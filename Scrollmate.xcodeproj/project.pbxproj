@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A6B46CC52F3C9E08000FAC81 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B46CC42F3C9E08000FAC81 /* WidgetKit.framework */; };
+		A6B46CC72F3C9E09000FAC81 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B46CC62F3C9E09000FAC81 /* SwiftUI.framework */; };
+		A6B46CD62F3C9E0A000FAC81 /* ScrollmateWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A6B46CC22F3C9E08000FAC81 /* ScrollmateWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		A6B46C9F2F3C9783000FAC81 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -21,12 +27,37 @@
 			remoteGlobalIDString = A6B46C902F3C9781000FAC81;
 			remoteInfo = Scrollmate;
 		};
+		A6B46CD42F3C9E0A000FAC81 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A6B46C892F3C9781000FAC81 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A6B46CC12F3C9E08000FAC81;
+			remoteInfo = ScrollmateWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A6B46CDB2F3C9E0A000FAC81 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A6B46CD62F3C9E0A000FAC81 /* ScrollmateWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		A6B46C912F3C9781000FAC81 /* Scrollmate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrollmate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6B46C9E2F3C9783000FAC81 /* ScrollmateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrollmateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6B46CA82F3C9783000FAC81 /* ScrollmateUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrollmateUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6B46CC22F3C9E08000FAC81 /* ScrollmateWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ScrollmateWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6B46CC42F3C9E08000FAC81 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		A6B46CC62F3C9E09000FAC81 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		A6B46CDC2F3C9E36000FAC81 /* ScrollmateWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScrollmateWidgetExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -36,6 +67,13 @@
 				Info.plist,
 			);
 			target = A6B46C902F3C9781000FAC81 /* Scrollmate */;
+		};
+		A6B46CDA2F3C9E0A000FAC81 /* Exceptions for "ScrollmateWidget" folder in "ScrollmateWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = A6B46CC12F3C9E08000FAC81 /* ScrollmateWidgetExtension */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -56,6 +94,14 @@
 		A6B46CAB2F3C9783000FAC81 /* ScrollmateUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ScrollmateUITests;
+			sourceTree = "<group>";
+		};
+		A6B46CC82F3C9E09000FAC81 /* ScrollmateWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A6B46CDA2F3C9E0A000FAC81 /* Exceptions for "ScrollmateWidget" folder in "ScrollmateWidgetExtension" target */,
+			);
+			path = ScrollmateWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -82,15 +128,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A6B46CBF2F3C9E08000FAC81 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6B46CC72F3C9E09000FAC81 /* SwiftUI.framework in Frameworks */,
+				A6B46CC52F3C9E08000FAC81 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		A6B46C882F3C9781000FAC81 = {
 			isa = PBXGroup;
 			children = (
+				A6B46CDC2F3C9E36000FAC81 /* ScrollmateWidgetExtension.entitlements */,
 				A6B46C932F3C9781000FAC81 /* Scrollmate */,
 				A6B46CA12F3C9783000FAC81 /* ScrollmateTests */,
 				A6B46CAB2F3C9783000FAC81 /* ScrollmateUITests */,
+				A6B46CC82F3C9E09000FAC81 /* ScrollmateWidget */,
+				A6B46CC32F3C9E08000FAC81 /* Frameworks */,
 				A6B46C922F3C9781000FAC81 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -101,8 +159,18 @@
 				A6B46C912F3C9781000FAC81 /* Scrollmate.app */,
 				A6B46C9E2F3C9783000FAC81 /* ScrollmateTests.xctest */,
 				A6B46CA82F3C9783000FAC81 /* ScrollmateUITests.xctest */,
+				A6B46CC22F3C9E08000FAC81 /* ScrollmateWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A6B46CC32F3C9E08000FAC81 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A6B46CC42F3C9E08000FAC81 /* WidgetKit.framework */,
+				A6B46CC62F3C9E09000FAC81 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -115,10 +183,12 @@
 				A6B46C8D2F3C9781000FAC81 /* Sources */,
 				A6B46C8E2F3C9781000FAC81 /* Frameworks */,
 				A6B46C8F2F3C9781000FAC81 /* Resources */,
+				A6B46CDB2F3C9E0A000FAC81 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A6B46CD52F3C9E0A000FAC81 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				A6B46C932F3C9781000FAC81 /* Scrollmate */,
@@ -176,6 +246,28 @@
 			productReference = A6B46CA82F3C9783000FAC81 /* ScrollmateUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		A6B46CC12F3C9E08000FAC81 /* ScrollmateWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A6B46CD72F3C9E0A000FAC81 /* Build configuration list for PBXNativeTarget "ScrollmateWidgetExtension" */;
+			buildPhases = (
+				A6B46CBE2F3C9E08000FAC81 /* Sources */,
+				A6B46CBF2F3C9E08000FAC81 /* Frameworks */,
+				A6B46CC02F3C9E08000FAC81 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				A6B46CC82F3C9E09000FAC81 /* ScrollmateWidget */,
+			);
+			name = ScrollmateWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = ScrollmateWidgetExtension;
+			productReference = A6B46CC22F3C9E08000FAC81 /* ScrollmateWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -197,6 +289,9 @@
 						CreatedOnToolsVersion = 26.2;
 						TestTargetID = A6B46C902F3C9781000FAC81;
 					};
+					A6B46CC12F3C9E08000FAC81 = {
+						CreatedOnToolsVersion = 26.2;
+					};
 				};
 			};
 			buildConfigurationList = A6B46C8C2F3C9781000FAC81 /* Build configuration list for PBXProject "Scrollmate" */;
@@ -216,6 +311,7 @@
 				A6B46C902F3C9781000FAC81 /* Scrollmate */,
 				A6B46C9D2F3C9783000FAC81 /* ScrollmateTests */,
 				A6B46CA72F3C9783000FAC81 /* ScrollmateUITests */,
+				A6B46CC12F3C9E08000FAC81 /* ScrollmateWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -236,6 +332,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A6B46CA62F3C9783000FAC81 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6B46CC02F3C9E08000FAC81 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -266,6 +369,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A6B46CBE2F3C9E08000FAC81 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -278,6 +388,11 @@
 			isa = PBXTargetDependency;
 			target = A6B46C902F3C9781000FAC81 /* Scrollmate */;
 			targetProxy = A6B46CA92F3C9783000FAC81 /* PBXContainerItemProxy */;
+		};
+		A6B46CD52F3C9E0A000FAC81 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A6B46CC12F3C9E08000FAC81 /* ScrollmateWidgetExtension */;
+			targetProxy = A6B46CD42F3C9E0A000FAC81 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -406,8 +521,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Scrollmate/Scrollmate.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Scrollmate/Info.plist;
@@ -444,8 +561,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Scrollmate/Scrollmate.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Scrollmate/Info.plist;
@@ -557,6 +676,68 @@
 			};
 			name = Release;
 		};
+		A6B46CD82F3C9E0A000FAC81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ScrollmateWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ScrollmateWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ScrollmateWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yeoksam102.Scrollmate.ScrollmateWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A6B46CD92F3C9E0A000FAC81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ScrollmateWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ScrollmateWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ScrollmateWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yeoksam102.Scrollmate.ScrollmateWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -592,6 +773,15 @@
 			buildConfigurations = (
 				A6B46CB92F3C9783000FAC81 /* Debug */,
 				A6B46CBA2F3C9783000FAC81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A6B46CD72F3C9E0A000FAC81 /* Build configuration list for PBXNativeTarget "ScrollmateWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6B46CD82F3C9E0A000FAC81 /* Debug */,
+				A6B46CD92F3C9E0A000FAC81 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
