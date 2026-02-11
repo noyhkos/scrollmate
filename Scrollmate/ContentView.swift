@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedInterval: Int = 5
+    @State private var selectedInterval: Int = SharedStorage.shared.notificationInterval
 
     let intervals: [Int] = [5, 10, 15, 20, 25, 30]
 
@@ -33,7 +33,8 @@ struct ContentView: View {
                         }
                     }
                     Button("Save") {
-                        print("저장! (selectedInterval: \(selectedInterval))")
+                        SharedStorage.shared.notificationInterval = selectedInterval
+                        print("저장 완료: \(selectedInterval)min")
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 8)
