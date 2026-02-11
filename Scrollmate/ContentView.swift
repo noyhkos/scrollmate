@@ -8,14 +8,42 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selectedInterval: Int = 5
+
+    let intervals: [Int] = [5, 10, 15, 20, 25, 30]
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationView {
+            List {
+                Section(header: Text("Reminder Interval")) {
+                    ForEach(intervals, id: \.self) { interval in
+                        Button(action: {
+                            selectedInterval = interval
+                        }) {
+                            HStack {
+                                Text("\(interval) minutes")
+                                Spacer()
+                                Image(systemName: selectedInterval == interval 
+                                    ? "checkmark.circle.fill" 
+                                    : "circle")
+                                    .foregroundColor(selectedInterval == interval 
+                                        ? .blue
+                                        : .gray)
+                            }
+                        }
+                    }
+                    Button("Save") {
+                        print("저장! (selectedInterval: \(selectedInterval))")
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 8)
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+                }
+            }
+            .navigationTitle("Scrollmate")
         }
-        .padding()
     }
 }
 
