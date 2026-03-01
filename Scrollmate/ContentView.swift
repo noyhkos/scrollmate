@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedInterval: Int = SharedStorage.shared.notificationInterval
+    @StateObject private var viewModel = SettingsViewModel()
+    @ObservedObject private var notificationManager = NotificationManager.shared
 
     let intervals: [Int] = [5, 10, 15, 20, 25, 30]
 
@@ -18,23 +19,22 @@ struct ContentView: View {
                 Section(header: Text("Reminder Interval")) {
                     ForEach(intervals, id: \.self) { interval in
                         Button(action: {
-                            selectedInterval = interval
+                            viewModel.selectedInterval = interval
                         }) {
                             HStack {
                                 Text("\(interval) minutes")
                                 Spacer()
-                                Image(systemName: selectedInterval == interval 
+                                Image(systemName: viewModel.selectedInterval == interval 
                                     ? "checkmark.circle.fill" 
                                     : "circle")
-                                    .foregroundColor(selectedInterval == interval 
+                                    .foregroundColor(viewModel.selectedInterval == interval 
                                         ? .blue
                                         : .gray)
                             }
                         }
                     }
                     Button("Save") {
-                        SharedStorage.shared.notificationInterval = selectedInterval
-                        print("저장 완료: \(selectedInterval)min")
+                        viewModel.saveSettings()
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 8)
@@ -42,8 +42,25 @@ struct ContentView: View {
                     .foregroundColor(.white)
                     .cornerRadius(8)
                 }
+
+                Section(header: Text("Notifications")) {
+                    HStack {
+                        Text("Status")
+                        Spacer()
+                        Text(notificationManager.isAuthorized ? "Enabled" : "Disabled")
+                        .foregroundColor(notificationManager.isAuthorized ? .green : .red)
+                    }
+                    if !notificationManager.isAuthorized {
+                        Button("Open Settings") {
+                            notificationManager.openAppSettings()
+                        }
+                    }
+                }
             }
             .navigationTitle("Scrollmate")
+            .onAppear {
+                notificationManager.checkAuthorization()
+            }
         }
     }
 }
