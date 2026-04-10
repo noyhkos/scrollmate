@@ -1,0 +1,66 @@
+<h2>제어센터 바로가기</h2>
+<p class="subtitle">iOS 18+의 ControlCenter Extension — 어떤 형태로 노출할까?</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#1c1c1e;border-radius:16px;padding:20px;width:200px;margin:0 auto;">
+        <div style="color:#8e8e93;font-size:10px;margin-bottom:10px;text-transform:uppercase;font-weight:600;">Scrollmate</div>
+        <div style="display:flex;align-items:center;justify-content:center;">
+          <div style="background:#34c759;border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;">
+            <svg width="26" height="26" viewBox="0 0 26 26">
+              <polygon points="9,5 21,13 9,21" fill="white"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — 단순 토글 버튼</h3>
+      <p>탭하면 알림 시작/종료 토글. 가장 심플한 구현.<br/><span style="color:#ff9f0a;font-size:12px;">iOS 18+ 필요</span></p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#1c1c1e;border-radius:16px;padding:16px;width:200px;margin:0 auto;">
+        <div style="color:#8e8e93;font-size:10px;margin-bottom:10px;text-transform:uppercase;font-weight:600;">Scrollmate</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="background:#34c759;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="20" height="20" viewBox="0 0 20 20">
+                <polygon points="7,4 17,10 7,16" fill="white"/>
+              </svg>
+            </div>
+            <div>
+              <div style="color:#fff;font-size:13px;font-weight:600;">시작</div>
+              <div style="color:#8e8e93;font-size:11px;">5분 주기</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — 버튼 + 현재 주기 표시</h3>
+      <p>버튼 옆에 설정된 알림 주기 보여줌.<br/><span style="color:#ff9f0a;font-size:12px;">iOS 18+ 필요</span></p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="skip" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#2c2c2e;border-radius:16px;padding:20px;width:200px;margin:0 auto;display:flex;align-items:center;justify-content:center;height:80px;">
+        <div style="color:#636366;font-size:13px;text-align:center;">일단 건너뜀</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>건너뛰기</h3>
+      <p>제어센터는 나중에. 위젯과 알림 화면 먼저 완성.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top:8px;">
+  <p class="subtitle" style="font-size:12px;color:#636366;">ControlCenter Extension은 iOS 18 이상에서만 동작. 최소 배포 타겟이 iOS 18 미만이면 별도 처리 필요.</p>
+</div>

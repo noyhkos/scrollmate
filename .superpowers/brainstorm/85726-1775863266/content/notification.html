@@ -1,0 +1,65 @@
+<h2>알림 화면</h2>
+<p class="subtitle">알림이 왔을 때 어떻게 표시할까?</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#f2f2f7;border-radius:12px;padding:16px;">
+        <!-- 잠금화면 스타일 알림 배너 -->
+        <div style="background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 12px rgba(0,0,0,0.12);">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <div style="width:32px;height:32px;background:#007aff;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+              <svg width="16" height="16" viewBox="0 0 16 16"><polygon points="5,3 13,8 5,13" fill="white"/></svg>
+            </div>
+            <div>
+              <div style="font-size:12px;font-weight:600;color:#1c1c1e;">Scrollmate</div>
+              <div style="font-size:11px;color:#8e8e93;">지금</div>
+            </div>
+          </div>
+          <div style="font-size:14px;font-weight:600;color:#1c1c1e;margin-bottom:2px;">스크롤 중이세요?</div>
+          <div style="font-size:13px;color:#3c3c43;">SNS를 사용한 지 5분이 지났어요.</div>
+          <!-- 액션 버튼들 -->
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <div style="flex:1;background:#f2f2f7;border-radius:10px;padding:10px;text-align:center;font-size:13px;font-weight:600;color:#1c1c1e;">확인</div>
+            <div style="flex:1;background:#ff3b30;border-radius:10px;padding:10px;text-align:center;font-size:13px;font-weight:600;color:#fff;">알림 끄기</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — 확인 + 알림 끄기</h3>
+      <p>"확인"은 알림 닫기만. "알림 끄기"는 타이머 종료 + 알림 전체 취소.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#f2f2f7;border-radius:12px;padding:16px;">
+        <div style="background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 12px rgba(0,0,0,0.12);">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <div style="width:32px;height:32px;background:#007aff;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+              <svg width="16" height="16" viewBox="0 0 16 16"><polygon points="5,3 13,8 5,13" fill="white"/></svg>
+            </div>
+            <div>
+              <div style="font-size:12px;font-weight:600;color:#1c1c1e;">Scrollmate</div>
+              <div style="font-size:11px;color:#8e8e93;">지금</div>
+            </div>
+          </div>
+          <div style="font-size:14px;font-weight:600;color:#1c1c1e;margin-bottom:2px;">스크롤 중이세요?</div>
+          <div style="font-size:13px;color:#3c3c43;">SNS를 사용한 지 5분이 지났어요.</div>
+          <!-- 액션 버튼들 -->
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:12px;">
+            <div style="background:#007aff;border-radius:10px;padding:10px;text-align:center;font-size:13px;font-weight:600;color:#fff;">5분 더 알림 받기</div>
+            <div style="background:#f2f2f7;border-radius:10px;padding:10px;text-align:center;font-size:13px;font-weight:600;color:#1c1c1e;">알림 끄기</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — 5분 더 + 알림 끄기</h3>
+      <p>"5분 더"는 타이머 리셋. "알림 끄기"는 종료. 더 능동적인 선택.</p>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,71 @@
+<h2>위젯 레이아웃</h2>
+<p class="subtitle">홈화면 위젯 — 어떤 정보를 보여줄까?</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#1c1c1e;border-radius:20px;padding:16px;width:155px;height:155px;margin:0 auto;display:flex;flex-direction:column;justify-content:space-between;box-sizing:border-box;">
+        <div style="color:#fff;font-size:13px;font-weight:600;">Scrollmate</div>
+        <div style="text-align:center;">
+          <div style="color:#ff9f0a;font-size:11px;margin-bottom:4px;">비활성</div>
+          <div style="background:#ff9f0a;border-radius:14px;padding:10px 0;color:#fff;font-weight:700;font-size:14px;">알림 시작</div>
+        </div>
+        <div style="color:#8e8e93;font-size:10px;">주기: 5분</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — 버튼만</h3>
+      <p>알림 상태 + 시작/종료 버튼. 심플.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#1c1c1e;border-radius:20px;padding:16px;width:155px;height:155px;margin:0 auto;display:flex;flex-direction:column;justify-content:space-between;box-sizing:border-box;">
+        <div style="color:#fff;font-size:13px;font-weight:600;">Scrollmate</div>
+        <div>
+          <div style="color:#34c759;font-size:11px;margin-bottom:2px;">활성중</div>
+          <div style="color:#fff;font-size:22px;font-weight:700;">12분</div>
+          <div style="color:#8e8e93;font-size:10px;">경과</div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <div style="flex:1;background:#ff3b30;border-radius:10px;padding:7px 0;color:#fff;font-weight:600;font-size:11px;text-align:center;">종료</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — 경과 시간 표시</h3>
+      <p>알림 시작 후 경과 시간 표시 + 종료 버튼.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#1c1c1e;border-radius:20px;padding:16px;width:320px;height:155px;margin:0 auto;display:flex;flex-direction:column;justify-content:space-between;box-sizing:border-box;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div style="color:#fff;font-size:13px;font-weight:600;">Scrollmate</div>
+          <div style="color:#34c759;font-size:11px;">활성중 · 5분마다</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div>
+            <div style="color:#fff;font-size:28px;font-weight:700;">23분</div>
+            <div style="color:#8e8e93;font-size:11px;">경과</div>
+          </div>
+          <div style="flex:1;background:#3a3a3c;border-radius:8px;height:6px;overflow:hidden;">
+            <div style="background:#007aff;width:40%;height:100%;border-radius:8px;"></div>
+          </div>
+          <div style="color:#8e8e93;font-size:11px;">다음 알림<br/>2분 후</div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <div style="flex:1;background:#ff3b30;border-radius:10px;padding:8px 0;color:#fff;font-weight:600;font-size:12px;text-align:center;">종료</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — 와이드 위젯 (경과 + 다음 알림)</h3>
+      <p>경과 시간과 다음 알림까지 남은 시간 표시. 더 많은 정보.</p>
+    </div>
+  </div>
+
+</div>
