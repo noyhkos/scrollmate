@@ -80,11 +80,16 @@ class NotificationManager: NSObject, ObservableObject {
             trigger: trigger
         )
 
-        UNUserNotificationCenter.current().add(request)
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error {
+                print("Notification scheduling failed: \(error)")
+            }
+        }
     }
 
     func cancelAllNotifications() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
     }
 }
 
