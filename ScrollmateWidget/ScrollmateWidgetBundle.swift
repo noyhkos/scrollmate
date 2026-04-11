@@ -5,5 +5,6 @@ import SwiftUI
 struct ScrollmateWidgetBundle: WidgetBundle {
     var body: some Widget {
         ScrollmateWidget()
+        ScrollmateControl()
     }
 }
