@@ -5,8 +5,16 @@ class SettingsViewModel: ObservableObject {
     @Published var selectedInterval: Int
     @Published var isEnabled: Bool
 
+    static let validIntervals = Array(stride(from: 5, through: 60, by: 5))
+
     init() {
-        selectedInterval = SharedStorage.shared.notificationInterval
+        let stored = SharedStorage.shared.notificationInterval
+        // Sanitize legacy values — round up to nearest valid 5-minute step
+        let sanitized = Self.validIntervals.first { $0 >= stored } ?? 5
+        if sanitized != stored {
+            SharedStorage.shared.notificationInterval = sanitized
+        }
+        selectedInterval = sanitized
         isEnabled = !SharedStorage.shared.activeTimers.isEmpty
     }
 
