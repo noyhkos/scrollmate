@@ -22,24 +22,8 @@ struct ToggleScrollmateIntent: SetValueIntent {
     func perform() async throws -> some IntentResult {
         if value {
             SharedStorage.shared.addTimer(for: "scrollmate")
-
             let interval = SharedStorage.shared.notificationInterval
-            let content = UNMutableNotificationContent()
-            content.title = "스크롤 중이세요?"
-            content.body = "SNS를 사용한 지 \(interval)분이 지났어요."
-            content.sound = .default
-            content.categoryIdentifier = "SCROLLMATE_REMINDER"
-
-            let trigger = UNTimeIntervalNotificationTrigger(
-                timeInterval: TimeInterval(interval * 60),
-                repeats: true
-            )
-            let request = UNNotificationRequest(
-                identifier: "scrollmate.reminder",
-                content: content,
-                trigger: trigger
-            )
-            try await UNUserNotificationCenter.current().add(request)
+            scheduleNotifications(intervalMinutes: interval)
         } else {
             SharedStorage.shared.activeTimers = [:]
             UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
@@ -50,6 +34,7 @@ struct ToggleScrollmateIntent: SetValueIntent {
         return .result()
     }
 }
+
 
 struct ScrollmateControl: ControlWidget {
     var body: some ControlWidgetConfiguration {

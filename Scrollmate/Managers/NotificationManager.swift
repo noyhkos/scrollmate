@@ -60,31 +60,45 @@ class NotificationManager: NSObject, ObservableObject {
         UNUserNotificationCenter.current().setNotificationCategories([category])
     }
 
+    // Schedule up to 64 individual notifications (iOS limit), each showing total elapsed time
     func scheduleRepeatingNotification(intervalMinutes: Int) {
         cancelAllNotifications()
 
-        let content = UNMutableNotificationContent()
-        content.title = "스크롤 중이세요?"
-        content.body = "SNS를 사용한 지 \(intervalMinutes)분이 지났어요."
-        content.sound = .default
-        content.categoryIdentifier = "SCROLLMATE_REMINDER"
+        let maxCount = 64
+        for i in 1...maxCount {
+            let elapsedMinutes = intervalMinutes * i
 
-        let trigger = UNTimeIntervalNotificationTrigger(
-            timeInterval: TimeInterval(intervalMinutes * 60),
-            repeats: true
-        )
+            let content = UNMutableNotificationContent()
+            content.title = "스크롤 중이세요?"
+            content.body = elapsedLabel(minutes: elapsedMinutes)
+            content.sound = .default
+            content.categoryIdentifier = "SCROLLMATE_REMINDER"
 
-        let request = UNNotificationRequest(
-            identifier: "scrollmate.reminder",
-            content: content,
-            trigger: trigger
-        )
+            let trigger = UNTimeIntervalNotificationTrigger(
+                timeInterval: TimeInterval(elapsedMinutes * 60),
+                repeats: false
+            )
 
-        UNUserNotificationCenter.current().add(request) { error in
-            if let error {
-                print("Notification scheduling failed: \(error)")
+            let request = UNNotificationRequest(
+                identifier: "scrollmate.reminder.\(i)",
+                content: content,
+                trigger: trigger
+            )
+
+            UNUserNotificationCenter.current().add(request) { error in
+                if let error {
+                    print("Notification \(i) scheduling failed: \(error)")
+                }
             }
         }
+    }
+
+    private func elapsedLabel(minutes: Int) -> String {
+        let h = minutes / 60
+        let m = minutes % 60
+        if h == 0 { return "알림을 켠 지 \(m)분이 지났어요." }
+        if m == 0 { return "알림을 켠 지 \(h)시간이 지났어요." }
+        return "알림을 켠 지 \(h)시간 \(m)분이 지났어요."
     }
 
     func cancelAllNotifications() {
