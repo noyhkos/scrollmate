@@ -63,6 +63,12 @@ struct ContentView: View {
                     .foregroundColor(.red)
                 }
 
+                // Test button — remove before release
+                Button("10초 알림 테스트") {
+                    notificationManager.scheduleTestNotification()
+                }
+                .foregroundColor(.orange)
+
                 Spacer()
             }
             .padding(.top, 32)

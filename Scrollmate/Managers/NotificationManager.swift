@@ -101,6 +101,19 @@ class NotificationManager: NSObject, ObservableObject {
         return "알림을 켠 지 \(h)시간 \(m)분이 지났어요."
     }
 
+    // Test only — fires a single notification after 10 seconds
+    func scheduleTestNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "스크롤 중이세요?"
+        content.body = "알림을 켠 지 10초가 지났어요. (테스트)"
+        content.sound = .default
+        content.categoryIdentifier = "SCROLLMATE_REMINDER"
+
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+        let request = UNNotificationRequest(identifier: "scrollmate.test", content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request)
+    }
+
     func cancelAllNotifications() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
