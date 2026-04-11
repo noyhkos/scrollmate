@@ -49,7 +49,10 @@ struct ContentView: View {
 
                 Toggle("알림 켜기", isOn: Binding(
                     get: { viewModel.isEnabled },
-                    set: { viewModel.setEnabled($0) }
+                    set: { newValue in
+                        viewModel.setEnabled(newValue)
+                        if !newValue { elapsedSeconds = 0 }
+                    }
                 ))
                 .padding(.horizontal)
 
