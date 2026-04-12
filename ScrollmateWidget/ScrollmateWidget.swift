@@ -44,6 +44,8 @@ struct ScrollmateWidgetEntryView: View {
         Button(intent: ToggleTimerIntent()) {
             Image(systemName: entry.isActive ? "stop.fill" : "play.fill")
                 .font(.system(size: 20, weight: .medium))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .overlay(Circle().strokeBorder(.white.opacity(0.6), lineWidth: 1.5))
         }
         .containerBackground(.clear, for: .widget)
     }
