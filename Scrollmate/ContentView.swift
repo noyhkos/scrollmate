@@ -5,14 +5,29 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var viewModel = SettingsViewModel()
     @State private var selectedTab: AppTab = .scroll
+    @State private var splashOpacity: Double = 1
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            Color.black.ignoresSafeArea()
-            ScrollTabView(viewModel: viewModel)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            // BottomTabBar hidden until remaining tabs are implemented
-            // BottomTabBar(selectedTab: $selectedTab)
+        ZStack {
+            ZStack(alignment: .bottom) {
+                Color.black.ignoresSafeArea()
+                ScrollTabView(viewModel: viewModel)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                // BottomTabBar hidden until remaining tabs are implemented
+                // BottomTabBar(selectedTab: $selectedTab)
+            }
+
+            if splashOpacity > 0 {
+                SplashView()
+                    .opacity(splashOpacity)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            withAnimation(.easeOut(duration: 0.6)) {
+                                splashOpacity = 0
+                            }
+                        }
+                    }
+            }
         }
         .preferredColorScheme(.dark)
     }
