@@ -1,3 +1,4 @@
+import ActivityKit
 import AppIntents
 import UserNotifications
 import WidgetKit
@@ -18,12 +19,21 @@ struct ToggleTimerIntent: AppIntent {
             let reminderIds = (1...63).map { "scrollmate.reminder.\($0)" }
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
             if let startTime { sendEndNotification(startTime: startTime) }
+            // End Live Activity
+            for activity in Activity<ScrollmateAttributes>.activities {
+                await activity.end(nil, dismissalPolicy: .immediate)
+            }
         } else {
             let now = Date()
             SharedStorage.shared.activeTimers["scrollmate"] = now
             let interval = SharedStorage.shared.notificationInterval
             sendStartNotification()
             scheduleNotifications(intervalMinutes: interval)
+            // Start Live Activity
+            let attributes = ScrollmateAttributes()
+            let state = ScrollmateAttributes.ContentState(startTime: now)
+            let content = ActivityContent(state: state, staleDate: nil)
+            try? Activity.request(attributes: attributes, content: content)
         }
 
         WidgetCenter.shared.reloadAllTimelines()
