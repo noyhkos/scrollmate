@@ -105,7 +105,7 @@ struct BottomTabBar: View {
                         .glassEffect(.regular, in: .rect(cornerRadius: 28))
                         .overlay(
                             RoundedRectangle(cornerRadius: 28)
-                                .fill(Color.black.opacity(0.5))
+                                .fill(Color.black.opacity(0.45))
                         )
                 } else {
                     RoundedRectangle(cornerRadius: 28)
@@ -344,7 +344,7 @@ struct SessionRowView: View {
 
     private static let timeFormatter: DateFormatter = {
         let f = DateFormatter()
-        f.dateFormat = "HH:mm"
+        f.dateFormat = "HH:mm:ss"
         return f
     }()
 
