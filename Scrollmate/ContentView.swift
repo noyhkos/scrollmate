@@ -92,7 +92,7 @@ struct BottomTabBar: View {
                         Text(tab.label)
                             .font(.system(size: 10))
                     }
-                    .foregroundColor(selectedTab == tab ? .appAccent : Color.white.opacity(0.6))
+                    .foregroundColor(selectedTab == tab ? .appAccent : Color.white.opacity(0.75))
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 12)
                 }
@@ -103,7 +103,7 @@ struct BottomTabBar: View {
                 if #available(iOS 26, *) {
                     RoundedRectangle(cornerRadius: 28)
                         .glassEffect(.regular, in: .rect(cornerRadius: 28))
-                        .opacity(0.75)
+                        .opacity(0.92)
                 } else {
                     RoundedRectangle(cornerRadius: 28)
                         .fill(.ultraThinMaterial)

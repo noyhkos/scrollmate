@@ -8,7 +8,7 @@ extension Color {
     static let appBorder       = Color(hex: "#2E2E2E")
     static let appTextPrimary  = Color(hex: "#F8F8F8")
     static let appTextSecondary = Color(hex: "#888888")
-    static let appAccent       = Color(hex: "#3A6EA8")
+    static let appAccent       = Color(hex: "#1D8EFF")
     static let appTabBar       = Color(hex: "#1A1A1A")
     static let appTabInactive  = Color(hex: "#555555")
 }
