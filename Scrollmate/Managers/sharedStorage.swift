@@ -1,5 +1,16 @@
 import Foundation
 
+// Defined here so both app and widget extension targets can access it via sharedStorage.swift
+struct ScrollSession: Codable, Identifiable {
+    let id: UUID
+    let startTime: Date
+    let endTime: Date
+
+    var duration: TimeInterval {
+        endTime.timeIntervalSince(startTime)
+    }
+}
+
 let APP_GROUP_ID = "group.com.scrollmate.app"
 
 let NOTIFICATION_INTERVAL_KEY = "notificationInterval"
