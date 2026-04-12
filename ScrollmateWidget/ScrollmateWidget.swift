@@ -76,7 +76,7 @@ struct ScrollmateWidgetEntryView: View {
             .buttonStyle(.plain)
         }
         .padding(14)
-        .containerBackground(Color.black, for: .widget)
+        .containerBackground(colorScheme == .dark ? Color.black : Color.white, for: .widget)
     }
 }
 
