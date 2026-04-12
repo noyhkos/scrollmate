@@ -27,6 +27,10 @@ class SettingsViewModel: ObservableObject {
                 NotificationManager.shared.scheduleRepeatingNotification(intervalMinutes: self.selectedInterval)
             }
         } else {
+            // Record the session before clearing the timer
+            if let startTime = SharedStorage.shared.activeTimers["scrollmate"] {
+                SharedStorage.shared.addSession(start: startTime, end: Date())
+            }
             TimerManager.shared.stopTimer(for: "scrollmate")
             Task { @MainActor in
                 NotificationManager.shared.cancelAllNotifications()

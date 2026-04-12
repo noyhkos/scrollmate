@@ -1,8 +1,8 @@
 import SwiftUI
 
 extension Color {
-    // Background — app-wide canvas
-    static let appBackground = Color(light: Color(hex: "#F8F8F8"), dark: Color(hex: "#111111"))
+    // Background — pure black to match iOS Clock app aesthetic
+    static let appBackground = Color(light: Color(hex: "#F8F8F8"), dark: Color(hex: "#000000"))
 
     // Surface — cards, sheets, grouped sections
     static let appSurface = Color(light: Color(hex: "#F0F0F0"), dark: Color(hex: "#1C1C1C"))
@@ -13,8 +13,17 @@ extension Color {
     // Text Primary — titles, body
     static let appTextPrimary = Color(light: Color(hex: "#111111"), dark: Color(hex: "#F8F8F8"))
 
-    // Text Secondary — captions, placeholders (same value works on both modes)
+    // Text Secondary — captions, placeholders
     static let appTextSecondary = Color(hex: "#888888")
+
+    // Accent — single point color (#3A6EA8)
+    static let appAccent = Color(hex: "#3A6EA8")
+
+    // Tab bar background
+    static let appTabBar = Color(hex: "#1A1A1A")
+
+    // Inactive tab icon color
+    static let appTabInactive = Color(hex: "#555555")
 }
 
 private extension Color {

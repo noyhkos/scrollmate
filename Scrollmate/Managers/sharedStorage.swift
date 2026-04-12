@@ -6,6 +6,7 @@ let NOTIFICATION_INTERVAL_KEY = "notificationInterval"
 let DEFAULT_NOTIFICATION_INTERVAL = 5
 
 let ACTIVE_TIMERS_KEY = "activeTimers"
+let SCROLL_SESSIONS_KEY = "scrollSessions"
 
 class SharedStorage {
     static let shared = SharedStorage()
@@ -42,5 +43,36 @@ class SharedStorage {
 
     func removeTimer(for appName: String) {
         activeTimers.removeValue(forKey: appName)
+    }
+
+    // MARK: - Session Storage
+
+    private var scrollSessions: [ScrollSession] {
+        get {
+            guard let data = defaults.data(forKey: SCROLL_SESSIONS_KEY),
+                  let sessions = try? JSONDecoder().decode([ScrollSession].self, from: data) else {
+                return []
+            }
+            return sessions
+        }
+        set {
+            let data = try? JSONEncoder().encode(newValue)
+            defaults.set(data, forKey: SCROLL_SESSIONS_KEY)
+        }
+    }
+
+    // Adds a session and discards any sessions whose endTime is not within end's calendar day
+    func addSession(start: Date, end: Date) {
+        let session = ScrollSession(id: UUID(), startTime: start, endTime: end)
+        let calendar = Calendar.current
+        let endDay = calendar.startOfDay(for: end)
+        var sessions = scrollSessions.filter { calendar.startOfDay(for: $0.endTime) == endDay }
+        sessions.append(session)
+        scrollSessions = sessions
+    }
+
+    // Returns only sessions that ended within today's calendar day
+    func todaySessions() -> [ScrollSession] {
+        scrollSessions.filter { Calendar.current.isDateInToday($0.endTime) }
     }
 }
