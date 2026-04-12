@@ -102,7 +102,7 @@ struct BottomTabBar: View {
             Group {
                 if #available(iOS 26, *) {
                     RoundedRectangle(cornerRadius: 28)
-                        .glassEffect(.regular, in: .rect(cornerRadius: 28))
+                        .glassEffect(.regular.opacity(0.5), in: .rect(cornerRadius: 28))
                 } else {
                     RoundedRectangle(cornerRadius: 28)
                         .fill(.ultraThinMaterial)
