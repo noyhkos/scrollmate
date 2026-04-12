@@ -229,18 +229,16 @@ struct ScrollTabView: View {
             pendingInterval = viewModel.selectedInterval
             showIntervalPicker = true
         } label: {
-            HStack(spacing: 8) {
-                Spacer()
+            HStack(spacing: 6) {
                 Text("\(viewModel.selectedInterval)분")
                     .font(.system(size: 20, weight: .regular, design: .serif))
                     .foregroundColor(.appTextPrimary)
                 Image(systemName: "chevron.up.chevron.down")
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundColor(.appTextSecondary)
-                Spacer()
             }
-            .padding(.vertical, 12)
-            .padding(.horizontal, 20)
+            .padding(.vertical, 10)
+            .padding(.horizontal, 18)
             .background(
                 RoundedRectangle(cornerRadius: 14)
                     .fill(Color.appSurface)
@@ -250,7 +248,7 @@ struct ScrollTabView: View {
                     )
             )
         }
-        .padding(.horizontal, 24)
+        .frame(maxWidth: .infinity, alignment: .center)
         .padding(.bottom, 32)
     }
 
