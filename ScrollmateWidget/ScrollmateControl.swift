@@ -21,13 +21,20 @@ struct ToggleScrollmateIntent: SetValueIntent {
 
     func perform() async throws -> some IntentResult {
         if value {
-            SharedStorage.shared.addTimer(for: "scrollmate")
+            let now = Date()
+            SharedStorage.shared.activeTimers["scrollmate"] = now
             let interval = SharedStorage.shared.notificationInterval
             scheduleNotifications(intervalMinutes: interval)
         } else {
+            // Record session before clearing timer
+            if let startTime = SharedStorage.shared.activeTimers["scrollmate"] {
+                SharedStorage.shared.addSession(start: startTime, end: Date())
+            }
             SharedStorage.shared.activeTimers = [:]
             UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
             UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+            // Notify app UI to sync state
+            NotificationCenter.default.post(name: kScrollmateStopNotification, object: nil)
         }
 
         WidgetCenter.shared.reloadAllTimelines()

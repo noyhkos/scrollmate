@@ -9,10 +9,18 @@ struct ToggleTimerIntent: AppIntent {
         let isActive = !SharedStorage.shared.activeTimers.isEmpty
 
         if isActive {
+            // Record session before clearing timer
+            if let startTime = SharedStorage.shared.activeTimers["scrollmate"] {
+                SharedStorage.shared.addSession(start: startTime, end: Date())
+            }
             SharedStorage.shared.activeTimers = [:]
             UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+            UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+            // Notify app UI to sync state
+            NotificationCenter.default.post(name: kScrollmateStopNotification, object: nil)
         } else {
-            SharedStorage.shared.addTimer(for: "scrollmate")
+            let now = Date()
+            SharedStorage.shared.activeTimers["scrollmate"] = now
             let interval = SharedStorage.shared.notificationInterval
             scheduleNotifications(intervalMinutes: interval)
         }
