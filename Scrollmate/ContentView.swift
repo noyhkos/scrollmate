@@ -136,13 +136,11 @@ struct ScrollTabView: View {
     private let ticker = Timer.publish(every: 1, on: .main, in: .default).autoconnect()
 
     @State private var elapsedSeconds: Int = 0
-    @State private var isPickerExpanded = false
+    @State private var showIntervalPicker = false
     @State private var pendingInterval: Int = 5
     @State private var todaySessions: [ScrollSession] = []
 
     var body: some View {
-        // Disable scroll while picker is open to prevent gesture conflict
-        // between UIScrollView (inside Picker) and SwiftUI ScrollView
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 headerSection
@@ -153,7 +151,6 @@ struct ScrollTabView: View {
                 sessionsSection
             }
         }
-        .scrollDisabled(isPickerExpanded)
         .background(Color.black)
         .onAppear {
             notificationManager.checkAuthorization()
@@ -167,6 +164,22 @@ struct ScrollTabView: View {
         .onReceive(NotificationCenter.default.publisher(for: kScrollmateStopNotification)) { _ in
             elapsedSeconds = 0
             todaySessions = SharedStorage.shared.todaySessions()
+        }
+        .sheet(isPresented: $showIntervalPicker) {
+            IntervalPickerSheet(
+                pendingInterval: $pendingInterval,
+                onConfirm: {
+                    viewModel.intervalChanged(to: pendingInterval)
+                    showIntervalPicker = false
+                },
+                onCancel: {
+                    pendingInterval = viewModel.selectedInterval
+                    showIntervalPicker = false
+                }
+            )
+            .presentationDetents([.height(280)])
+            .presentationDragIndicator(.visible)
+            .presentationBackground(Color.appSurface)
         }
     }
 
@@ -201,78 +214,35 @@ struct ScrollTabView: View {
             }
     }
 
-    // MARK: Interval — tap to expand inline picker
+    // MARK: Interval — tap to open picker sheet
 
     private var intervalSection: some View {
-        VStack(spacing: 0) {
-            // Tappable pill showing current interval
-            Button {
-                withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
-                    if isPickerExpanded {
-                        pendingInterval = viewModel.selectedInterval
-                        isPickerExpanded = false
-                    } else {
-                        pendingInterval = viewModel.selectedInterval
-                        isPickerExpanded = true
-                    }
-                }
-            } label: {
-                HStack(spacing: 8) {
-                    Spacer()
-                    Text("\(viewModel.selectedInterval)분")
-                        .font(.system(size: 20, weight: .regular, design: .serif))
-                        .foregroundColor(.appTextPrimary)
-                    Image(systemName: isPickerExpanded ? "chevron.up" : "chevron.down")
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundColor(.appTextSecondary)
-                    Spacer()
-                }
-                .padding(.vertical, 12)
-                .padding(.horizontal, 20)
-                .background(
-                    RoundedRectangle(cornerRadius: 14)
-                        .fill(Color.appSurface)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 14)
-                                .strokeBorder(
-                                    isPickerExpanded ? Color.appAccent : Color.appBorder,
-                                    lineWidth: isPickerExpanded ? 1.5 : 1
-                                )
-                        )
-                )
+        Button {
+            pendingInterval = viewModel.selectedInterval
+            showIntervalPicker = true
+        } label: {
+            HStack(spacing: 8) {
+                Spacer()
+                Text("\(viewModel.selectedInterval)분")
+                    .font(.system(size: 20, weight: .regular, design: .serif))
+                    .foregroundColor(.appTextPrimary)
+                Image(systemName: "chevron.up.chevron.down")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(.appTextSecondary)
+                Spacer()
             }
-            .padding(.horizontal, 24)
-
-            // Inline expanding picker — clipped to prevent overflow layout issues
-            if isPickerExpanded {
-                HStack(alignment: .center, spacing: 0) {
-                    Picker("", selection: $pendingInterval) {
-                        ForEach(Array(stride(from: 5, through: 60, by: 5)), id: \.self) { minute in
-                            Text("\(minute)분").tag(minute)
-                        }
-                    }
-                    .pickerStyle(.wheel)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 160)
-                    .clipped()
-
-                    Button {
-                        withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
-                            viewModel.intervalChanged(to: pendingInterval)
-                            isPickerExpanded = false
-                        }
-                    } label: {
-                        Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: 36))
-                            .foregroundColor(.appAccent)
-                    }
-                    .padding(.trailing, 24)
-                }
-                .transition(.opacity.combined(with: .scale(scale: 0.97, anchor: .top)))
-                .padding(.top, 8)
-                .padding(.horizontal, 8)
-            }
+            .padding(.vertical, 12)
+            .padding(.horizontal, 20)
+            .background(
+                RoundedRectangle(cornerRadius: 14)
+                    .fill(Color.appSurface)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 14)
+                            .strokeBorder(Color.appBorder, lineWidth: 1)
+                    )
+            )
         }
+        .padding(.horizontal, 24)
         .padding(.bottom, 32)
     }
 
@@ -399,6 +369,45 @@ struct SessionRowView: View {
         if h > 0 { return "\(h)h \(m)m" }
         if m > 0 { return "\(m)m" }
         return "< 1m"
+    }
+}
+
+// MARK: - Interval Picker Sheet
+
+struct IntervalPickerSheet: View {
+    @Binding var pendingInterval: Int
+    let onConfirm: () -> Void
+    let onCancel: () -> Void
+
+    var body: some View {
+        VStack(spacing: 0) {
+            // Drag handle area + confirm button
+            HStack {
+                Button("취소") { onCancel() }
+                    .foregroundColor(.appTextSecondary)
+                    .font(.system(size: 16))
+
+                Spacer()
+
+                Button("확인") { onConfirm() }
+                    .foregroundColor(.appAccent)
+                    .font(.system(size: 16, weight: .semibold))
+            }
+            .padding(.horizontal, 24)
+            .padding(.top, 20)
+            .padding(.bottom, 8)
+
+            Picker("", selection: $pendingInterval) {
+                ForEach(Array(stride(from: 5, through: 60, by: 5)), id: \.self) { minute in
+                    Text("\(minute)분")
+                        .foregroundColor(.appTextPrimary)
+                        .tag(minute)
+                }
+            }
+            .pickerStyle(.wheel)
+            .frame(maxWidth: .infinity)
+        }
+        .background(Color.appSurface)
     }
 }
 
