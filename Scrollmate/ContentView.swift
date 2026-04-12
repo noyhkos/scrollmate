@@ -98,10 +98,7 @@ struct BottomTabBar: View {
                 }
             }
         }
-        .background(
-            RoundedRectangle(cornerRadius: 28)
-                .fill(.ultraThinMaterial)
-        )
+        .glassEffect(.regular, in: .rect(cornerRadius: 28))
         .padding(.horizontal, 16)
         .padding(.bottom, 24)
     }
