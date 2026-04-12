@@ -100,10 +100,10 @@ struct BottomTabBar: View {
         }
         .background(
             RoundedRectangle(cornerRadius: 28)
-                .fill(Color.appTabBar.opacity(0.85))
-                .background(
+                .fill(.ultraThinMaterial)
+                .overlay(
                     RoundedRectangle(cornerRadius: 28)
-                        .fill(.ultraThinMaterial)
+                        .fill(Color.white.opacity(0.05))
                 )
         )
         .padding(.horizontal, 16)
