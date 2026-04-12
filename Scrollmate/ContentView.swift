@@ -125,7 +125,8 @@ struct ScrollTabView: View {
     @ObservedObject var viewModel: SettingsViewModel
     @ObservedObject private var notificationManager = NotificationManager.shared
 
-    private let ticker = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    // Use .default mode so the timer yields during touch/scroll tracking events
+    private let ticker = Timer.publish(every: 1, on: .main, in: .default).autoconnect()
 
     @State private var elapsedSeconds: Int = 0
     @State private var isPickerExpanded = false
@@ -179,7 +180,8 @@ struct ScrollTabView: View {
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.bottom, 28)
             .onReceive(ticker) { _ in
-                guard let start = SharedStorage.shared.activeTimers["scrollmate"] else { return }
+                guard viewModel.isEnabled,
+                      let start = SharedStorage.shared.activeTimers["scrollmate"] else { return }
                 elapsedSeconds = Int(Date().timeIntervalSince(start))
             }
     }
