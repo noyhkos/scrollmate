@@ -27,9 +27,17 @@ struct Provider: TimelineProvider {
 
 struct ScrollmateWidgetEntryView: View {
     var entry: Provider.Entry
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         VStack(spacing: 0) {
+            // Header
+            Text("Let's Scroll!")
+                .font(.system(size: 15, weight: .semibold, design: .default))
+                .foregroundColor(.primary)
+                .frame(maxWidth: .infinity, alignment: .center)
+//                .padding(.bottom, )
+
             Spacer()
 
             // Elapsed timer — Text(.timer) auto-counts without per-second timeline updates
@@ -37,14 +45,14 @@ struct ScrollmateWidgetEntryView: View {
                 Text(start, style: .timer)
                     .font(.system(size: 24, weight: .thin, design: .monospaced))
                     .monospacedDigit()
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
                     .multilineTextAlignment(.center)
             } else {
-                Text("0:00:00")
+                Text("00:00:00")
                     .font(.system(size: 24, weight: .thin, design: .monospaced))
-                    .foregroundColor(.white.opacity(0.3))
+                    .foregroundColor(.secondary)
             }
 
             Spacer()
@@ -53,22 +61,22 @@ struct ScrollmateWidgetEntryView: View {
             Button(intent: ToggleTimerIntent()) {
                 HStack(spacing: 6) {
                     Image(systemName: entry.isActive ? "crown.fill" : "play.fill")
-                        .font(.system(size: 13, weight: .medium))
+                        .font(.system(size: 15, weight: .medium))
                     Text(entry.isActive ? "Stop" : "Start")
-                        .font(.system(size: 13, weight: .semibold))
+                        .font(.system(size: 15, weight: .semibold))
                 }
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 8)
+                .padding(.vertical, 11)
                 .background(
-                    RoundedRectangle(cornerRadius: 12)
+                    RoundedRectangle(cornerRadius: 14)
                         .fill(entry.isActive ? Color(red: 0.11, green: 0.56, blue: 1.0) : Color.green)
                 )
             }
             .buttonStyle(.plain)
         }
         .padding(14)
-        .containerBackground(.black, for: .widget)
+        .containerBackground(Color.black, for: .widget)
     }
 }
 
