@@ -12,8 +12,10 @@ class TimerManager: ObservableObject {
     }
 
     func startTimer(for appName: String) {
-        activeTimers[appName] = Date()
-        SharedStorage.shared.addTimer(for: appName)
+        // Use a single Date() to keep local and persisted start times identical
+        let now = Date()
+        activeTimers[appName] = now
+        SharedStorage.shared.activeTimers[appName] = now
         WidgetCenter.shared.reloadAllTimelines()
     }
 

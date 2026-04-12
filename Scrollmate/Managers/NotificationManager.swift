@@ -137,9 +137,15 @@ extension NotificationManager: UNUserNotificationCenterDelegate {
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
         if response.actionIdentifier == "STOP" {
+            // Record session before clearing timer
+            if let startTime = SharedStorage.shared.activeTimers["scrollmate"] {
+                SharedStorage.shared.addSession(start: startTime, end: Date())
+            }
             SharedStorage.shared.activeTimers = [:]
             cancelAllNotifications()
             WidgetCenter.shared.reloadAllTimelines()
+            // Notify SettingsViewModel to update isEnabled on main thread
+            NotificationCenter.default.post(name: kScrollmateStopNotification, object: nil)
         }
         // CONFIRM and UNNotificationDismissActionIdentifier → timer continues, do nothing
         completionHandler()

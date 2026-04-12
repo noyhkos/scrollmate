@@ -37,6 +37,7 @@ enum AppTab: CaseIterable {
 struct ContentView: View {
     @StateObject private var viewModel = SettingsViewModel()
     @State private var selectedTab: AppTab = .scroll
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -51,6 +52,12 @@ struct ContentView: View {
             BottomTabBar(selectedTab: $selectedTab)
         }
         .preferredColorScheme(.dark)
+        // Re-sync state whenever app returns to foreground
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                viewModel.syncState()
+            }
+        }
     }
 
     @ViewBuilder
@@ -125,7 +132,7 @@ struct ScrollTabView: View {
     @ObservedObject var viewModel: SettingsViewModel
     @ObservedObject private var notificationManager = NotificationManager.shared
 
-    // Use .default mode so the timer yields during touch/scroll tracking events
+    // .default mode yields during touch tracking — avoids blocking user input
     private let ticker = Timer.publish(every: 1, on: .main, in: .default).autoconnect()
 
     @State private var elapsedSeconds: Int = 0
@@ -134,6 +141,8 @@ struct ScrollTabView: View {
     @State private var todaySessions: [ScrollSession] = []
 
     var body: some View {
+        // Disable scroll while picker is open to prevent gesture conflict
+        // between UIScrollView (inside Picker) and SwiftUI ScrollView
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 headerSection
@@ -144,6 +153,7 @@ struct ScrollTabView: View {
                 sessionsSection
             }
         }
+        .scrollDisabled(isPickerExpanded)
         .background(Color.black)
         .onAppear {
             notificationManager.checkAuthorization()
@@ -151,6 +161,11 @@ struct ScrollTabView: View {
             if let start = SharedStorage.shared.activeTimers["scrollmate"] {
                 elapsedSeconds = Int(Date().timeIntervalSince(start))
             }
+            todaySessions = SharedStorage.shared.todaySessions()
+        }
+        // Refresh sessions when stop action arrives from notification banner
+        .onReceive(NotificationCenter.default.publisher(for: kScrollmateStopNotification)) { _ in
+            elapsedSeconds = 0
             todaySessions = SharedStorage.shared.todaySessions()
         }
     }
@@ -194,7 +209,6 @@ struct ScrollTabView: View {
             Button {
                 withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
                     if isPickerExpanded {
-                        // Collapse and discard changes
                         pendingInterval = viewModel.selectedInterval
                         isPickerExpanded = false
                     } else {
@@ -229,18 +243,18 @@ struct ScrollTabView: View {
             }
             .padding(.horizontal, 24)
 
-            // Inline expanding picker + confirm button
+            // Inline expanding picker — clipped to prevent overflow layout issues
             if isPickerExpanded {
                 HStack(alignment: .center, spacing: 0) {
                     Picker("", selection: $pendingInterval) {
                         ForEach(Array(stride(from: 5, through: 60, by: 5)), id: \.self) { minute in
-                            Text("\(minute)분")
-                                .foregroundColor(.appTextPrimary)
-                                .tag(minute)
+                            Text("\(minute)분").tag(minute)
                         }
                     }
                     .pickerStyle(.wheel)
-                    .frame(maxWidth: .infinity, maxHeight: 160)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 160)
+                    .clipped()
 
                     Button {
                         withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
@@ -254,11 +268,8 @@ struct ScrollTabView: View {
                     }
                     .padding(.trailing, 24)
                 }
-                .transition(.asymmetric(
-                    insertion: .move(edge: .top).combined(with: .opacity),
-                    removal: .move(edge: .top).combined(with: .opacity)
-                ))
-                .padding(.top, 4)
+                .transition(.opacity.combined(with: .scale(scale: 0.97, anchor: .top)))
+                .padding(.top, 8)
                 .padding(.horizontal, 8)
             }
         }
