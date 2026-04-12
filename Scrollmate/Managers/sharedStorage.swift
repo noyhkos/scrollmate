@@ -51,10 +51,6 @@ class SharedStorage {
         }
     }
 
-    func addTimer(for appName: String) {
-        activeTimers[appName] = Date()
-    }
-
     func removeTimer(for appName: String) {
         activeTimers.removeValue(forKey: appName)
     }

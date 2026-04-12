@@ -11,7 +11,7 @@
 		A6B46CC52F3C9E08000FAC81 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B46CC42F3C9E08000FAC81 /* WidgetKit.framework */; };
 		A6B46CC72F3C9E09000FAC81 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B46CC62F3C9E09000FAC81 /* SwiftUI.framework */; };
 		A6B46CD62F3C9E0A000FAC81 /* ScrollmateWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A6B46CC22F3C9E08000FAC81 /* ScrollmateWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		B1C2D3E4F5A6B7C8D9E0F1A2 /* sharedStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E2D3C4B5A6978869504132 /* sharedStorage.swift */; };
+		B1C2D3E4F5A6B7C8D9E0F1A2 /* SharedStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E2D3C4B5A6978869504132 /* SharedStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +61,7 @@
 		A6B46CC42F3C9E08000FAC81 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		A6B46CC62F3C9E09000FAC81 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		A6B46CDC2F3C9E36000FAC81 /* ScrollmateWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScrollmateWidgetExtension.entitlements; sourceTree = "<group>"; };
-		F1E2D3C4B5A6978869504132 /* sharedStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = sharedStorage.swift; path = Scrollmate/Managers/sharedStorage.swift; sourceTree = SOURCE_ROOT; };
+		F1E2D3C4B5A6978869504132 /* SharedStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SharedStorage.swift; path = Scrollmate/Managers/SharedStorage.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -147,7 +147,7 @@
 		A6594CD12F89EAEB00665094 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				F1E2D3C4B5A6978869504132 /* sharedStorage.swift */,
+				F1E2D3C4B5A6978869504132 /* SharedStorage.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -388,7 +388,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1C2D3E4F5A6B7C8D9E0F1A2 /* sharedStorage.swift in Sources */,
+				B1C2D3E4F5A6B7C8D9E0F1A2 /* SharedStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
