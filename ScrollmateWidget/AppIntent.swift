@@ -15,7 +15,7 @@ struct ToggleTimerIntent: AppIntent {
                 SharedStorage.shared.addSession(start: startTime, end: Date())
             }
             SharedStorage.shared.activeTimers = [:]
-            let reminderIds = (1...64).map { "scrollmate.reminder.\($0)" }
+            let reminderIds = (1...63).map { "scrollmate.reminder.\($0)" }
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
             if let startTime { sendEndNotification(startTime: startTime) }
         } else {
@@ -84,10 +84,10 @@ private func registerNotificationCategory() {
 func scheduleNotifications(intervalMinutes: Int) {
     registerNotificationCategory()
     // Only cancel reminder notifications — start/end notifications must not be removed
-    let reminderIds = (1...64).map { "scrollmate.reminder.\($0)" }
+    let reminderIds = (1...63).map { "scrollmate.reminder.\($0)" }
     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
 
-    let maxCount = 64
+    let maxCount = 63
     for i in 1...maxCount {
         let elapsedMinutes = intervalMinutes * i
 

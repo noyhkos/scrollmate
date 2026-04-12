@@ -33,7 +33,7 @@ struct ToggleScrollmateIntent: SetValueIntent {
                 SharedStorage.shared.addSession(start: startTime, end: Date())
             }
             SharedStorage.shared.activeTimers = [:]
-            let reminderIds = (1...64).map { "scrollmate.reminder.\($0)" }
+            let reminderIds = (1...63).map { "scrollmate.reminder.\($0)" }
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
             if let startTime { sendEndNotification(startTime: startTime) }
         }

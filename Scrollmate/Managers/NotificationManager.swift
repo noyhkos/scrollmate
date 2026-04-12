@@ -96,10 +96,10 @@ class NotificationManager: NSObject, ObservableObject {
 
     // Schedule up to 64 individual notifications — nonisolated to avoid main thread blocking
     nonisolated func scheduleRepeatingNotification(intervalMinutes: Int) {
-        let reminderIds = (1...64).map { "scrollmate.reminder.\($0)" }
+        let reminderIds = (1...63).map { "scrollmate.reminder.\($0)" }
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
 
-        for i in 1...64 {
+        for i in 1...63 {
             let elapsedMinutes = intervalMinutes * i
             let content = UNMutableNotificationContent()
             content.title = "스크롤 중이세요?"
@@ -131,7 +131,7 @@ class NotificationManager: NSObject, ObservableObject {
     }
 
     nonisolated func cancelReminderNotifications() {
-        let reminderIds = (1...64).map { "scrollmate.reminder.\($0)" }
+        let reminderIds = (1...63).map { "scrollmate.reminder.\($0)" }
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
     }
 }
