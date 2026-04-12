@@ -92,7 +92,7 @@ struct BottomTabBar: View {
                         Text(tab.label)
                             .font(.system(size: 10))
                     }
-                    .foregroundColor(selectedTab == tab ? .appAccent : .appTabInactive)
+                    .foregroundColor(selectedTab == tab ? .appAccent : Color.white.opacity(0.6))
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 12)
                 }
