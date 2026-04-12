@@ -128,7 +128,7 @@ struct ScrollTabView: View {
     private let ticker = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     @State private var elapsedSeconds: Int = 0
-    @State private var showIntervalPicker = false
+    @State private var isPickerExpanded = false
     @State private var pendingInterval: Int = 5
     @State private var todaySessions: [ScrollSession] = []
 
@@ -146,18 +146,11 @@ struct ScrollTabView: View {
         .background(Color.black)
         .onAppear {
             notificationManager.checkAuthorization()
+            pendingInterval = viewModel.selectedInterval
             if let start = SharedStorage.shared.activeTimers["scrollmate"] {
                 elapsedSeconds = Int(Date().timeIntervalSince(start))
             }
             todaySessions = SharedStorage.shared.todaySessions()
-        }
-        .sheet(isPresented: $showIntervalPicker) {
-            IntervalPickerSheet(pendingInterval: $pendingInterval) {
-                viewModel.intervalChanged(to: pendingInterval)
-                showIntervalPicker = false
-            }
-            .presentationDetents([.height(260)])
-            .presentationDragIndicator(.visible)
         }
     }
 
@@ -191,23 +184,83 @@ struct ScrollTabView: View {
             }
     }
 
-    // MARK: Interval — tap to open picker sheet
+    // MARK: Interval — tap to expand inline picker
 
     private var intervalSection: some View {
-        HStack {
+        VStack(spacing: 0) {
+            // Tappable pill showing current interval
             Button {
-                pendingInterval = viewModel.selectedInterval
-                showIntervalPicker = true
+                withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                    if isPickerExpanded {
+                        // Collapse and discard changes
+                        pendingInterval = viewModel.selectedInterval
+                        isPickerExpanded = false
+                    } else {
+                        pendingInterval = viewModel.selectedInterval
+                        isPickerExpanded = true
+                    }
+                }
             } label: {
-                Text("\(viewModel.selectedInterval)분")
-                    .font(.system(size: 18, weight: .regular, design: .serif))
-                    .foregroundColor(.appTextPrimary)
-                    .padding(.vertical, 8)
+                HStack(spacing: 8) {
+                    Spacer()
+                    Text("\(viewModel.selectedInterval)분")
+                        .font(.system(size: 20, weight: .regular, design: .serif))
+                        .foregroundColor(.appTextPrimary)
+                    Image(systemName: isPickerExpanded ? "chevron.up" : "chevron.down")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundColor(.appTextSecondary)
+                    Spacer()
+                }
+                .padding(.vertical, 12)
+                .padding(.horizontal, 20)
+                .background(
+                    RoundedRectangle(cornerRadius: 14)
+                        .fill(Color.appSurface)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 14)
+                                .strokeBorder(
+                                    isPickerExpanded ? Color.appAccent : Color.appBorder,
+                                    lineWidth: isPickerExpanded ? 1.5 : 1
+                                )
+                        )
+                )
             }
-            Spacer()
+            .padding(.horizontal, 24)
+
+            // Inline expanding picker + confirm button
+            if isPickerExpanded {
+                HStack(alignment: .center, spacing: 0) {
+                    Picker("", selection: $pendingInterval) {
+                        ForEach(Array(stride(from: 5, through: 60, by: 5)), id: \.self) { minute in
+                            Text("\(minute)분")
+                                .foregroundColor(.appTextPrimary)
+                                .tag(minute)
+                        }
+                    }
+                    .pickerStyle(.wheel)
+                    .frame(maxWidth: .infinity, maxHeight: 160)
+
+                    Button {
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                            viewModel.intervalChanged(to: pendingInterval)
+                            isPickerExpanded = false
+                        }
+                    } label: {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 36))
+                            .foregroundColor(.appAccent)
+                    }
+                    .padding(.trailing, 24)
+                }
+                .transition(.asymmetric(
+                    insertion: .move(edge: .top).combined(with: .opacity),
+                    removal: .move(edge: .top).combined(with: .opacity)
+                ))
+                .padding(.top, 4)
+                .padding(.horizontal, 8)
+            }
         }
-        .padding(.horizontal, 24)
-        .padding(.bottom, 36)
+        .padding(.bottom, 32)
     }
 
     // MARK: Start / End Toggle Button
@@ -289,38 +342,6 @@ struct ScrollTabView: View {
         let m = (elapsedSeconds % 3600) / 60
         let s = elapsedSeconds % 60
         return String(format: "%02d:%02d:%02d", h, m, s)
-    }
-}
-
-// MARK: - Interval Picker Sheet
-
-struct IntervalPickerSheet: View {
-    @Binding var pendingInterval: Int
-    let onConfirm: () -> Void
-
-    var body: some View {
-        HStack(alignment: .center) {
-            Picker("", selection: $pendingInterval) {
-                ForEach(Array(stride(from: 5, through: 60, by: 5)), id: \.self) { minute in
-                    Text("\(minute)분")
-                        .foregroundColor(.appTextPrimary)
-                        .tag(minute)
-                }
-            }
-            .pickerStyle(.wheel)
-            .frame(maxWidth: .infinity)
-
-            Button {
-                onConfirm()
-            } label: {
-                Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 40))
-                    .foregroundColor(.appAccent)
-            }
-            .padding(.trailing, 28)
-        }
-        .frame(height: 200)
-        .background(Color.appTabBar)
     }
 }
 
