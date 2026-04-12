@@ -17,10 +17,12 @@ class LiveActivityManager {
         activity = try? Activity.request(attributes: attributes, content: content)
     }
 
-    func stop() {
+    func stop(startTime: Date = Date()) {
         guard let activity else { return }
         Task {
-            await activity.end(nil, dismissalPolicy: .immediate)
+            let finalState = ScrollmateAttributes.ContentState(startTime: startTime)
+            let finalContent = ActivityContent(state: finalState, staleDate: Date())
+            await activity.end(finalContent, dismissalPolicy: .immediate)
             self.activity = nil
         }
     }

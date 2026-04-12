@@ -59,7 +59,7 @@ class SettingsViewModel: ObservableObject {
                 SharedStorage.shared.addSession(start: startTime, end: Date())
             }
             SharedStorage.shared.removeTimer(for: "scrollmate")
-            LiveActivityManager.shared.stop()
+            LiveActivityManager.shared.stop(startTime: startTime ?? Date())
             if let startTime {
                 nm.sendEndNotification(startTime: startTime)
             }

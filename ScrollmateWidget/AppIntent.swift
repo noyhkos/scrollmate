@@ -19,9 +19,11 @@ struct ToggleTimerIntent: AppIntent {
             let reminderIds = (1...63).map { "scrollmate.reminder.\($0)" }
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
             if let startTime { sendEndNotification(startTime: startTime) }
-            // End Live Activity
+            // End Live Activity with explicit final content so iOS dismisses immediately
+            let finalState = ScrollmateAttributes.ContentState(startTime: startTime ?? Date())
+            let finalContent = ActivityContent(state: finalState, staleDate: Date())
             for activity in Activity<ScrollmateAttributes>.activities {
-                await activity.end(nil, dismissalPolicy: .immediate)
+                await activity.end(finalContent, dismissalPolicy: .immediate)
             }
         } else {
             let now = Date()
