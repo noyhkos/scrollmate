@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A6594D272F8BA19E00665094 /* Scrollmate.icon in Resources */ = {isa = PBXBuildFile; fileRef = A6594D262F8BA19E00665094 /* Scrollmate.icon */; };
 		A6B46CC52F3C9E08000FAC81 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B46CC42F3C9E08000FAC81 /* WidgetKit.framework */; };
 		A6B46CC72F3C9E09000FAC81 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B46CC62F3C9E09000FAC81 /* SwiftUI.framework */; };
 		A6B46CD62F3C9E0A000FAC81 /* ScrollmateWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A6B46CC22F3C9E08000FAC81 /* ScrollmateWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -52,6 +53,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A6594D262F8BA19E00665094 /* Scrollmate.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Scrollmate.icon; sourceTree = "<group>"; };
 		A6B46C912F3C9781000FAC81 /* Scrollmate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrollmate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6B46C9E2F3C9783000FAC81 /* ScrollmateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrollmateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6B46CA82F3C9783000FAC81 /* ScrollmateUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrollmateUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -161,6 +163,7 @@
 				A6B46CC32F3C9E08000FAC81 /* Frameworks */,
 				A6B46C922F3C9781000FAC81 /* Products */,
 				A6594CD12F89EAEB00665094 /* Recovered References */,
+				A6594D262F8BA19E00665094 /* Scrollmate.icon */,
 			);
 			sourceTree = "<group>";
 		};
@@ -332,6 +335,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6594D272F8BA19E00665094 /* Scrollmate.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,8 +535,9 @@
 		A6B46CB32F3C9783000FAC81 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Scrollmate;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Scrollmate/Scrollmate.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -546,7 +551,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -571,8 +576,9 @@
 		A6B46CB42F3C9783000FAC81 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Scrollmate;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Scrollmate/Scrollmate.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -586,7 +592,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
