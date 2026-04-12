@@ -103,7 +103,7 @@ struct BottomTabBar: View {
                 .fill(.ultraThinMaterial)
                 .overlay(
                     RoundedRectangle(cornerRadius: 28)
-                        .fill(Color.white.opacity(0.05))
+                        .fill(Color.black.opacity(0.55))
                 )
         )
         .padding(.horizontal, 16)
