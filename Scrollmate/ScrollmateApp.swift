@@ -6,7 +6,7 @@ struct ScrollmateApp: App {
         WindowGroup {
             ContentView()
                 .onAppear {
-                    NotificationManager.shared.requestAuthorization()
+                    // Register notification category — checkAuthorization is called in ScrollTabView.onAppear
                     NotificationManager.shared.setupNotificationCategory()
                 }
         }

@@ -43,35 +43,14 @@ struct ContentView: View {
         ZStack(alignment: .bottom) {
             Color.black.ignoresSafeArea()
 
-            tabContent
+            // Tab content — no bottom inset while tab bar is hidden
+            ScrollTabView(viewModel: viewModel)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .safeAreaInset(edge: .bottom) {
-                    Color.clear.frame(height: 96)
-                }
 
-            BottomTabBar(selectedTab: $selectedTab)
+            // BottomTabBar hidden until remaining tabs are implemented
+            // BottomTabBar(selectedTab: $selectedTab)
         }
         .preferredColorScheme(.dark)
-        // Re-sync state whenever app returns to foreground
-        .onChange(of: scenePhase) { _, phase in
-            if phase == .active {
-                viewModel.syncState()
-            }
-        }
-    }
-
-    @ViewBuilder
-    private var tabContent: some View {
-        switch selectedTab {
-        case .scroll:
-            ScrollTabView(viewModel: viewModel)
-        case .stop:
-            ComingSoonView(tabName: "Stop")
-        case .record:
-            ComingSoonView(tabName: "Record")
-        case .setting:
-            ComingSoonView(tabName: "Setting")
-        }
     }
 }
 
@@ -142,12 +121,14 @@ struct ComingSoonView: View {
 struct ScrollTabView: View {
     @ObservedObject var viewModel: SettingsViewModel
     @ObservedObject private var notificationManager = NotificationManager.shared
+    @Environment(\.scenePhase) private var scenePhase
 
     // .default mode yields during touch tracking — avoids blocking user input
     private let ticker = Timer.publish(every: 1, on: .main, in: .default).autoconnect()
 
     @State private var elapsedSeconds: Int = 0
     @State private var showIntervalPicker = false
+    @State private var showDeniedAlert = false
     @State private var pendingInterval: Int = 5
     @State private var todaySessions: [ScrollSession] = []
 
@@ -158,7 +139,6 @@ struct ScrollTabView: View {
                 elapsedSection
                 intervalSection
                 actionButton
-                debugButtons
                 sessionsSection
             }
         }
@@ -171,9 +151,20 @@ struct ScrollTabView: View {
             }
             todaySessions = SharedStorage.shared.todaySessions()
         }
-        // Refresh sessions when stop action arrives from notification banner
+        // Refresh sessions when stop action arrives from notification banner (in-process only)
         .onReceive(NotificationCenter.default.publisher(for: kScrollmateStopNotification)) { _ in
             elapsedSeconds = 0
+            todaySessions = SharedStorage.shared.todaySessions()
+        }
+        // Single scenePhase observer — syncs all state when app returns to foreground
+        .onChange(of: scenePhase) { _, phase in
+            guard phase == .active else { return }
+            viewModel.syncState()
+            if viewModel.isEnabled, let start = SharedStorage.shared.activeTimers["scrollmate"] {
+                elapsedSeconds = Int(Date().timeIntervalSince(start))
+            } else {
+                elapsedSeconds = 0
+            }
             todaySessions = SharedStorage.shared.todaySessions()
         }
         .sheet(isPresented: $showIntervalPicker) {
@@ -214,7 +205,7 @@ struct ScrollTabView: View {
 
     private var elapsedSection: some View {
         Text(formattedElapsed)
-            .font(.system(size: 72, weight: .thin, design: .serif))
+            .font(.system(size: 61, weight: .thin, design: .monospaced))
             .foregroundColor(.appTextPrimary)
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.bottom, 28)
@@ -264,7 +255,7 @@ struct ScrollTabView: View {
                 elapsedSeconds = 0
                 todaySessions = SharedStorage.shared.todaySessions()
             } else {
-                viewModel.setEnabled(true)
+                handleStartTapped()
             }
         } label: {
             ZStack {
@@ -279,28 +270,30 @@ struct ScrollTabView: View {
         }
         .frame(maxWidth: .infinity, alignment: .center)
         .padding(.bottom, 36)
+        .alert("알림 권한이 필요해요", isPresented: $showDeniedAlert) {
+            Button("설정으로 이동") { notificationManager.openAppSettings() }
+            Button("취소", role: .cancel) {}
+        } message: {
+            Text("스크롤 알림을 받으려면 설정에서 알림 권한을 허용해 주세요.")
+        }
     }
 
-    // MARK: Debug Buttons — remove before release
+    // MARK: Start Action
 
-    private var debugButtons: some View {
-        VStack(spacing: 8) {
-            if !notificationManager.isAuthorized {
-                Button("알림 권한 설정") {
-                    notificationManager.openAppSettings()
-                }
-                .foregroundColor(.red)
-                .font(.footnote)
+    private func handleStartTapped() {
+        switch notificationManager.authorizationStatus {
+        case .notDetermined:
+            Task {
+                let granted = await notificationManager.requestAuthorization()
+                if granted { viewModel.setEnabled(true) }
             }
-
-            Button("10초 알림 테스트") {
-                notificationManager.scheduleTestNotification()
-            }
-            .font(.caption)
-            .foregroundColor(.appTextSecondary)
+        case .denied:
+            showDeniedAlert = true
+        case .authorized, .provisional, .ephemeral:
+            viewModel.setEnabled(true)
+        @unknown default:
+            viewModel.setEnabled(true)
         }
-        .frame(maxWidth: .infinity, alignment: .center)
-        .padding(.bottom, 32)
     }
 
     // MARK: Today's Scrolls
@@ -351,7 +344,7 @@ struct SessionRowView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text("\(Self.timeFormatter.string(from: session.startTime)) ~ \(Self.timeFormatter.string(from: session.endTime))")
+                Text("\(Self.timeFormatter.string(from: session.startTime)) - \(Self.timeFormatter.string(from: session.endTime))")
                     .font(.system(size: 15, design: .monospaced))
                     .foregroundColor(.appTextPrimary)
 

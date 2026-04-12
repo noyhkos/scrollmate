@@ -1,9 +1,8 @@
 import Foundation
 import Combine
+import WidgetKit
 
-// Posted by NotificationManager when user taps "알림 끄기" from banner
-let kScrollmateStopNotification = Notification.Name("ScrollmateStopFromBanner")
-
+@MainActor
 class SettingsViewModel: ObservableObject {
     @Published var selectedInterval: Int
     @Published var isEnabled: Bool
@@ -41,30 +40,44 @@ class SettingsViewModel: ObservableObject {
 
     func setEnabled(_ enabled: Bool) {
         isEnabled = enabled
+        // Pre-capture on main actor before entering detached task
+        let nm = NotificationManager.shared
         if enabled {
             SharedStorage.shared.notificationInterval = selectedInterval
             TimerManager.shared.startTimer(for: "scrollmate")
-            Task { @MainActor in
-                NotificationManager.shared.scheduleRepeatingNotification(intervalMinutes: self.selectedInterval)
+            // sendStartNotification is a single fast add — call directly on main thread
+            nm.sendStartNotification()
+            // scheduleRepeatingNotification has removePending + 64 adds — detach to avoid blocking
+            let interval = selectedInterval
+            Task.detached {
+                nm.scheduleRepeatingNotification(intervalMinutes: interval)
             }
         } else {
-            // Record session before clearing timer
-            if let startTime = SharedStorage.shared.activeTimers["scrollmate"] {
+            let startTime = SharedStorage.shared.activeTimers["scrollmate"]
+            if let startTime {
                 SharedStorage.shared.addSession(start: startTime, end: Date())
             }
             TimerManager.shared.stopTimer(for: "scrollmate")
-            Task { @MainActor in
-                NotificationManager.shared.cancelAllNotifications()
+            // sendEndNotification is a single fast add — call directly on main thread
+            if let startTime {
+                nm.sendEndNotification(startTime: startTime)
+            }
+            Task.detached {
+                nm.cancelReminderNotifications()
             }
         }
+        // Reload home widget and control center after state change
+        WidgetCenter.shared.reloadAllTimelines()
+        ControlCenter.shared.reloadAllControls()
     }
 
     func intervalChanged(to interval: Int) {
         selectedInterval = interval
         SharedStorage.shared.notificationInterval = interval
         if isEnabled {
-            Task { @MainActor in
-                NotificationManager.shared.scheduleRepeatingNotification(intervalMinutes: interval)
+            let nm = NotificationManager.shared
+            Task.detached {
+                nm.scheduleRepeatingNotification(intervalMinutes: interval)
             }
         }
     }

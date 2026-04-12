@@ -9,31 +9,83 @@ struct ToggleTimerIntent: AppIntent {
         let isActive = !SharedStorage.shared.activeTimers.isEmpty
 
         if isActive {
+            let startTime = SharedStorage.shared.activeTimers["scrollmate"]
             // Record session before clearing timer
-            if let startTime = SharedStorage.shared.activeTimers["scrollmate"] {
+            if let startTime {
                 SharedStorage.shared.addSession(start: startTime, end: Date())
             }
             SharedStorage.shared.activeTimers = [:]
-            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-            UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-            // Notify app UI to sync state
-            NotificationCenter.default.post(name: kScrollmateStopNotification, object: nil)
+            let reminderIds = (1...64).map { "scrollmate.reminder.\($0)" }
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
+            if let startTime { sendEndNotification(startTime: startTime) }
         } else {
             let now = Date()
             SharedStorage.shared.activeTimers["scrollmate"] = now
             let interval = SharedStorage.shared.notificationInterval
+            sendStartNotification()
             scheduleNotifications(intervalMinutes: interval)
         }
 
         WidgetCenter.shared.reloadAllTimelines()
+        ControlCenter.shared.reloadAllControls()
         return .result()
     }
 }
 
+func sendStartNotification() {
+    let content = UNMutableNotificationContent()
+    content.title = "Let's scroll!!"
+    content.body = "기록을 시작합니다."
+    content.sound = .default
+    let request = UNNotificationRequest(
+        identifier: "scrollmate.start",
+        content: content,
+        trigger: UNTimeIntervalNotificationTrigger(timeInterval: 0.5, repeats: false)
+    )
+    UNUserNotificationCenter.current().add(request)
+}
+
+func sendEndNotification(startTime: Date) {
+    let elapsed = Int(Date().timeIntervalSince(startTime))
+    let h = elapsed / 3600
+    let m = (elapsed % 3600) / 60
+    let label: String
+    if h > 0 && m > 0 { label = "\(h)시간 \(m)분 사용" }
+    else if h > 0 { label = "\(h)시간 사용" }
+    else if m > 0 { label = "\(m)분 사용" }
+    else { label = "1분 미만 사용" }
+
+    let content = UNMutableNotificationContent()
+    content.title = "Scrollmate 기록 종료!"
+    content.body = "Let's move on — \(label)"
+    content.sound = .default
+    let request = UNNotificationRequest(
+        identifier: "scrollmate.end",
+        content: content,
+        trigger: UNTimeIntervalNotificationTrigger(timeInterval: 0.5, repeats: false)
+    )
+    UNUserNotificationCenter.current().add(request)
+}
+
+// Register SCROLLMATE_REMINDER category so action buttons appear on notifications
+private func registerNotificationCategory() {
+    let confirmAction = UNNotificationAction(identifier: "CONFIRM", title: "확인", options: [])
+    let stopAction = UNNotificationAction(identifier: "STOP", title: "알림 끄기", options: [.destructive])
+    let category = UNNotificationCategory(
+        identifier: "SCROLLMATE_REMINDER",
+        actions: [confirmAction, stopAction],
+        intentIdentifiers: [],
+        options: [.customDismissAction]
+    )
+    UNUserNotificationCenter.current().setNotificationCategories([category])
+}
+
 // Schedule 64 individual notifications, each with total elapsed time in the body
 func scheduleNotifications(intervalMinutes: Int) {
-    UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-    UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+    registerNotificationCategory()
+    // Only cancel reminder notifications — start/end notifications must not be removed
+    let reminderIds = (1...64).map { "scrollmate.reminder.\($0)" }
+    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
 
     let maxCount = 64
     for i in 1...maxCount {
