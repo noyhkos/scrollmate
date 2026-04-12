@@ -69,10 +69,14 @@
           ],
           "glass-specializations" : [
             {
-              "value" : true
+              "value" : false
             },
             {
               "appearance" : "dark",
+              "value" : true
+            },
+            {
+              "appearance" : "tinted",
               "value" : true
             }
           ],
@@ -83,20 +87,19 @@
             {
               "appearance" : "dark",
               "value" : 1
+            },
+            {
+              "appearance" : "tinted",
+              "value" : 0.8
             }
           ],
           "position" : {
-            "scale" : 0.9,
+            "scale" : 1,
             "translation-in-points" : [
               0,
               26
             ]
           }
-        },
-        {
-          "hidden" : true,
-          "image-name" : "dark_mode.png",
-          "name" : "dark_mode"
         }
       ],
       "shadow" : {

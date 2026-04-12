@@ -33,7 +33,7 @@ struct ScrollmateWidgetEntryView: View {
         VStack(spacing: 0) {
             // Header
             Text("Let's Scroll!")
-                .font(.system(size: 15, weight: .semibold, design: .default))
+                .font(.system(size: 18, weight: .semibold, design: .default))
                 .foregroundColor(.primary)
                 .frame(maxWidth: .infinity, alignment: .center)
 //                .padding(.bottom, )
@@ -75,7 +75,7 @@ struct ScrollmateWidgetEntryView: View {
             }
             .buttonStyle(.plain)
         }
-        .padding(14)
+        .padding(8)
         .containerBackground(colorScheme == .dark ? Color.black : Color.white, for: .widget)
     }
 }
