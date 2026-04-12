@@ -37,6 +37,39 @@ struct ScrollmateLiveActivity: Widget {
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
             .activityBackgroundTint(Color.black)
+        } dynamicIsland: { context in
+            DynamicIsland {
+                DynamicIslandExpandedRegion(.leading) {
+                    Image("CircledLogoLight")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 28, height: 28)
+                }
+                DynamicIslandExpandedRegion(.trailing) {
+                    Button(intent: ToggleTimerIntent()) {
+                        Image(systemName: "stop.fill")
+                            .font(.system(size: 14, weight: .medium))
+                    }
+                    .buttonStyle(.plain)
+                }
+                DynamicIslandExpandedRegion(.center) {
+                    Text(context.state.startTime, style: .timer)
+                        .font(.system(size: 16, weight: .thin, design: .monospaced))
+                        .monospacedDigit()
+                        .foregroundColor(.white)
+                }
+            } compactLeading: {
+                Image(systemName: "crown.fill")
+                    .font(.system(size: 12))
+            } compactTrailing: {
+                Text(context.state.startTime, style: .timer)
+                    .font(.system(size: 12, weight: .thin, design: .monospaced))
+                    .monospacedDigit()
+                    .frame(width: 48)
+            } minimal: {
+                Image(systemName: "crown.fill")
+                    .font(.system(size: 12))
+            }
         }
     }
 }
