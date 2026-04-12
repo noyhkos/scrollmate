@@ -18,61 +18,95 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            VStack(spacing: 40) {
+            ZStack {
+                Color.appBackground.ignoresSafeArea()
 
-                if viewModel.isEnabled {
-                    Text(formattedElapsed)
-                        .font(.system(size: 52, weight: .thin, design: .monospaced))
-                        .foregroundColor(.primary)
-                        .onReceive(ticker) { _ in
-                            guard let start = SharedStorage.shared.activeTimers["scrollmate"] else { return }
-                            elapsedSeconds = Int(Date().timeIntervalSince(start))
+                VStack(spacing: 32) {
+
+                    // Elapsed time
+                    if viewModel.isEnabled {
+                        Text(formattedElapsed)
+                            .font(.system(size: 52, weight: .thin, design: .monospaced))
+                            .foregroundColor(.appTextPrimary)
+                            .onReceive(ticker) { _ in
+                                guard let start = SharedStorage.shared.activeTimers["scrollmate"] else { return }
+                                elapsedSeconds = Int(Date().timeIntervalSince(start))
+                            }
+                    }
+
+                    // Interval picker
+                    VStack(spacing: 6) {
+                        Text("알림 주기")
+                            .font(.subheadline)
+                            .foregroundColor(.appTextSecondary)
+
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(Color.appSurface)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .strokeBorder(Color.appBorder, lineWidth: 1)
+                                )
+
+                            Picker("알림 주기", selection: Binding(
+                                get: { viewModel.selectedInterval },
+                                set: { viewModel.intervalChanged(to: $0) }
+                            )) {
+                                ForEach(Array(stride(from: 5, through: 60, by: 5)), id: \.self) { minute in
+                                    Text("\(minute)분")
+                                        .foregroundColor(.appTextPrimary)
+                                        .tag(minute)
+                                }
+                            }
+                            .pickerStyle(.wheel)
+                            .frame(height: 150)
                         }
-                }
+                        .padding(.horizontal)
+                    }
 
-                VStack(spacing: 8) {
-                    Text("알림 주기")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                    // Toggle
+                    HStack {
+                        Text("알림 켜기")
+                            .foregroundColor(.appTextPrimary)
+                        Spacer()
+                        Toggle("", isOn: Binding(
+                            get: { viewModel.isEnabled },
+                            set: { newValue in
+                                viewModel.setEnabled(newValue)
+                                if !newValue { elapsedSeconds = 0 }
+                            }
+                        ))
+                        .labelsHidden()
+                    }
+                    .padding()
+                    .background(Color.appSurface)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .strokeBorder(Color.appBorder, lineWidth: 1)
+                    )
+                    .padding(.horizontal)
 
-                    Picker("알림 주기", selection: Binding(
-                        get: { viewModel.selectedInterval },
-                        set: { viewModel.intervalChanged(to: $0) }
-                    )) {
-                        ForEach(Array(stride(from: 5, through: 60, by: 5)), id: \.self) { minute in
-                            Text("\(minute)분").tag(minute)
+                    if !notificationManager.isAuthorized {
+                        Button("알림 권한 설정") {
+                            notificationManager.openAppSettings()
                         }
+                        .foregroundColor(.red)
                     }
-                    .pickerStyle(.wheel)
-                    .frame(height: 150)
-                }
 
-                Toggle("알림 켜기", isOn: Binding(
-                    get: { viewModel.isEnabled },
-                    set: { newValue in
-                        viewModel.setEnabled(newValue)
-                        if !newValue { elapsedSeconds = 0 }
+                    // Test button — remove before release
+                    Button("10초 알림 테스트") {
+                        notificationManager.scheduleTestNotification()
                     }
-                ))
-                .padding(.horizontal)
+                    .font(.footnote)
+                    .foregroundColor(.appTextSecondary)
 
-                if !notificationManager.isAuthorized {
-                    Button("알림 권한 설정") {
-                        notificationManager.openAppSettings()
-                    }
-                    .foregroundColor(.red)
+                    Spacer()
                 }
-
-                // Test button — remove before release
-                Button("10초 알림 테스트") {
-                    notificationManager.scheduleTestNotification()
-                }
-                .foregroundColor(.orange)
-
-                Spacer()
+                .padding(.top, 24)
             }
-            .padding(.top, 32)
             .navigationTitle("Scrollmate")
+            .toolbarColorScheme(.none)
             .onAppear {
                 notificationManager.checkAuthorization()
                 if let start = SharedStorage.shared.activeTimers["scrollmate"] {
