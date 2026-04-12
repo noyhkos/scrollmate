@@ -43,11 +43,10 @@ class SettingsViewModel: ObservableObject {
         // Pre-capture on main actor before entering detached task
         let nm = NotificationManager.shared
         if enabled {
+            SharedStorage.shared.activeTimers["scrollmate"] = Date()
             SharedStorage.shared.notificationInterval = selectedInterval
-            TimerManager.shared.startTimer(for: "scrollmate")
-            // sendStartNotification is a single fast add — call directly on main thread
             nm.sendStartNotification()
-            // scheduleRepeatingNotification has removePending + 64 adds — detach to avoid blocking
+            // scheduleRepeatingNotification has removePending + 63 adds — detach to avoid blocking
             let interval = selectedInterval
             Task.detached {
                 nm.scheduleRepeatingNotification(intervalMinutes: interval)
@@ -57,8 +56,7 @@ class SettingsViewModel: ObservableObject {
             if let startTime {
                 SharedStorage.shared.addSession(start: startTime, end: Date())
             }
-            TimerManager.shared.stopTimer(for: "scrollmate")
-            // sendEndNotification is a single fast add — call directly on main thread
+            SharedStorage.shared.removeTimer(for: "scrollmate")
             if let startTime {
                 nm.sendEndNotification(startTime: startTime)
             }
@@ -66,7 +64,7 @@ class SettingsViewModel: ObservableObject {
                 nm.cancelReminderNotifications()
             }
         }
-        // Reload home widget and control center after state change
+        // Single reload point for widget and control center
         WidgetCenter.shared.reloadAllTimelines()
         ControlCenter.shared.reloadAllControls()
     }
