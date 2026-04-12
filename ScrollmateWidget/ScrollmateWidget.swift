@@ -28,8 +28,29 @@ struct Provider: TimelineProvider {
 struct ScrollmateWidgetEntryView: View {
     var entry: Provider.Entry
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.widgetFamily) private var widgetFamily
 
     var body: some View {
+        if widgetFamily == .accessoryCircular {
+            lockScreenView
+        } else {
+            homeScreenView
+        }
+    }
+
+    // MARK: Lock Screen — circular toggle matching control center style
+
+    private var lockScreenView: some View {
+        Button(intent: ToggleTimerIntent()) {
+            Image(systemName: entry.isActive ? "stop.fill" : "play.fill")
+                .font(.system(size: 20, weight: .medium))
+        }
+        .containerBackground(.clear, for: .widget)
+    }
+
+    // MARK: Home Screen
+
+    private var homeScreenView: some View {
         VStack(spacing: 0) {
             // Header
             Text("Let's Scroll!")
@@ -89,6 +110,6 @@ struct ScrollmateWidget: Widget {
         }
         .configurationDisplayName("Scrollmate")
         .description("알림을 시작하거나 종료합니다.")
-        .supportedFamilies([.systemSmall])
+        .supportedFamilies([.systemSmall, .accessoryCircular])
     }
 }
