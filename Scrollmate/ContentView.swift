@@ -98,7 +98,17 @@ struct BottomTabBar: View {
                 }
             }
         }
-        .glassEffect(.regular, in: .rect(cornerRadius: 28))
+        .background(
+            Group {
+                if #available(iOS 26, *) {
+                    RoundedRectangle(cornerRadius: 28)
+                        .glassEffect(.regular, in: .rect(cornerRadius: 28))
+                } else {
+                    RoundedRectangle(cornerRadius: 28)
+                        .fill(.ultraThinMaterial)
+                }
+            }
+        )
         .padding(.horizontal, 16)
         .padding(.bottom, 24)
     }
