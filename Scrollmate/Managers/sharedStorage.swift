@@ -1,7 +1,14 @@
 import Foundation
+import ActivityKit
 
 // Shared across app and widget targets — must be defined here
-let kScrollmateStopNotification = Notification.Name("ScrollmateStopFromBanner")
+let scrollmateStopNotification = Notification.Name("ScrollmateStopFromBanner")
+
+struct ScrollmateAttributes: ActivityAttributes {
+    struct ContentState: Codable, Hashable {
+        let startTime: Date
+    }
+}
 
 // Defined here so both app and widget extension targets can access it via sharedStorage.swift
 struct ScrollSession: Codable, Identifiable {
