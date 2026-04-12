@@ -163,7 +163,7 @@ extension NotificationManager: UNUserNotificationCenterDelegate {
             NotificationManager.shared.cancelReminderNotifications()
             WidgetCenter.shared.reloadAllTimelines()
             ControlCenter.shared.reloadAllControls()
-            NotificationCenter.default.post(name: kScrollmateStopNotification, object: nil)
+            NotificationCenter.default.post(name: scrollmateStopNotification, object: nil)
         }
     }
 }

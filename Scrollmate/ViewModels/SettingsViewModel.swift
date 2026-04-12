@@ -22,7 +22,7 @@ class SettingsViewModel: ObservableObject {
         isEnabled = !SharedStorage.shared.activeTimers.isEmpty
 
         // Sync state when user stops from notification banner
-        NotificationCenter.default.publisher(for: kScrollmateStopNotification)
+        NotificationCenter.default.publisher(for: scrollmateStopNotification)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.isEnabled = false

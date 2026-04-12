@@ -152,7 +152,7 @@ struct ScrollTabView: View {
             todaySessions = SharedStorage.shared.todaySessions()
         }
         // Refresh sessions when stop action arrives from notification banner (in-process only)
-        .onReceive(NotificationCenter.default.publisher(for: kScrollmateStopNotification)) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: scrollmateStopNotification)) { _ in
             elapsedSeconds = 0
             todaySessions = SharedStorage.shared.todaySessions()
         }
