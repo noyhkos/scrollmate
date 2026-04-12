@@ -188,13 +188,20 @@ struct ScrollTabView: View {
     // MARK: Header
 
     private var headerSection: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("G'day mate!")
-                .font(.system(size: 32, weight: .regular, design: .serif))
-                .foregroundColor(.appTextPrimary)
-            Text("Let's scroll")
-                .font(.system(size: 22, weight: .regular, design: .serif))
-                .foregroundColor(.appTextSecondary)
+        HStack(alignment: .top) {
+            VStack(alignment: .leading, spacing: 6) {
+                Text("G'day mate!")
+                    .font(.system(size: 32, weight: .regular, design: .serif))
+                    .foregroundColor(.appTextPrimary)
+                Text("Let's Scroll")
+                    .font(.system(size: 22, weight: .regular, design: .serif))
+                    .foregroundColor(.appTextSecondary)
+            }
+            Spacer()
+            Image("CircledLogoLight")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 60, height: 60)
         }
         .padding(.horizontal, 24)
         .padding(.top, 24)
