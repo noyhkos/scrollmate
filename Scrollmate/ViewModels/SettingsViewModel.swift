@@ -43,9 +43,11 @@ class SettingsViewModel: ObservableObject {
         // Pre-capture on main actor before entering detached task
         let nm = NotificationManager.shared
         if enabled {
-            SharedStorage.shared.activeTimers["scrollmate"] = Date()
+            let now = Date()
+            SharedStorage.shared.activeTimers["scrollmate"] = now
             SharedStorage.shared.notificationInterval = selectedInterval
             nm.sendStartNotification()
+            LiveActivityManager.shared.start(startTime: now)
             // scheduleRepeatingNotification has removePending + 63 adds — detach to avoid blocking
             let interval = selectedInterval
             Task.detached {
@@ -57,6 +59,7 @@ class SettingsViewModel: ObservableObject {
                 SharedStorage.shared.addSession(start: startTime, end: Date())
             }
             SharedStorage.shared.removeTimer(for: "scrollmate")
+            LiveActivityManager.shared.stop()
             if let startTime {
                 nm.sendEndNotification(startTime: startTime)
             }
