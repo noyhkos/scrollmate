@@ -60,7 +60,7 @@ class NotificationManager: NSObject, ObservableObject {
 
     nonisolated func sendStartNotification() {
         let content = UNMutableNotificationContent()
-        content.title = "Let's scroll!"
+        content.title = "Let's Scroll!"
         content.body = "기록을 시작합니다."
         content.sound = .default
         let request = UNNotificationRequest(
@@ -75,7 +75,7 @@ class NotificationManager: NSObject, ObservableObject {
         let elapsed = Int(Date().timeIntervalSince(startTime))
         let content = UNMutableNotificationContent()
         content.title = "Scrollmate 기록 종료!"
-        content.body = "Let's move on — \(durationLabel(seconds: elapsed))"
+        content.body = "Let's Move On — \(durationLabel(seconds: elapsed))"
         content.sound = .default
         let request = UNNotificationRequest(
             identifier: "scrollmate.end",

@@ -34,7 +34,7 @@ struct ToggleTimerIntent: AppIntent {
 
 func sendStartNotification() {
     let content = UNMutableNotificationContent()
-    content.title = "Let's scroll!!"
+    content.title = "Let's Scroll!"
     content.body = "기록을 시작합니다."
     content.sound = .default
     let request = UNNotificationRequest(
@@ -57,7 +57,7 @@ func sendEndNotification(startTime: Date) {
 
     let content = UNMutableNotificationContent()
     content.title = "Scrollmate 기록 종료!"
-    content.body = "Let's move on — \(label)"
+    content.body = "Let's Move On — \(label)"
     content.sound = .default
     let request = UNNotificationRequest(
         identifier: "scrollmate.end",
