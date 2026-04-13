@@ -12,7 +12,7 @@ struct ScrollmateControlProvider: ControlValueProvider {
     }
 }
 
-// SetValueIntent required by ControlWidgetToggle — value is the new on/off state
+// SetValueIntent required by ControlWidgetToggle — delegates to shared toggle logic
 struct ToggleScrollmateIntent: SetValueIntent {
     static var title: LocalizedStringResource = "Toggle Scrollmate"
 
@@ -20,26 +20,8 @@ struct ToggleScrollmateIntent: SetValueIntent {
     var value: Bool
 
     func perform() async throws -> some IntentResult {
-        if value {
-            let now = Date()
-            SharedStorage.shared.activeTimers["scrollmate"] = now
-            let interval = SharedStorage.shared.notificationInterval
-            sendStartNotification()
-            scheduleNotifications(intervalMinutes: interval)
-        } else {
-            let startTime = SharedStorage.shared.activeTimers["scrollmate"]
-            // Record session before clearing timer
-            if let startTime {
-                SharedStorage.shared.addSession(start: startTime, end: Date())
-            }
-            SharedStorage.shared.activeTimers = [:]
-            let reminderIds = (1...63).map { "scrollmate.reminder.\($0)" }
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
-            if let startTime { sendEndNotification(startTime: startTime) }
-        }
-
-        WidgetCenter.shared.reloadAllTimelines()
-        ControlCenter.shared.reloadAllControls()
+        // Ignore value from system (can be stale) — always read fresh state from SharedStorage
+        await performTimerToggle()
         return .result()
     }
 }

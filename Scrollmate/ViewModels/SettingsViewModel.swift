@@ -28,6 +28,12 @@ class SettingsViewModel: ObservableObject {
                 self?.isEnabled = false
             }
             .store(in: &cancellables)
+
+        // Sync state when widget or control center toggles timer
+        NotificationCenter.default.publisher(for: .scrollmateWidgetStateChanged)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.syncState() }
+            .store(in: &cancellables)
     }
 
     // Re-sync isEnabled from SharedStorage (call on foreground resume)
