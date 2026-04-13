@@ -38,9 +38,36 @@
 "duration.minutes" = "%d min";
 "duration.less" = "Less than 1 min";
 
+// MARK: - Interval
+"interval.label" = "Reminder interval";
+
 // MARK: - Widget
 "widget.title" = "Let's Scroll!";
 "widget.start" = "Start";
 "widget.stop" = "Stop";
 "widget.description" = "Start or stop alerts.";
 "control.description" = "Toggle Alerts";
+
+// MARK: - How To
+"howto.title" = "How to use";
+"howto.subtitle" = "Scrollmate";
+
+"howto.step1.title" = "Start";
+"howto.step1.body" = "Tap the play button to begin tracking your scroll session.";
+"howto.step2.title" = "Get reminded";
+"howto.step2.body" = "You'll receive a notification every few minutes as a gentle nudge to stop scrolling.";
+"howto.step3.title" = "Set your interval";
+"howto.step3.body" = "Tap the interval picker to choose how often you want to be reminded — from 5 to 60 minutes.";
+"howto.step4.title" = "Stop";
+"howto.step4.body" = "Tap the crown button to end your session. Your scroll time is saved to today's log.";
+
+"howto.access.title" = "Where to toggle";
+"howto.access.subtitle" = "All four toggles are in sync. Use whichever is most convenient for you.";
+"howto.access.app.title" = "App";
+"howto.access.app.body" = "The main screen — tap play to start, crown to stop.";
+"howto.access.widget.title" = "Home Screen Widget";
+"howto.access.widget.body" = "Add the Scrollmate widget to your home screen for one-tap control.";
+"howto.access.control.title" = "Control Center";
+"howto.access.control.body" = "Add the Scrollmate toggle widget in Control Center for quick access without opening the app.";
+"howto.access.lock.title" = "Lock Screen";
+"howto.access.lock.body" = "Add a Scrollmate widget through lock screen customization.";

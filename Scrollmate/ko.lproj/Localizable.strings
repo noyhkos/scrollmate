@@ -20,7 +20,7 @@
 
 // MARK: - Notifications
 "notification.start.title" = "Let's Scroll!";
-"notification.start.body" = "기록을 시작합니다.";
+"notification.start.body" = "세션을 시작합니다.";
 "notification.end.title" = "좋은 선택이에요!";
 "notification.end.body" = "%@";
 "notification.reminder.title" = "스크롤 중이세요?";
@@ -38,9 +38,36 @@
 "duration.minutes" = "%d분 스크롤했어요";
 "duration.less" = "1분 미만 스크롤했어요";
 
+// MARK: - Interval
+"interval.label" = "알림 주기";
+
 // MARK: - Widget
 "widget.title" = "Let's Scroll!";
 "widget.start" = "Start";
 "widget.stop" = "Stop";
 "widget.description" = "알림을 시작하거나 종료합니다.";
 "control.description" = "알림 시작/종료";
+
+// MARK: - How To
+"howto.title" = "사용 방법";
+"howto.subtitle" = "Scrollmate";
+
+"howto.step1.title" = "시작";
+"howto.step1.body" = "플레이 버튼을 눌러 스크롤 세션을 시작하세요.";
+"howto.step2.title" = "알림 받기";
+"howto.step2.body" = "몇 분마다 알림을 받아 스크롤을 멈추도록 유도해줘요.";
+"howto.step3.title" = "주기 설정";
+"howto.step3.body" = "인터벌 선택기를 눌러 알림 주기를 5~60분 사이에서 설정하세요.";
+"howto.step4.title" = "종료";
+"howto.step4.body" = "크라운 버튼을 눌러 세션을 종료하세요. 스크롤 시간이 오늘의 기록에 저장돼요.";
+
+"howto.access.title" = "어디서든 사용할 수 있어요";
+"howto.access.subtitle" = "네 개의 스위치 토글은 모두 동기화 되어 있어요. 가장 접근하기 편한 경로에서 사용해보세요.";
+"howto.access.app.title" = "앱";
+"howto.access.app.body" = "메인 화면 — 플레이를 눌러 시작하고, 크라운을 눌러 종료해요.";
+"howto.access.widget.title" = "홈 화면 위젯";
+"howto.access.widget.body" = "홈 화면에 Scrollmate 위젯을 추가해 한 번에 제어하세요.";
+"howto.access.control.title" = "제어 센터";
+"howto.access.control.body" = "제어 센터에서 Scrollmate 토글 위젯을 추가하면 앱을 열지 않고도 바로 사용할 수 있어요.";
+"howto.access.lock.title" = "잠금화면";
+"howto.access.lock.body" = "잠금화면 커스텀에서 Scrollmate 위젯을 추가해서 사용할 수도 있어요.";

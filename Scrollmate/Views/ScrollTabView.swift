@@ -14,6 +14,7 @@ struct ScrollTabView: View {
     @State private var elapsedSeconds: Int = 0
     @State private var showIntervalPicker = false
     @State private var showDeniedAlert = false
+    @State private var showHowTo = false
     @State private var pendingInterval: Int = 5
     @State private var todaySessions: [ScrollSession] = []
 
@@ -84,11 +85,25 @@ struct ScrollTabView: View {
                     .foregroundColor(.appTextSecondary)
             }
             Spacer()
-            Image("CircledLogoLight")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 60, height: 60)
-                .padding(.vertical, 4)
+            Button {
+                showHowTo = true
+            } label: {
+                Image("CircledLogoLight")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 60, height: 60)
+                    .padding(.vertical, 4)
+                    .overlay(alignment: .topTrailing) {
+                        Image(systemName: "questionmark.circle.fill")
+                            .font(.system(size: 30, weight: .regular))
+                            .foregroundColor(.appTextSecondary)
+                            .offset(x: 12, y: -12)
+                    }
+            }
+            .buttonStyle(.plain)
+        }
+        .sheet(isPresented: $showHowTo) {
+            HowToView()
         }
         .padding(.horizontal, 24)
         .padding(.top, 24)
@@ -113,6 +128,10 @@ struct ScrollTabView: View {
     // MARK: Interval — tap to open picker sheet
 
     private var intervalSection: some View {
+        VStack(spacing: 8) {
+            Text("interval.label")
+                .font(.system(size: 12, weight: .regular))
+                .foregroundColor(.appTextSecondary)
         Button {
             pendingInterval = viewModel.selectedInterval
             showIntervalPicker = true
@@ -135,6 +154,8 @@ struct ScrollTabView: View {
                             .strokeBorder(Color.appBorder, lineWidth: 1)
                     )
             )
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
         }
         .frame(maxWidth: .infinity, alignment: .center)
         .padding(.bottom, 32)
