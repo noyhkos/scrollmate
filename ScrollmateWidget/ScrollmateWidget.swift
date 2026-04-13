@@ -53,7 +53,7 @@ struct ScrollmateWidgetEntryView: View {
     private var homeScreenView: some View {
         VStack(spacing: 0) {
             // Header
-            Text("Let's Scroll!")
+            Text("widget.title")
                 .font(.system(size: 18, weight: .semibold, design: .default))
                 .foregroundColor(.primary)
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -83,7 +83,7 @@ struct ScrollmateWidgetEntryView: View {
                 HStack(spacing: 6) {
                     Image(systemName: entry.isActive ? "crown.fill" : "play.fill")
                         .font(.system(size: 15, weight: .medium))
-                    Text(entry.isActive ? "Stop" : "Start")
+                    Text(entry.isActive ? "widget.stop" : "widget.start")
                         .font(.system(size: 15, weight: .semibold))
                 }
                 .foregroundColor(.white)
@@ -109,7 +109,7 @@ struct ScrollmateWidget: Widget {
             ScrollmateWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Scrollmate")
-        .description("알림을 시작하거나 종료합니다.")
+        .description("widget.description")
         .supportedFamilies([.systemSmall, .accessoryCircular])
     }
 }

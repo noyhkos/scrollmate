@@ -8,13 +8,13 @@ struct IntervalPickerSheet: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Button("취소") { onCancel() }
+                Button("common.cancel") { onCancel() }
                     .foregroundColor(.appTextSecondary)
                     .font(.system(size: 16))
 
                 Spacer()
 
-                Button("확인") { onConfirm() }
+                Button("common.confirm") { onConfirm() }
                     .foregroundColor(.appAccent)
                     .font(.system(size: 16, weight: .semibold))
             }
@@ -24,7 +24,7 @@ struct IntervalPickerSheet: View {
 
             Picker("", selection: $pendingInterval) {
                 ForEach(Array(stride(from: 5, through: 60, by: 5)), id: \.self) { minute in
-                    Text("\(minute)분")
+                    Text(verbatim: "\(minute) \(String(localized: "unit.min"))")
                         .foregroundColor(.appTextPrimary)
                         .tag(minute)
                 }

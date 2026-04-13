@@ -43,8 +43,16 @@ class NotificationManager: NSObject, ObservableObject {
 
     // nonisolated — UNUserNotificationCenter calls use XPC and must not run on main thread
     nonisolated func setupNotificationCategory() {
-        let confirmAction = UNNotificationAction(identifier: "CONFIRM", title: "확인", options: [])
-        let stopAction = UNNotificationAction(identifier: "STOP", title: "알림 끄기", options: [.destructive])
+        let confirmAction = UNNotificationAction(
+            identifier: "CONFIRM",
+            title: String(localized: "notification.action.confirm"),
+            options: []
+        )
+        let stopAction = UNNotificationAction(
+            identifier: "STOP",
+            title: String(localized: "notification.action.stop"),
+            options: [.destructive]
+        )
         let category = UNNotificationCategory(
             identifier: reminderCategoryId,
             actions: [confirmAction, stopAction],
@@ -56,8 +64,8 @@ class NotificationManager: NSObject, ObservableObject {
 
     nonisolated func sendStartNotification() {
         let content = UNMutableNotificationContent()
-        content.title = "Let's Scroll!"
-        content.body = "기록을 시작합니다."
+        content.title = String(localized: "notification.start.title")
+        content.body = String(localized: "notification.start.body")
         content.sound = .default
         let request = UNNotificationRequest(
             identifier: startNotificationId,
@@ -70,8 +78,8 @@ class NotificationManager: NSObject, ObservableObject {
     nonisolated func sendEndNotification(startTime: Date) {
         let elapsed = Int(Date().timeIntervalSince(startTime))
         let content = UNMutableNotificationContent()
-        content.title = "Scrollmate 기록 종료!"
-        content.body = "Let's Move On — \(usageDurationLabel(seconds: elapsed))"
+        content.title = String(localized: "notification.end.title")
+        content.body = String(format: String(localized: "notification.end.body"), usageDurationLabel(seconds: elapsed))
         content.sound = .default
         let request = UNNotificationRequest(
             identifier: endNotificationId,
@@ -98,7 +106,7 @@ class NotificationManager: NSObject, ObservableObject {
             guard secondsFromNow > 0 else { continue }
 
             let content = UNMutableNotificationContent()
-            content.title = "스크롤 중이세요?"
+            content.title = String(localized: "notification.reminder.title")
             content.body = elapsedLabel(minutes: minutesFromStart)
             content.sound = .default
             content.categoryIdentifier = reminderCategoryId

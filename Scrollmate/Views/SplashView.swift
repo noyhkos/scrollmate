@@ -12,10 +12,10 @@ struct SplashView: View {
                     .frame(width: 72, height: 72)
 
                 VStack(alignment: .center, spacing: 6) {
-                    Text("Hello?")
+                    Text("splash.line1")
                         .font(.system(size: 32, weight: .regular, design: .serif))
                         .foregroundColor(.appTextPrimary)
-                    Text("It's a wonderful day, innit?")
+                    Text("splash.line2")
                         .font(.system(size: 22, weight: .regular, design: .serif))
                         .foregroundColor(.appTextSecondary)
                 }

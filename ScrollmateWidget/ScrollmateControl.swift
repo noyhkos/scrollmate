@@ -41,6 +41,6 @@ struct ScrollmateControl: ControlWidget {
             }
         }
         .displayName("Scrollmate")
-        .description("알림 시작/종료")
+        .description("control.description")
     }
 }

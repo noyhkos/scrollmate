@@ -75,10 +75,10 @@ struct ScrollTabView: View {
     private var headerSection: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 6) {
-                Text("G'day mate!")
+                Text("greeting.title")
                     .font(.system(size: 32, weight: .regular, design: .serif))
                     .foregroundColor(.appTextPrimary)
-                Text("Let's Scroll")
+                Text("greeting.subtitle")
                     .font(.system(size: 22, weight: .regular, design: .serif))
                     .foregroundColor(.appTextSecondary)
             }
@@ -117,7 +117,7 @@ struct ScrollTabView: View {
             showIntervalPicker = true
         } label: {
             HStack(spacing: 6) {
-                Text("\(viewModel.selectedInterval)분")
+                Text(verbatim: "\(viewModel.selectedInterval) \(String(localized: "unit.min"))")
                     .font(.system(size: 20, weight: .regular, design: .serif))
                     .foregroundColor(.appTextPrimary)
                 Image(systemName: "chevron.up.chevron.down")
@@ -163,11 +163,11 @@ struct ScrollTabView: View {
         }
         .frame(maxWidth: .infinity, alignment: .center)
         .padding(.bottom, 36)
-        .alert("알림 권한이 필요해요", isPresented: $showDeniedAlert) {
-            Button("설정으로 이동") { notificationManager.openAppSettings() }
-            Button("취소", role: .cancel) {}
+        .alert("permission.title", isPresented: $showDeniedAlert) {
+            Button("permission.settings") { notificationManager.openAppSettings() }
+            Button("common.cancel", role: .cancel) {}
         } message: {
-            Text("스크롤 알림을 받으려면 설정에서 알림 권한을 허용해 주세요.")
+            Text("permission.body")
         }
     }
 
@@ -193,14 +193,14 @@ struct ScrollTabView: View {
 
     private var sessionsSection: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Today's Scrolls")
+            Text("session.title")
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundColor(.appTextSecondary)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 12)
 
             if todaySessions.isEmpty {
-                Text("No sessions yet")
+                Text("session.empty")
                     .font(.subheadline)
                     .foregroundColor(.appTabInactive)
                     .frame(maxWidth: .infinity, alignment: .center)

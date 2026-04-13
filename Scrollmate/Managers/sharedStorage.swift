@@ -16,23 +16,23 @@ nonisolated(unsafe) let reminderCategoryId = "SCROLLMATE_REMINDER"
 
 // MARK: - Shared Formatters (available to both app and widget extension targets)
 
-/// "알림을 켠 지 N분이 지났어요." — reminder notification body
+/// Reminder notification body — localized, e.g. "30 minutes since you started scrolling."
 nonisolated func elapsedLabel(minutes: Int) -> String {
     let h = minutes / 60
     let m = minutes % 60
-    if h == 0 { return "알림을 켠 지 \(m)분이 지났어요." }
-    if m == 0 { return "알림을 켠 지 \(h)시간이 지났어요." }
-    return "알림을 켠 지 \(h)시간 \(m)분이 지났어요."
+    if h == 0 { return String(format: String(localized: "elapsed.minutes"), m) }
+    if m == 0 { return String(format: String(localized: "elapsed.hours"), h) }
+    return String(format: String(localized: "elapsed.hours.minutes"), h, m)
 }
 
-/// "N시간 N분 사용" — end notification body
+/// End notification / session duration label — localized, e.g. "1 hr 30 min"
 nonisolated func usageDurationLabel(seconds: Int) -> String {
     let h = seconds / 3600
     let m = (seconds % 3600) / 60
-    if h > 0 && m > 0 { return "\(h)시간 \(m)분 사용" }
-    if h > 0 { return "\(h)시간 사용" }
-    if m > 0 { return "\(m)분 사용" }
-    return "1분 미만 사용"
+    if h > 0 && m > 0 { return String(format: String(localized: "duration.hours.minutes"), h, m) }
+    if h > 0 { return String(format: String(localized: "duration.hours"), h) }
+    if m > 0 { return String(format: String(localized: "duration.minutes"), m) }
+    return String(localized: "duration.less")
 }
 
 // Defined here so both app and widget extension targets can access it
