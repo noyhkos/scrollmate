@@ -8,16 +8,16 @@ let darwinStateChangedNotification = "com.scrollmate.stateChanged"
 
 // MARK: - Notification Keys & Identifiers
 
-let scrollmateTimerKey = "scrollmate"
-let startNotificationId = "scrollmate.start"
-let endNotificationId = "scrollmate.end"
-let reminderNotificationIdPrefix = "scrollmate.reminder"
-let reminderCategoryId = "SCROLLMATE_REMINDER"
+nonisolated(unsafe) let scrollmateTimerKey = "scrollmate"
+nonisolated(unsafe) let startNotificationId = "scrollmate.start"
+nonisolated(unsafe) let endNotificationId = "scrollmate.end"
+nonisolated(unsafe) let reminderNotificationIdPrefix = "scrollmate.reminder"
+nonisolated(unsafe) let reminderCategoryId = "SCROLLMATE_REMINDER"
 
 // MARK: - Shared Formatters (available to both app and widget extension targets)
 
 /// "알림을 켠 지 N분이 지났어요." — reminder notification body
-func elapsedLabel(minutes: Int) -> String {
+nonisolated func elapsedLabel(minutes: Int) -> String {
     let h = minutes / 60
     let m = minutes % 60
     if h == 0 { return "알림을 켠 지 \(m)분이 지났어요." }
@@ -26,7 +26,7 @@ func elapsedLabel(minutes: Int) -> String {
 }
 
 /// "N시간 N분 사용" — end notification body
-func usageDurationLabel(seconds: Int) -> String {
+nonisolated func usageDurationLabel(seconds: Int) -> String {
     let h = seconds / 3600
     let m = (seconds % 3600) / 60
     if h > 0 && m > 0 { return "\(h)시간 \(m)분 사용" }
