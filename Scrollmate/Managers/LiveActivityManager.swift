@@ -18,12 +18,24 @@ class LiveActivityManager {
     }
 
     func stop(startTime: Date = Date()) {
-        guard let activity else { return }
         Task {
-            let finalState = ScrollmateAttributes.ContentState(startTime: startTime)
-            let finalContent = ActivityContent(state: finalState, staleDate: Date())
+            await endAllActivities()
+        }
+    }
+
+    // Ends all active Live Activities — callable from the main app process where ActivityKit works reliably
+    func endAllActivities() async {
+        let finalContent = ActivityContent(
+            state: ScrollmateAttributes.ContentState(startTime: activity?.content.state.startTime ?? Date()),
+            staleDate: Date()
+        )
+        if let activity {
             await activity.end(finalContent, dismissalPolicy: .immediate)
             self.activity = nil
         }
+        for act in Activity<ScrollmateAttributes>.activities {
+            await act.end(finalContent, dismissalPolicy: .immediate)
+        }
+        SharedStorage.shared.pendingLiveActivityEnd = false
     }
 }

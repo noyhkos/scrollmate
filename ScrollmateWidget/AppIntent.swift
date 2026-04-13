@@ -20,12 +20,14 @@ struct ToggleTimerIntent: AppIntent {
             let reminderIds = (1...63).map { "scrollmate.reminder.\($0)" }
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
             if let startTime { sendEndNotification(startTime: startTime) }
-            // End Live Activity with explicit final content so iOS dismisses immediately
-            let finalState = ScrollmateAttributes.ContentState(startTime: startTime ?? Date())
-            let finalContent = ActivityContent(state: finalState, staleDate: Date())
-            for activity in Activity<ScrollmateAttributes>.activities {
-                await activity.end(finalContent, dismissalPolicy: .immediate)
-            }
+            // Widget extension cannot reliably end main-app-started activities.
+            // Signal the main app via Darwin notification + SharedStorage flag.
+            SharedStorage.shared.pendingLiveActivityEnd = true
+            CFNotificationCenterPostNotification(
+                CFNotificationCenterGetDarwinNotifyCenter(),
+                CFNotificationName(darwinStopLiveActivityNotification as CFString),
+                nil, nil, true
+            )
         } else {
             let now = Date()
             SharedStorage.shared.activeTimers["scrollmate"] = now

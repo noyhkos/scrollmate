@@ -36,6 +36,10 @@ class SettingsViewModel: ObservableObject {
         let stored = SharedStorage.shared.notificationInterval
         let sanitized = Self.validIntervals.first { $0 >= stored } ?? 5
         selectedInterval = sanitized
+        // Fallback: if widget extension requested a Live Activity stop while this app was killed
+        if SharedStorage.shared.pendingLiveActivityEnd {
+            Task { await LiveActivityManager.shared.endAllActivities() }
+        }
     }
 
     func setEnabled(_ enabled: Bool) {
