@@ -36,9 +36,13 @@ class SettingsViewModel: ObservableObject {
         let stored = SharedStorage.shared.notificationInterval
         let sanitized = Self.validIntervals.first { $0 >= stored } ?? 5
         selectedInterval = sanitized
-        // Fallback: if widget extension requested a Live Activity stop while this app was killed
+        // Fallback: end pending activity if widget requested stop while app was killed
         if SharedStorage.shared.pendingLiveActivityEnd {
             Task { await LiveActivityManager.shared.endAllActivities() }
+        }
+        // Fallback: start Live Activity if timer is running but activity was never started
+        if let startTime = SharedStorage.shared.activeTimers["scrollmate"] {
+            Task { await LiveActivityManager.shared.startIfNeeded(startTime: startTime) }
         }
     }
 

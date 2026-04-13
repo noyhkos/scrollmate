@@ -9,6 +9,12 @@ class LiveActivityManager {
 
     private init() {}
 
+    // Start only if no Live Activity is currently active
+    func startIfNeeded(startTime: Date) {
+        guard activity == nil, Activity<ScrollmateAttributes>.activities.isEmpty else { return }
+        start(startTime: startTime)
+    }
+
     func start(startTime: Date) {
         guard ActivityAuthorizationInfo().areActivitiesEnabled else { return }
         let attributes = ScrollmateAttributes()

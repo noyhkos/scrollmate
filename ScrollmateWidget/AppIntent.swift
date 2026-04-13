@@ -34,11 +34,13 @@ struct ToggleTimerIntent: AppIntent {
             let interval = SharedStorage.shared.notificationInterval
             sendStartNotification()
             scheduleNotifications(intervalMinutes: interval)
-            // Start Live Activity
-            let attributes = ScrollmateAttributes()
-            let state = ScrollmateAttributes.ContentState(startTime: now)
-            let content = ActivityContent(state: state, staleDate: nil)
-            try? Activity.request(attributes: attributes, content: content)
+            // Live Activities must be started from the main app process, not extensions.
+            // Signal the main app via Darwin notification to start the Live Activity.
+            CFNotificationCenterPostNotification(
+                CFNotificationCenterGetDarwinNotifyCenter(),
+                CFNotificationName(darwinStartLiveActivityNotification as CFString),
+                nil, nil, true
+            )
         }
 
         WidgetCenter.shared.reloadAllTimelines()
