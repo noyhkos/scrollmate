@@ -3,6 +3,38 @@ import Foundation
 // Shared across app and widget targets — must be defined here
 let scrollmateStopNotification = Notification.Name("ScrollmateStopFromBanner")
 
+// Darwin notification for cross-process state sync (widget → main app)
+let darwinStateChangedNotification = "com.scrollmate.stateChanged"
+
+// MARK: - Notification Keys & Identifiers
+
+let scrollmateTimerKey = "scrollmate"
+let startNotificationId = "scrollmate.start"
+let endNotificationId = "scrollmate.end"
+let reminderNotificationIdPrefix = "scrollmate.reminder"
+let reminderCategoryId = "SCROLLMATE_REMINDER"
+
+// MARK: - Shared Formatters (available to both app and widget extension targets)
+
+/// "알림을 켠 지 N분이 지났어요." — reminder notification body
+func elapsedLabel(minutes: Int) -> String {
+    let h = minutes / 60
+    let m = minutes % 60
+    if h == 0 { return "알림을 켠 지 \(m)분이 지났어요." }
+    if m == 0 { return "알림을 켠 지 \(h)시간이 지났어요." }
+    return "알림을 켠 지 \(h)시간 \(m)분이 지났어요."
+}
+
+/// "N시간 N분 사용" — end notification body
+func usageDurationLabel(seconds: Int) -> String {
+    let h = seconds / 3600
+    let m = (seconds % 3600) / 60
+    if h > 0 && m > 0 { return "\(h)시간 \(m)분 사용" }
+    if h > 0 { return "\(h)시간 사용" }
+    if m > 0 { return "\(m)분 사용" }
+    return "1분 미만 사용"
+}
+
 // Defined here so both app and widget extension targets can access it
 struct ScrollSession: Codable, Identifiable {
     let id: UUID

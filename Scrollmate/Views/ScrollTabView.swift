@@ -1,30 +1,6 @@
 import SwiftUI
 import Combine
 
-// MARK: - App Tab
-
-enum AppTab: CaseIterable {
-    case scroll, stop, record, setting
-
-    var label: String {
-        switch self {
-        case .scroll:  return "Scroll"
-        case .stop:    return "Stop"
-        case .record:  return "Record"
-        case .setting: return "Setting"
-        }
-    }
-
-    var icon: String {
-        switch self {
-        case .scroll:  return "scroll"
-        case .stop:    return "hand.raised"
-        case .record:  return "list.clipboard"
-        case .setting: return "gearshape"
-        }
-    }
-}
-
 // MARK: - Scroll Tab
 
 struct ScrollTabView: View {
@@ -55,7 +31,7 @@ struct ScrollTabView: View {
         .onAppear {
             notificationManager.checkAuthorization()
             pendingInterval = viewModel.selectedInterval
-            if let start = SharedStorage.shared.activeTimers["scrollmate"] {
+            if let start = SharedStorage.shared.activeTimers[scrollmateTimerKey] {
                 elapsedSeconds = Int(Date().timeIntervalSince(start))
             }
             todaySessions = SharedStorage.shared.todaySessions()
@@ -69,7 +45,7 @@ struct ScrollTabView: View {
         .onChange(of: scenePhase) { _, phase in
             guard phase == .active else { return }
             viewModel.syncState()
-            if viewModel.isEnabled, let start = SharedStorage.shared.activeTimers["scrollmate"] {
+            if viewModel.isEnabled, let start = SharedStorage.shared.activeTimers[scrollmateTimerKey] {
                 elapsedSeconds = Int(Date().timeIntervalSince(start))
             } else {
                 elapsedSeconds = 0
@@ -128,7 +104,7 @@ struct ScrollTabView: View {
             .padding(.bottom, 28)
             .onReceive(ticker) { _ in
                 guard viewModel.isEnabled,
-                      let start = SharedStorage.shared.activeTimers["scrollmate"] else { return }
+                      let start = SharedStorage.shared.activeTimers[scrollmateTimerKey] else { return }
                 elapsedSeconds = Int(Date().timeIntervalSince(start))
             }
     }

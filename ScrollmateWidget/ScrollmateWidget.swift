@@ -14,12 +14,12 @@ struct Provider: TimelineProvider {
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
-        let start = SharedStorage.shared.activeTimers["scrollmate"]
+        let start = SharedStorage.shared.activeTimers[scrollmateTimerKey]
         completion(SimpleEntry(date: Date(), isActive: start != nil, startTime: start))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
-        let start = SharedStorage.shared.activeTimers["scrollmate"]
+        let start = SharedStorage.shared.activeTimers[scrollmateTimerKey]
         let entry = SimpleEntry(date: Date(), isActive: start != nil, startTime: start)
         completion(Timeline(entries: [entry], policy: .never))
     }

@@ -49,7 +49,7 @@ class SettingsViewModel: ObservableObject {
         let nm = NotificationManager.shared
         if enabled {
             let now = Date()
-            SharedStorage.shared.activeTimers["scrollmate"] = now
+            SharedStorage.shared.activeTimers[scrollmateTimerKey] = now
             SharedStorage.shared.notificationInterval = selectedInterval
             nm.sendStartNotification()
             let interval = selectedInterval
@@ -57,11 +57,11 @@ class SettingsViewModel: ObservableObject {
                 nm.scheduleRepeatingNotification(intervalMinutes: interval)
             }
         } else {
-            let startTime = SharedStorage.shared.activeTimers["scrollmate"]
+            let startTime = SharedStorage.shared.activeTimers[scrollmateTimerKey]
             if let startTime {
                 SharedStorage.shared.addSession(start: startTime, end: Date())
             }
-            SharedStorage.shared.removeTimer(for: "scrollmate")
+            SharedStorage.shared.removeTimer(for: scrollmateTimerKey)
             if let startTime {
                 nm.sendEndNotification(startTime: startTime)
             }
