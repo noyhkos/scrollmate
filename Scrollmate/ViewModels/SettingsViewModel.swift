@@ -54,7 +54,7 @@ class SettingsViewModel: ObservableObject {
             nm.sendStartNotification()
             let interval = selectedInterval
             Task.detached {
-                nm.scheduleRepeatingNotification(intervalMinutes: interval)
+                nm.scheduleRepeatingNotification(intervalMinutes: interval, startTime: now)
             }
         } else {
             let startTime = SharedStorage.shared.activeTimers[scrollmateTimerKey]
@@ -76,10 +76,10 @@ class SettingsViewModel: ObservableObject {
     func intervalChanged(to interval: Int) {
         selectedInterval = interval
         SharedStorage.shared.notificationInterval = interval
-        if isEnabled {
+        if isEnabled, let startTime = SharedStorage.shared.activeTimers[scrollmateTimerKey] {
             let nm = NotificationManager.shared
             Task.detached {
-                nm.scheduleRepeatingNotification(intervalMinutes: interval)
+                nm.scheduleRepeatingNotification(intervalMinutes: interval, startTime: startTime)
             }
         }
     }

@@ -25,10 +25,11 @@ func performTimerToggle() async {
         cancelReminderNotifications()
         if let startTime { sendEndNotification(startTime: startTime) }
     } else {
-        SharedStorage.shared.activeTimers[scrollmateTimerKey] = Date()
+        let now = Date()
+        SharedStorage.shared.activeTimers[scrollmateTimerKey] = now
         let interval = SharedStorage.shared.notificationInterval
         sendStartNotification()
-        scheduleRepeatingNotification(intervalMinutes: interval)
+        scheduleRepeatingNotification(intervalMinutes: interval, startTime: now)
     }
 
     WidgetCenter.shared.reloadAllTimelines()
@@ -81,24 +82,31 @@ private func sendEndNotification(startTime: Date) {
     UNUserNotificationCenter.current().add(request)
 }
 
-private func scheduleRepeatingNotification(intervalMinutes: Int) {
+private func scheduleRepeatingNotification(intervalMinutes: Int, startTime: Date) {
     setupNotificationCategory()
     let reminderIds = (1...63).map { "\(reminderNotificationIdPrefix).\($0)" }
     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
 
-    for i in 1...63 {
-        let elapsedMinutes = intervalMinutes * i
+    let elapsedSeconds = Int(Date().timeIntervalSince(startTime))
+    let elapsedMinutes = elapsedSeconds / 60
+    let startIndex = elapsedMinutes / intervalMinutes + 1
+
+    for i in 0..<63 {
+        let minutesFromStart = (startIndex + i) * intervalMinutes
+        let secondsFromNow = minutesFromStart * 60 - elapsedSeconds
+        guard secondsFromNow > 0 else { continue }
+
         let content = UNMutableNotificationContent()
         content.title = "스크롤 중이세요?"
-        content.body = elapsedLabel(minutes: elapsedMinutes)
+        content.body = elapsedLabel(minutes: minutesFromStart)
         content.sound = .default
         content.categoryIdentifier = reminderCategoryId
         let trigger = UNTimeIntervalNotificationTrigger(
-            timeInterval: TimeInterval(elapsedMinutes * 60),
+            timeInterval: TimeInterval(secondsFromNow),
             repeats: false
         )
         let request = UNNotificationRequest(
-            identifier: "\(reminderNotificationIdPrefix).\(i)",
+            identifier: "\(reminderNotificationIdPrefix).\(i + 1)",
             content: content,
             trigger: trigger
         )
