@@ -3,6 +3,7 @@ import AppIntents
 import UserNotifications
 import WidgetKit
 
+@MainActor
 struct ToggleTimerIntent: AppIntent {
     static var title: LocalizedStringResource = "Toggle Scrollmate Timer"
 
