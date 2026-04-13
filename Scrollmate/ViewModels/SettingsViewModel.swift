@@ -36,27 +36,16 @@ class SettingsViewModel: ObservableObject {
         let stored = SharedStorage.shared.notificationInterval
         let sanitized = Self.validIntervals.first { $0 >= stored } ?? 5
         selectedInterval = sanitized
-        // Fallback: end pending activity if widget requested stop while app was killed
-        if SharedStorage.shared.pendingLiveActivityEnd {
-            Task { await LiveActivityManager.shared.endAllActivities() }
-        }
-        // Fallback: start Live Activity if timer is running but activity was never started
-        if let startTime = SharedStorage.shared.activeTimers["scrollmate"] {
-            Task { await LiveActivityManager.shared.startIfNeeded(startTime: startTime) }
-        }
     }
 
     func setEnabled(_ enabled: Bool) {
         isEnabled = enabled
-        // Pre-capture on main actor before entering detached task
         let nm = NotificationManager.shared
         if enabled {
             let now = Date()
             SharedStorage.shared.activeTimers["scrollmate"] = now
             SharedStorage.shared.notificationInterval = selectedInterval
             nm.sendStartNotification()
-            LiveActivityManager.shared.start(startTime: now)
-            // scheduleRepeatingNotification has removePending + 63 adds — detach to avoid blocking
             let interval = selectedInterval
             Task.detached {
                 nm.scheduleRepeatingNotification(intervalMinutes: interval)
@@ -67,7 +56,6 @@ class SettingsViewModel: ObservableObject {
                 SharedStorage.shared.addSession(start: startTime, end: Date())
             }
             SharedStorage.shared.removeTimer(for: "scrollmate")
-            LiveActivityManager.shared.stop(startTime: startTime ?? Date())
             if let startTime {
                 nm.sendEndNotification(startTime: startTime)
             }
@@ -75,7 +63,6 @@ class SettingsViewModel: ObservableObject {
                 nm.cancelReminderNotifications()
             }
         }
-        // Single reload point for widget and control center
         WidgetCenter.shared.reloadAllTimelines()
         ControlCenter.shared.reloadAllControls()
     }

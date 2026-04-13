@@ -111,6 +111,7 @@ struct ScrollTabView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 60, height: 60)
+                .padding(.vertical, 4)
         }
         .padding(.horizontal, 24)
         .padding(.top, 24)

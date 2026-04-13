@@ -161,7 +161,6 @@ extension NotificationManager: UNUserNotificationCenterDelegate {
             }
             SharedStorage.shared.activeTimers = [:]
             NotificationManager.shared.cancelReminderNotifications()
-            LiveActivityManager.shared.stop()
             WidgetCenter.shared.reloadAllTimelines()
             ControlCenter.shared.reloadAllControls()
             NotificationCenter.default.post(name: scrollmateStopNotification, object: nil)

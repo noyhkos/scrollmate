@@ -10,7 +10,5 @@
 	</array>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>Inorder to notify the usage duration of the apps to user</string>
-	<key>NSSupportsLiveActivities</key>
-	<true/>
 </dict>
 </plist>

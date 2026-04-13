@@ -1,4 +1,3 @@
-import ActivityKit
 import AppIntents
 import UserNotifications
 import WidgetKit
@@ -27,11 +26,6 @@ struct ToggleScrollmateIntent: SetValueIntent {
             let interval = SharedStorage.shared.notificationInterval
             sendStartNotification()
             scheduleNotifications(intervalMinutes: interval)
-            // Start Live Activity
-            let attributes = ScrollmateAttributes()
-            let state = ScrollmateAttributes.ContentState(startTime: now)
-            let content = ActivityContent(state: state, staleDate: nil)
-            try? Activity.request(attributes: attributes, content: content)
         } else {
             let startTime = SharedStorage.shared.activeTimers["scrollmate"]
             // Record session before clearing timer
@@ -42,10 +36,6 @@ struct ToggleScrollmateIntent: SetValueIntent {
             let reminderIds = (1...63).map { "scrollmate.reminder.\($0)" }
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
             if let startTime { sendEndNotification(startTime: startTime) }
-            // End Live Activity
-            for activity in Activity<ScrollmateAttributes>.activities {
-                await activity.end(nil, dismissalPolicy: .immediate)
-            }
         }
 
         WidgetCenter.shared.reloadAllTimelines()
