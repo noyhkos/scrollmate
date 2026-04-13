@@ -22,15 +22,13 @@ func performTimerToggle() async {
             SharedStorage.shared.addSession(start: startTime, end: Date())
         }
         SharedStorage.shared.activeTimers = [:]
-        let reminderIds = (1...63).map { "\(reminderNotificationIdPrefix).\($0)" }
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
+        cancelReminderNotifications()
         if let startTime { sendEndNotification(startTime: startTime) }
     } else {
-        let now = Date()
-        SharedStorage.shared.activeTimers[scrollmateTimerKey] = now
+        SharedStorage.shared.activeTimers[scrollmateTimerKey] = Date()
         let interval = SharedStorage.shared.notificationInterval
         sendStartNotification()
-        scheduleNotifications(intervalMinutes: interval)
+        scheduleRepeatingNotification(intervalMinutes: interval)
     }
 
     WidgetCenter.shared.reloadAllTimelines()
@@ -44,7 +42,19 @@ func performTimerToggle() async {
     )
 }
 
-func sendStartNotification() {
+private func setupNotificationCategory() {
+    let confirmAction = UNNotificationAction(identifier: "CONFIRM", title: "확인", options: [])
+    let stopAction = UNNotificationAction(identifier: "STOP", title: "알림 끄기", options: [.destructive])
+    let category = UNNotificationCategory(
+        identifier: reminderCategoryId,
+        actions: [confirmAction, stopAction],
+        intentIdentifiers: [],
+        options: [.customDismissAction]
+    )
+    UNUserNotificationCenter.current().setNotificationCategories([category])
+}
+
+private func sendStartNotification() {
     let content = UNMutableNotificationContent()
     content.title = "Let's Scroll!"
     content.body = "기록을 시작합니다."
@@ -57,7 +67,7 @@ func sendStartNotification() {
     UNUserNotificationCenter.current().add(request)
 }
 
-func sendEndNotification(startTime: Date) {
+private func sendEndNotification(startTime: Date) {
     let elapsed = Int(Date().timeIntervalSince(startTime))
     let content = UNMutableNotificationContent()
     content.title = "Scrollmate 기록 종료!"
@@ -71,20 +81,8 @@ func sendEndNotification(startTime: Date) {
     UNUserNotificationCenter.current().add(request)
 }
 
-private func registerNotificationCategory() {
-    let confirmAction = UNNotificationAction(identifier: "CONFIRM", title: "확인", options: [])
-    let stopAction = UNNotificationAction(identifier: "STOP", title: "알림 끄기", options: [.destructive])
-    let category = UNNotificationCategory(
-        identifier: reminderCategoryId,
-        actions: [confirmAction, stopAction],
-        intentIdentifiers: [],
-        options: [.customDismissAction]
-    )
-    UNUserNotificationCenter.current().setNotificationCategories([category])
-}
-
-func scheduleNotifications(intervalMinutes: Int) {
-    registerNotificationCategory()
+private func scheduleRepeatingNotification(intervalMinutes: Int) {
+    setupNotificationCategory()
     let reminderIds = (1...63).map { "\(reminderNotificationIdPrefix).\($0)" }
     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
 
@@ -106,4 +104,9 @@ func scheduleNotifications(intervalMinutes: Int) {
         )
         UNUserNotificationCenter.current().add(request)
     }
+}
+
+private func cancelReminderNotifications() {
+    let reminderIds = (1...63).map { "\(reminderNotificationIdPrefix).\($0)" }
+    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
 }

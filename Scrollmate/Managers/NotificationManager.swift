@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import UIKit
 import UserNotifications
@@ -80,8 +81,9 @@ class NotificationManager: NSObject, ObservableObject {
         UNUserNotificationCenter.current().add(request)
     }
 
-    // Schedule up to 63 individual notifications — nonisolated to avoid main thread blocking
+    // Schedule up to 63 individual notifications — registers category and clears existing ones first
     nonisolated func scheduleRepeatingNotification(intervalMinutes: Int) {
+        setupNotificationCategory()
         let reminderIds = (1...63).map { "\(reminderNotificationIdPrefix).\($0)" }
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
 

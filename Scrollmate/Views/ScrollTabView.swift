@@ -5,7 +5,7 @@ import Combine
 
 struct ScrollTabView: View {
     @ObservedObject var viewModel: SettingsViewModel
-    @ObservedObject private var notificationManager = NotificationManager.shared
+    private let notificationManager = NotificationManager.shared
     @Environment(\.scenePhase) private var scenePhase
 
     // .default mode yields during touch tracking — avoids blocking user input
