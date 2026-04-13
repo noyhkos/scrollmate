@@ -33,10 +33,10 @@
 "elapsed.hours.minutes" = "스크롤 시작 후 %d시간 %d분이 지났어요.";
 
 // MARK: - Duration (end notification body / session list)
-"duration.hours.minutes" = "%d시간 %d분 스크롤";
-"duration.hours" = "%d시간 스크롤";
-"duration.minutes" = "%d분 스크롤";
-"duration.less" = "1분 미만 스크롤";
+"duration.hours.minutes" = "%d시간 %d분 스크롤했어요";
+"duration.hours" = "%d시간 스크롤했어요";
+"duration.minutes" = "%d분 스크롤했어요";
+"duration.less" = "1분 미만 스크롤했어요";
 
 // MARK: - Widget
 "widget.title" = "Let's Scroll!";
