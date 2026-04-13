@@ -44,6 +44,7 @@ struct ScrollTabView: View {
         // Single scenePhase observer — syncs all state when app returns to foreground
         .onChange(of: scenePhase) { _, phase in
             guard phase == .active else { return }
+            notificationManager.checkAuthorization()
             viewModel.syncState()
             if viewModel.isEnabled, let start = SharedStorage.shared.activeTimers[scrollmateTimerKey] {
                 elapsedSeconds = Int(Date().timeIntervalSince(start))
