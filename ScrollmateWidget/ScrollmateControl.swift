@@ -20,8 +20,11 @@ struct ToggleScrollmateIntent: SetValueIntent {
     var value: Bool
 
     func perform() async throws -> some IntentResult {
-        // Ignore value from system (can be stale) — always read fresh state from SharedStorage
-        await performTimerToggle()
+        let currentlyActive = !SharedStorage.shared.activeTimers.isEmpty
+        // Only toggle if system's desired state differs from actual state
+        if value != currentlyActive {
+            await performTimerToggle()
+        }
         return .result()
     }
 }

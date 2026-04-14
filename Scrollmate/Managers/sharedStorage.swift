@@ -80,6 +80,7 @@ class SharedStorage {
         }
         set {
             defaults.set(newValue, forKey: ACTIVE_TIMERS_KEY)
+            defaults.synchronize()
         }
     }
 
@@ -100,6 +101,7 @@ class SharedStorage {
         set {
             let data = try? JSONEncoder().encode(newValue)
             defaults.set(data, forKey: SCROLL_SESSIONS_KEY)
+            defaults.synchronize()
         }
     }
 
