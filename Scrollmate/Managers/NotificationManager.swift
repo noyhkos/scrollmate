@@ -136,6 +136,14 @@ extension NotificationManager: UNUserNotificationCenterDelegate {
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         completionHandler([.banner, .sound, .badge])
+
+        // Replenish the notification queue whenever a reminder fires while the app is in the foreground
+        guard notification.request.identifier.hasPrefix(reminderNotificationIdPrefix) else { return }
+        Task { @MainActor in
+            guard let startTime = SharedStorage.shared.activeTimers[scrollmateTimerKey] else { return }
+            let interval = SharedStorage.shared.notificationInterval
+            NotificationManager.shared.scheduleRepeatingNotification(intervalMinutes: interval, startTime: startTime)
+        }
     }
 
     nonisolated func userNotificationCenter(
