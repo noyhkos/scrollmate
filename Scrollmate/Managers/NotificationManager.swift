@@ -89,10 +89,10 @@ class NotificationManager: NSObject, ObservableObject {
         UNUserNotificationCenter.current().add(request)
     }
 
-    // Schedule up to 63 notifications aligned to startTime — registers category and clears existing ones first
+    // Schedule 59 normal reminders + 1 exhausted final notice (60th) aligned to startTime
     nonisolated func scheduleRepeatingNotification(intervalMinutes: Int, startTime: Date) {
         setupNotificationCategory()
-        let reminderIds = (1...63).map { "\(reminderNotificationIdPrefix).\($0)" }
+        let reminderIds = (1...60).map { "\(reminderNotificationIdPrefix).\($0)" }
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
 
         let elapsedSeconds = Int(Date().timeIntervalSince(startTime))
@@ -100,14 +100,17 @@ class NotificationManager: NSObject, ObservableObject {
         // First future interval index from start (e.g. at 25min with 10min interval → next is index 3 = 30min)
         let startIndex = elapsedMinutes / intervalMinutes + 1
 
-        for i in 0..<63 {
+        for i in 0..<60 {
             let minutesFromStart = (startIndex + i) * intervalMinutes
             let secondsFromNow = minutesFromStart * 60 - elapsedSeconds
             guard secondsFromNow > 0 else { continue }
 
             let content = UNMutableNotificationContent()
-            content.title = String(localized: "notification.reminder.title")
-            content.body = elapsedLabel(minutes: minutesFromStart)
+            let isLast = (i == 59)
+            content.title = String(localized: isLast ? "notification.exhausted.title" : "notification.reminder.title")
+            content.body = isLast
+                ? String(localized: "notification.exhausted.body")
+                : elapsedLabel(minutes: minutesFromStart)
             content.sound = .default
             content.categoryIdentifier = reminderCategoryId
             let trigger = UNTimeIntervalNotificationTrigger(
@@ -124,7 +127,7 @@ class NotificationManager: NSObject, ObservableObject {
     }
 
     nonisolated func cancelReminderNotifications() {
-        let reminderIds = (1...63).map { "\(reminderNotificationIdPrefix).\($0)" }
+        let reminderIds = (1...60).map { "\(reminderNotificationIdPrefix).\($0)" }
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
     }
 }

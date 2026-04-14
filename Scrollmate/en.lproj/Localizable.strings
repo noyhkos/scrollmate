@@ -24,6 +24,8 @@
 "notification.end.title" = "Good choice mate!";
 "notification.end.body" = "%@ scrolled.";
 "notification.reminder.title" = "Are you having fun?";
+"notification.exhausted.title" = "I'm done. 😮‍💨";
+"notification.exhausted.body" = "This is the 60th alert. I'm exhausted. Please stop scrolling. 🙏";
 "notification.action.confirm" = "Yes";
 "notification.action.stop" = "Stop Scrolling";
 
