@@ -10,17 +10,16 @@ struct ContentView: View {
             ScrollTabView(viewModel: viewModel)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-            if splashOpacity > 0 {
-                SplashView()
-                    .opacity(splashOpacity)
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                            withAnimation(.easeOut(duration: 0.6)) {
-                                splashOpacity = 0
-                            }
+            SplashView()
+                .opacity(splashOpacity)
+                .allowsHitTesting(splashOpacity > 0)
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        withAnimation(.easeOut(duration: 0.1)) {
+                            splashOpacity = 0
                         }
                     }
-            }
+                }
         }
         .preferredColorScheme(.dark)
     }
