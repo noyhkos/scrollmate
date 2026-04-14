@@ -152,6 +152,17 @@ extension NotificationManager: UNUserNotificationCenterDelegate {
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
         completionHandler()
+
+        // Replenish on any reminder interaction (user tapped from background)
+        if response.notification.request.identifier.hasPrefix(reminderNotificationIdPrefix),
+           response.actionIdentifier != "STOP" {
+            Task { @MainActor in
+                guard let startTime = SharedStorage.shared.activeTimers[scrollmateTimerKey] else { return }
+                let interval = SharedStorage.shared.notificationInterval
+                NotificationManager.shared.scheduleRepeatingNotification(intervalMinutes: interval, startTime: startTime)
+            }
+        }
+
         guard response.actionIdentifier == "STOP" else { return }
         Task { @MainActor in
             if let startTime = SharedStorage.shared.activeTimers[scrollmateTimerKey] {
