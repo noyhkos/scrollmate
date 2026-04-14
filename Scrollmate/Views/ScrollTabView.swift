@@ -56,7 +56,7 @@ struct ScrollTabView: View {
             }
             .buttonStyle(.plain)
             .padding(.trailing, 20)
-//            .padding(.bottom, 20)
+            .padding(.bottom, 20)
         }
         .onAppear {
             notificationManager.checkAuthorization()
@@ -83,6 +83,7 @@ struct ScrollTabView: View {
                 elapsedSeconds = 0
             }
             todaySessions = SharedStorage.shared.todaySessions()
+            activeTier = SharedStorage.shared.purchasedTier
         }
         .sheet(isPresented: $showTip, onDismiss: {
             activeTier = SharedStorage.shared.purchasedTier
@@ -301,67 +302,6 @@ struct ScrollTabView: View {
                 .overlay(Circle().strokeBorder(Color.appBorder, lineWidth: 1.5))
                 .clipShape(Circle())
         }
-    }
-
-    // MARK: Tip tier ring gradients
-
-    private var goldMetalGradient: AngularGradient {
-        AngularGradient(
-            colors: [
-                Color(hex: "#B8860B"),
-                Color(hex: "#FFD700"),
-                Color(hex: "#FFFACD"),
-                Color(hex: "#FFA500"),
-                Color(hex: "#FFD700"),
-                Color(hex: "#FFE066"),
-                Color(hex: "#B8860B"),
-            ],
-            center: .center
-        )
-    }
-
-    private var silverMetalGradient: AngularGradient {
-        AngularGradient(
-            colors: [
-                Color(hex: "#aaaaaa"),
-                Color(hex: "#eeeeee"),
-                Color(hex: "#bbbbbb"),
-                Color(hex: "#ffffff"),
-                Color(hex: "#999999"),
-                Color(hex: "#dddddd"),
-                Color(hex: "#aaaaaa"),
-            ],
-            center: .center
-        )
-    }
-
-    private var blueMetalGradient: AngularGradient {
-        AngularGradient(
-            colors: [
-                Color(hex: "#1a6fb5"),
-                Color(hex: "#56b4f5"),
-                Color(hex: "#a8d8ff"),
-                Color(hex: "#1d8eff"),
-                Color(hex: "#56b4f5"),
-                Color(hex: "#1a6fb5"),
-            ],
-            center: .center
-        )
-    }
-
-    private var purpleMetalGradient: AngularGradient {
-        AngularGradient(
-            colors: [
-                Color(hex: "#7b2fff"),
-                Color(hex: "#c471ed"),
-                Color(hex: "#f64f59"),
-                Color(hex: "#c471ed"),
-                Color(hex: "#7b2fff"),
-                Color(hex: "#a855f7"),
-                Color(hex: "#7b2fff"),
-            ],
-            center: .center
-        )
     }
 
     private var totalDurationLabel: String {

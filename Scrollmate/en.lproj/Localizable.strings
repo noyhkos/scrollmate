@@ -42,10 +42,7 @@
 "tip.fab.label" = "Buy me a coffee";
 "tip.title" = "Buy me a coffee";
 "tip.subtitle" = "Scrollmate is free.\nIf you enjoy it, a small tip means a lot ☺️";
-"tip.option1.label" = "Small treat";
-"tip.option2.label" = "Nice one";
-"tip.option3.label" = "Generous!";
-"tip.option4.label" = "Big thanks!";
+"tip.cta" = "Support";
 "tip.restore" = "Restore purchase";
 
 // MARK: - Tip Tiers

@@ -72,7 +72,7 @@ struct ScrollmateWidgetEntryView: View {
                 VStack(alignment: .leading, spacing: 1) {
                     Text("Scrollmate")
                         .font(.system(size: 13, weight: .semibold))
-                    Text(entry.isActive ? "widget.stop" : "widget.start")
+                    Text(LocalizedStringKey(entry.isActive ? "widget.stop" : "widget.start"))
                         .font(.system(size: 11, weight: .regular))
                 }
                 Spacer()
@@ -116,7 +116,7 @@ struct ScrollmateWidgetEntryView: View {
                 HStack(spacing: 6) {
                     Image(systemName: entry.isActive ? "crown.fill" : "play.fill")
                         .font(.system(size: 15, weight: .medium))
-                    Text(entry.isActive ? "widget.stop" : "widget.start")
+                    Text(LocalizedStringKey(entry.isActive ? "widget.stop" : "widget.start"))
                         .font(.system(size: 15, weight: .semibold))
                 }
                 .foregroundColor(.white)

@@ -49,7 +49,7 @@ struct TipView: View {
                         SharedStorage.shared.purchasedTier = selectedTier
                         dismiss()
                     } label: {
-                        Text("\(selectedTier.price) 후원하기")
+                        Text("\(selectedTier.price) \(String(localized: "tip.cta"))")
                             .font(.system(size: 16, weight: .bold))
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
