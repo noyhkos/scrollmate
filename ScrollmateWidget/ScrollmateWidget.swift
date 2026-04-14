@@ -42,9 +42,12 @@ struct ScrollmateWidgetEntryView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
-        if widgetFamily == .accessoryCircular {
+        switch widgetFamily {
+        case .accessoryCircular:
             lockScreenView
-        } else {
+        case .accessoryRectangular:
+            lockScreenRectView
+        default:
             homeScreenView
         }
     }
@@ -55,6 +58,25 @@ struct ScrollmateWidgetEntryView: View {
         Button(intent: ToggleTimerIntent()) {
             Image(systemName: entry.isActive ? "stop.fill" : "play.fill")
                 .font(.system(size: 20, weight: .medium))
+        }
+        .containerBackground(.clear, for: .widget)
+    }
+
+    // MARK: Lock Screen — rectangular
+
+    private var lockScreenRectView: some View {
+        Button(intent: ToggleTimerIntent()) {
+            HStack(spacing: 10) {
+                Image(systemName: entry.isActive ? "stop.fill" : "play.fill")
+                    .font(.system(size: 14, weight: .medium))
+                VStack(alignment: .leading, spacing: 1) {
+                    Text("Scrollmate")
+                        .font(.system(size: 13, weight: .semibold))
+                    Text(entry.isActive ? "widget.stop" : "widget.start")
+                        .font(.system(size: 11, weight: .regular))
+                }
+                Spacer()
+            }
         }
         .containerBackground(.clear, for: .widget)
     }
@@ -129,6 +151,6 @@ struct ScrollmateWidget: Widget {
         }
         .configurationDisplayName("Scrollmate")
         .description("widget.description")
-        .supportedFamilies([.systemSmall, .accessoryCircular])
+        .supportedFamilies([.systemSmall, .accessoryCircular, .accessoryRectangular])
     }
 }
