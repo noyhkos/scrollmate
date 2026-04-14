@@ -20,10 +20,10 @@
 
 // MARK: - Notifications
 "notification.start.title" = "Let's Scroll!";
-"notification.start.body" = "Starting your session.";
+"notification.start.body" = "Reminder every %d min.";
 "notification.end.title" = "Good choice mate!";
 "notification.end.body" = "%@ scrolled.";
-"notification.reminder.title" = "Still scrolling?";
+"notification.reminder.title" = "Are you having fun?";
 "notification.action.confirm" = "Yes";
 "notification.action.stop" = "Stop Scrolling";
 
@@ -57,7 +57,7 @@
 "howto.step2.title" = "Get reminded";
 "howto.step2.body" = "You'll receive a notification every few minutes as a gentle nudge to stop scrolling.";
 "howto.step3.title" = "Set your interval";
-"howto.step3.body" = "Tap the interval picker to choose how often you want to be reminded — from 5 to 60 minutes.";
+"howto.step3.body" = "Tap the interval picker to choose how often you want to be reminded — from 1 to 60 minutes.";
 "howto.step4.title" = "Stop";
 "howto.step4.body" = "Tap the crown button to end your session. Your scroll time is saved to today's log.";
 

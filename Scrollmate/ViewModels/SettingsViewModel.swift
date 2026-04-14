@@ -7,7 +7,7 @@ class SettingsViewModel: ObservableObject {
     @Published var selectedInterval: Int
     @Published var isEnabled: Bool
 
-    static let validIntervals = Array(stride(from: 5, through: 60, by: 5))
+    static let validIntervals = [1, 2, 3, 4] + Array(stride(from: 5, through: 60, by: 5))
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -51,7 +51,7 @@ class SettingsViewModel: ObservableObject {
             let now = Date()
             SharedStorage.shared.activeTimers[scrollmateTimerKey] = now
             SharedStorage.shared.notificationInterval = selectedInterval
-            nm.sendStartNotification()
+            nm.sendStartNotification(intervalMinutes: selectedInterval)
             let interval = selectedInterval
             Task.detached {
                 nm.scheduleRepeatingNotification(intervalMinutes: interval, startTime: now)

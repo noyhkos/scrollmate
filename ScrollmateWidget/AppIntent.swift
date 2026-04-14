@@ -28,10 +28,12 @@ func performTimerToggle() async {
         let now = Date()
         SharedStorage.shared.activeTimers[scrollmateTimerKey] = now
         let interval = SharedStorage.shared.notificationInterval
-        sendStartNotification()
+        sendStartNotification(intervalMinutes: interval)
         scheduleRepeatingNotification(intervalMinutes: interval, startTime: now)
     }
 
+    // Small delay to ensure UserDefaults is flushed before widget reads it
+    try? await Task.sleep(nanoseconds: 100_000_000)
     WidgetCenter.shared.reloadAllTimelines()
     ControlCenter.shared.reloadAllControls()
 
@@ -63,10 +65,10 @@ private func setupNotificationCategory() {
     UNUserNotificationCenter.current().setNotificationCategories([category])
 }
 
-private func sendStartNotification() {
+private func sendStartNotification(intervalMinutes: Int) {
     let content = UNMutableNotificationContent()
     content.title = String(localized: "notification.start.title")
-    content.body = String(localized: "notification.start.body")
+    content.body = String(format: String(localized: "notification.start.body"), intervalMinutes)
     content.sound = .default
     let request = UNNotificationRequest(
         identifier: startNotificationId,

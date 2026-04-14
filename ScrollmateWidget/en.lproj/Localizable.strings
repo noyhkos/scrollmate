@@ -20,10 +20,10 @@
 
 // MARK: - Notifications
 "notification.start.title" = "Let's Scroll!";
-"notification.start.body" = "Starting your session.";
+"notification.start.body" = "Reminder every %d min.";
 "notification.end.title" = "Good choice mate!";
 "notification.end.body" = "%@ scrolled.";
-"notification.reminder.title" = "Still scrolling?";
+"notification.reminder.title" = "Are you having fun?";
 "notification.action.confirm" = "Yes";
 "notification.action.stop" = "Stop Scrolling";
 

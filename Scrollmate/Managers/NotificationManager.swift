@@ -62,10 +62,10 @@ class NotificationManager: NSObject, ObservableObject {
         UNUserNotificationCenter.current().setNotificationCategories([category])
     }
 
-    nonisolated func sendStartNotification() {
+    nonisolated func sendStartNotification(intervalMinutes: Int) {
         let content = UNMutableNotificationContent()
         content.title = String(localized: "notification.start.title")
-        content.body = String(localized: "notification.start.body")
+        content.body = String(format: String(localized: "notification.start.body"), intervalMinutes)
         content.sound = .default
         let request = UNNotificationRequest(
             identifier: startNotificationId,
@@ -152,6 +152,8 @@ extension NotificationManager: UNUserNotificationCenterDelegate {
             }
             SharedStorage.shared.activeTimers = [:]
             NotificationManager.shared.cancelReminderNotifications()
+            // Delay to ensure UserDefaults is flushed before widget reads it
+            try? await Task.sleep(nanoseconds: 100_000_000)
             WidgetCenter.shared.reloadAllTimelines()
             ControlCenter.shared.reloadAllControls()
             NotificationCenter.default.post(name: scrollmateStopNotification, object: nil)

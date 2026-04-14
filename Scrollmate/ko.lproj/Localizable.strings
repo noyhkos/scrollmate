@@ -20,10 +20,10 @@
 
 // MARK: - Notifications
 "notification.start.title" = "Let's Scroll!";
-"notification.start.body" = "세션을 시작합니다.";
+"notification.start.body" = "%d분마다 알림을 드릴게요.";
 "notification.end.title" = "좋은 선택이에요!";
 "notification.end.body" = "%@";
-"notification.reminder.title" = "스크롤 중이세요?";
+"notification.reminder.title" = "재밌게 즐기고 계신가요?";
 "notification.action.confirm" = "네";
 "notification.action.stop" = "스크롤 멈추기";
 
@@ -57,7 +57,7 @@
 "howto.step2.title" = "알림 받기";
 "howto.step2.body" = "몇 분마다 알림을 받아 스크롤을 멈추도록 유도해줘요.";
 "howto.step3.title" = "주기 설정";
-"howto.step3.body" = "인터벌 선택기를 눌러 알림 주기를 5~60분 사이에서 설정하세요.";
+"howto.step3.body" = "인터벌 선택기를 눌러 알림 주기를 1~60분 사이에서 설정하세요.";
 "howto.step4.title" = "종료";
 "howto.step4.body" = "크라운 버튼을 눌러 세션을 종료하세요. 스크롤 시간이 오늘의 기록에 저장돼요.";
 

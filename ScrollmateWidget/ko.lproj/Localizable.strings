@@ -20,10 +20,10 @@
 
 // MARK: - Notifications
 "notification.start.title" = "Let's Scroll!";
-"notification.start.body" = "세션을 시작합니다.";
+"notification.start.body" = "%d분마다 알림을 드릴게요.";
 "notification.end.title" = "좋은 선택이에요!";
 "notification.end.body" = "%@";
-"notification.reminder.title" = "스크롤 중이세요?";
+"notification.reminder.title" = "재밌게 즐기고 계신가요?";
 "notification.action.confirm" = "네";
 "notification.action.stop" = "스크롤 멈추기";
 
