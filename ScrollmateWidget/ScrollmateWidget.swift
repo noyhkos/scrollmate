@@ -2,6 +2,17 @@ import WidgetKit
 import SwiftUI
 import AppIntents
 
+private extension Color {
+    init(hex: String) {
+        let hex = hex.trimmingCharacters(in: CharacterSet(charactersIn: "#"))
+        let value = UInt64(hex, radix: 16) ?? 0
+        let r = Double((value >> 16) & 0xFF) / 255
+        let g = Double((value >> 8) & 0xFF) / 255
+        let b = Double(value & 0xFF) / 255
+        self.init(red: r, green: g, blue: b)
+    }
+}
+
 struct SimpleEntry: TimelineEntry {
     let date: Date
     let isActive: Bool
@@ -27,8 +38,8 @@ struct Provider: TimelineProvider {
 
 struct ScrollmateWidgetEntryView: View {
     var entry: Provider.Entry
-    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.widgetFamily) private var widgetFamily
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         if widgetFamily == .accessoryCircular {
@@ -54,7 +65,7 @@ struct ScrollmateWidgetEntryView: View {
         VStack(spacing: 0) {
             // Header
             Text("widget.title")
-                .font(.system(size: 18, weight: .semibold, design: .default))
+                .font(.system(size: 20, weight: .bold, design: .serif))
                 .foregroundColor(.primary)
                 .frame(maxWidth: .infinity, alignment: .center)
 //                .padding(.bottom, )
@@ -96,8 +107,16 @@ struct ScrollmateWidgetEntryView: View {
             }
             .buttonStyle(.plain)
         }
-        .padding(8)
-        .containerBackground(colorScheme == .dark ? Color.black : Color.white, for: .widget)
+        .padding(4)
+        .containerBackground(for: .widget) {
+            LinearGradient(
+                colors: colorScheme == .dark
+                    ? [Color(hex: "#111111"), Color(hex: "#1c1c1c")]
+                    : [Color(hex: "#f8f8f8"), Color(hex: "#e4e4e4")],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        }
     }
 }
 
