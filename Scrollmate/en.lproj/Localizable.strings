@@ -38,6 +38,24 @@
 "duration.minutes" = "%d min";
 "duration.less" = "Less than 1 min";
 
+// MARK: - Tip
+"tip.fab.label" = "Buy me a coffee";
+"tip.title" = "Buy me a coffee";
+"tip.subtitle" = "Scrollmate is free.\nIf you enjoy it, a small tip means a lot ☺️";
+"tip.option1.label" = "Small treat";
+"tip.option2.label" = "Nice one";
+"tip.option3.label" = "Generous!";
+"tip.option4.label" = "Big thanks!";
+"tip.restore" = "Restore purchase";
+
+// MARK: - Tip Tiers
+"tier.none"    = "Default";
+"tier.bronze"  = "Bronze";
+"tier.silver"  = "Silver";
+"tier.gold"    = "Gold";
+"tier.emerald" = "Emerald";
+"tier.diamond" = "Diamond";
+
 // MARK: - Interval
 "interval.label" = "Reminder interval";
 

@@ -53,6 +53,42 @@ let DEFAULT_NOTIFICATION_INTERVAL = 5
 
 let ACTIVE_TIMERS_KEY = "activeTimers"
 let SCROLL_SESSIONS_KEY = "scrollSessions"
+let TIP_TIER_KEY = "tipTier"
+
+// MARK: - Tip Tier
+
+enum TipTier: Int, Codable, Comparable {
+    case none    = 0
+    case bronze  = 1
+    case silver  = 2
+    case gold    = 3
+    case emerald = 4
+    case diamond = 5
+
+    static func < (lhs: TipTier, rhs: TipTier) -> Bool { lhs.rawValue < rhs.rawValue }
+
+    var productId: String? {
+        switch self {
+        case .none:    return nil
+        case .bronze:  return "com.scrollmate.tip.bronze"
+        case .silver:  return "com.scrollmate.tip.silver"
+        case .gold:    return "com.scrollmate.tip.gold"
+        case .emerald: return "com.scrollmate.tip.emerald"
+        case .diamond: return "com.scrollmate.tip.diamond"
+        }
+    }
+
+    var price: String {
+        switch self {
+        case .none:    return ""
+        case .bronze:  return "$0.99"
+        case .silver:  return "$2.99"
+        case .gold:    return "$4.99"
+        case .emerald: return "$9.99"
+        case .diamond: return "$14.99"
+        }
+    }
+}
 
 class SharedStorage {
     static let shared = SharedStorage()
@@ -101,6 +137,21 @@ class SharedStorage {
         set {
             let data = try? JSONEncoder().encode(newValue)
             defaults.set(data, forKey: SCROLL_SESSIONS_KEY)
+            defaults.synchronize()
+        }
+    }
+
+    // MARK: - Tip Tier Storage
+
+    var purchasedTier: TipTier {
+        get {
+            let raw = defaults.integer(forKey: TIP_TIER_KEY)
+            return TipTier(rawValue: raw) ?? .none
+        }
+        set {
+            // Always accept the purchase; display the highest tier ever purchased
+            let highest = max(newValue, purchasedTier)
+            defaults.set(highest.rawValue, forKey: TIP_TIER_KEY)
             defaults.synchronize()
         }
     }
