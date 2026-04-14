@@ -15,7 +15,7 @@ struct ContentView: View {
                 .allowsHitTesting(splashOpacity > 0)
                 .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        withAnimation(.easeOut(duration: 0.1)) {
+                        withAnimation(.easeOut(duration: 0.2)) {
                             splashOpacity = 0
                         }
                     }
