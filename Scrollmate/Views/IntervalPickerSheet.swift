@@ -23,7 +23,7 @@ struct IntervalPickerSheet: View {
             .padding(.bottom, 8)
 
             Picker("", selection: $pendingInterval) {
-                ForEach(Array(stride(from: 5, through: 60, by: 5)), id: \.self) { minute in
+                ForEach([1, 2, 3, 4] + Array(stride(from: 5, through: 60, by: 5)), id: \.self) { minute in
                     Text(verbatim: "\(minute) \(String(localized: "unit.min"))")
                         .foregroundColor(.appTextPrimary)
                         .tag(minute)
