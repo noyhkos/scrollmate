@@ -49,7 +49,7 @@ struct ScrollTabView: View {
                     Capsule()
                         .fill(Color.appSurface)
                         .overlay(
-                            Capsule().strokeBorder(Color.appBorder, lineWidth: 1)
+                            Capsule().strokeBorder(Color.appAccent, lineWidth: 1)
                         )
                 )
                 .shadow(color: .black.opacity(0.5), radius: 8, y: 4)
