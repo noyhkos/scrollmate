@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A640628A2F95C24000289D39 /* Scrollmate: Scroll Smarter.storekit in Resources */ = {isa = PBXBuildFile; fileRef = A64062892F95C24000289D39 /* Scrollmate: Scroll Smarter.storekit */; };
 		A6594D272F8BA19E00665094 /* Scrollmate.icon in Resources */ = {isa = PBXBuildFile; fileRef = A6594D262F8BA19E00665094 /* Scrollmate.icon */; };
 		A6B46CC52F3C9E08000FAC81 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B46CC42F3C9E08000FAC81 /* WidgetKit.framework */; };
 		A6B46CC72F3C9E09000FAC81 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B46CC62F3C9E09000FAC81 /* SwiftUI.framework */; };
@@ -53,6 +54,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A64062892F95C24000289D39 /* Scrollmate: Scroll Smarter.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Scrollmate: Scroll Smarter.storekit"; sourceTree = "<group>"; };
 		A6594D262F8BA19E00665094 /* Scrollmate.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Scrollmate.icon; sourceTree = "<group>"; };
 		A6B46C912F3C9781000FAC81 /* Scrollmate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrollmate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6B46C9E2F3C9783000FAC81 /* ScrollmateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrollmateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,6 +157,7 @@
 		A6B46C882F3C9781000FAC81 = {
 			isa = PBXGroup;
 			children = (
+				A64062892F95C24000289D39 /* Scrollmate: Scroll Smarter.storekit */,
 				A6B46CDC2F3C9E36000FAC81 /* ScrollmateWidgetExtension.entitlements */,
 				A6B46C932F3C9781000FAC81 /* Scrollmate */,
 				A6B46CA12F3C9783000FAC81 /* ScrollmateTests */,
@@ -337,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6594D272F8BA19E00665094 /* Scrollmate.icon in Resources */,
+				A640628A2F95C24000289D39 /* Scrollmate: Scroll Smarter.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

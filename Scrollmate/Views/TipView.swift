@@ -1,10 +1,11 @@
 import SwiftUI
+import StoreKit
 
 struct TipView: View {
     @Environment(\.dismiss) private var dismiss
+    @ObservedObject private var store = StoreKitManager.shared
 
     private let tiers: [TipTier] = [.bronze, .silver, .gold, .emerald, .diamond]
-
     @State private var selectedTier: TipTier = .bronze
 
     var body: some View {
@@ -31,49 +32,80 @@ struct TipView: View {
                             .lineSpacing(3)
                     }
                     .padding(.horizontal, 32)
-                    .padding(.bottom, 38)
+                    .padding(.bottom, 48)
 
-                    // Tier cards list
+                    // Tier cards
                     VStack(spacing: 10) {
                         ForEach(tiers, id: \.rawValue) { tier in
-                            TierCard(tier: tier, isSelected: selectedTier == tier)
-                                .onTapGesture { selectedTier = tier }
+                            TierCard(
+                                tier: tier,
+                                priceLabel: store.priceLabel(for: tier),
+                                isSelected: selectedTier == tier,
+                                isPurchased: SharedStorage.shared.purchasedTier >= tier
+                            )
+                            .onTapGesture { selectedTier = tier }
                         }
                     }
                     .padding(.horizontal, 24)
                     .padding(.bottom, 16)
 
+                    // Error message
+                    if let error = store.purchaseError {
+                        Text(error)
+                            .font(.system(size: 13))
+                            .foregroundColor(.red)
+                            .padding(.bottom, 8)
+                    }
+
                     // CTA
                     Button {
-                        // StoreKit purchase — implement after App Store Connect setup
-                        SharedStorage.shared.purchasedTier = selectedTier
-                        dismiss()
+                        Task {
+                            if let product = store.products.first(where: { $0.id == selectedTier.productId }) {
+                                await store.purchase(product)
+                                if SharedStorage.shared.purchasedTier >= selectedTier {
+                                    dismiss()
+                                }
+                            }
+                        }
                     } label: {
-                        Text("\(selectedTier.price) \(String(localized: "tip.cta"))")
-                            .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 16)
-                            .background(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(Color.appAccent)
-                            )
+                        ZStack {
+                            Text("\(store.priceLabel(for: selectedTier)) \(String(localized: "tip.cta"))")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.white)
+                                .opacity(store.isPurchasing ? 0 : 1)
+
+                            if store.isPurchasing {
+                                ProgressView()
+                                    .tint(.white)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(store.products.isEmpty ? Color.gray : Color.appAccent)
+                        )
                     }
+                    .disabled(store.isPurchasing || store.products.isEmpty)
                     .padding(.horizontal, 24)
                     .padding(.bottom, 12)
 
                     // Restore
                     Button {
-                        // StoreKit restore — implement after App Store Connect setup
+                        Task { await store.restorePurchases() }
                     } label: {
                         Text("tip.restore")
                             .font(.system(size: 13, weight: .regular))
                             .foregroundColor(.appTextSecondary.opacity(0.5))
                     }
+                    .disabled(store.isPurchasing)
                     .padding(.bottom, 32)
                 }
-                .padding(.top, 62)
+                .padding(.top, 92)
             }
+        }
+        .task {
+            await store.loadProducts()
         }
     }
 }
@@ -82,7 +114,9 @@ struct TipView: View {
 
 private struct TierCard: View {
     let tier: TipTier
+    let priceLabel: String
     let isSelected: Bool
+    let isPurchased: Bool
 
     var body: some View {
         HStack(spacing: 16) {
@@ -102,14 +136,18 @@ private struct TierCard: View {
                 Text(tier.labelKey)
                     .font(.system(size: 15, weight: .semibold))
                     .foregroundColor(.appTextPrimary)
-                Text(tier.price)
+                Text(priceLabel)
                     .font(.system(size: 13, weight: .regular))
                     .foregroundColor(.appTextSecondary)
             }
 
             Spacer()
 
-            if isSelected {
+            if isPurchased {
+                Image(systemName: "checkmark.seal.fill")
+                    .font(.system(size: 22))
+                    .foregroundColor(.appAccent)
+            } else if isSelected {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 22))
                     .foregroundColor(.appAccent)

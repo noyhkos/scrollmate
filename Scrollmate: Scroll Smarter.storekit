@@ -1,0 +1,142 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "A5757491",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "6762579115",
+      "localizations" : [
+        {
+          "description" : "Scrollmate를 응원하고 브론즈 링을 해제하세요.",
+          "displayName" : "브론즈",
+          "locale" : "ko"
+        },
+        {
+          "description" : "Support Scrollmate and unlock the Bronze ring.",
+          "displayName" : "Bronze",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.scrollmate.tip.bronze",
+      "referenceName" : "Bronze Tip",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "14.99",
+      "familyShareable" : false,
+      "internalID" : "6762579554",
+      "localizations" : [
+        {
+          "description" : "Support Scrollmate and unlock the Diamond ring.",
+          "displayName" : "Diamond",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Scrollmate를 응원하고 다이아 링을 해제하세요.",
+          "displayName" : "다이아몬드",
+          "locale" : "ko"
+        }
+      ],
+      "productID" : "com.scrollmate.tip.diamond",
+      "referenceName" : "Diamond Tip",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "9.99",
+      "familyShareable" : false,
+      "internalID" : "6762579520",
+      "localizations" : [
+        {
+          "description" : "Support Scrollmate and unlock the Emerald ring.",
+          "displayName" : "Emerald",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Scrollmate를 응원하고 에메랄드 링을 해제하세요.",
+          "displayName" : "에메랄드",
+          "locale" : "ko"
+        }
+      ],
+      "productID" : "com.scrollmate.tip.emerald",
+      "referenceName" : "Emerald Tip",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "6762579334",
+      "localizations" : [
+        {
+          "description" : "Support Scrollmate and unlock the Gold ring.",
+          "displayName" : "Gold",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Scrollmate를 응원하고 골드 링을 해제하세요.",
+          "displayName" : "골드",
+          "locale" : "ko"
+        }
+      ],
+      "productID" : "com.scrollmate.tip.gold",
+      "referenceName" : "Gold Tip",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "2.99",
+      "familyShareable" : false,
+      "internalID" : "6762579482",
+      "localizations" : [
+        {
+          "description" : "Support Scrollmate and unlock the Silver ring.",
+          "displayName" : "Silver",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Scrollmate를 응원하고 실버 링을 해제하세요.",
+          "displayName" : "실버",
+          "locale" : "ko"
+        }
+      ],
+      "productID" : "com.scrollmate.tip.silver",
+      "referenceName" : "Silver Tip",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6762578910",
+    "_askToBuyEnabled" : false,
+    "_billingGracePeriodEnabled" : false,
+    "_billingIssuesEnabled" : false,
+    "_developerTeamID" : "TNJDT76VS2",
+    "_disableDialogs" : false,
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 798343819.61481595,
+    "_locale" : "en_US",
+    "_renewalBillingIssuesEnabled" : false,
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+
+    ],
+    "_timeRate" : 0
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

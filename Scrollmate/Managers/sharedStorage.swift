@@ -57,7 +57,7 @@ let TIP_TIER_KEY = "tipTier"
 
 // MARK: - Tip Tier
 
-enum TipTier: Int, Codable, Comparable {
+enum TipTier: Int, Codable, Comparable, CaseIterable {
     case none    = 0
     case bronze  = 1
     case silver  = 2

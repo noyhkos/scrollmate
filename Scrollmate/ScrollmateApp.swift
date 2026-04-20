@@ -26,6 +26,10 @@ struct ScrollmateApp: App {
                 .onAppear {
                     NotificationManager.shared.setupNotificationCategory()
                 }
+                .task {
+                    // Restore purchased tiers on every launch
+                    await StoreKitManager.shared.restoreOnLaunch()
+                }
         }
     }
 }
