@@ -32,9 +32,12 @@ func performTimerToggle() async {
         scheduleRepeatingNotification(intervalMinutes: interval, startTime: now)
     }
 
-    // Small delay to ensure UserDefaults is flushed before widget reads it
-    try? await Task.sleep(nanoseconds: 100_000_000)
+    // Flush UserDefaults before widget reads the updated state
+    try? await Task.sleep(nanoseconds: 200_000_000)
     WidgetCenter.shared.reloadAllTimelines()
+    ControlCenter.shared.reloadAllControls()
+    // Second reload after a longer delay to handle throttling in non-debug builds
+    try? await Task.sleep(nanoseconds: 800_000_000)
     ControlCenter.shared.reloadAllControls()
 
     // Signal main app to sync UI state
@@ -94,14 +97,14 @@ private func sendEndNotification(startTime: Date) {
 
 private func scheduleRepeatingNotification(intervalMinutes: Int, startTime: Date) {
     setupNotificationCategory()
-    let reminderIds = (1...63).map { "\(reminderNotificationIdPrefix).\($0)" }
+    let reminderIds = (1...60).map { "\(reminderNotificationIdPrefix).\($0)" }
     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
 
     let elapsedSeconds = Int(Date().timeIntervalSince(startTime))
     let elapsedMinutes = elapsedSeconds / 60
     let startIndex = elapsedMinutes / intervalMinutes + 1
 
-    for i in 0..<63 {
+    for i in 0..<59 {
         let minutesFromStart = (startIndex + i) * intervalMinutes
         let secondsFromNow = minutesFromStart * 60 - elapsedSeconds
         guard secondsFromNow > 0 else { continue }
@@ -125,6 +128,6 @@ private func scheduleRepeatingNotification(intervalMinutes: Int, startTime: Date
 }
 
 private func cancelReminderNotifications() {
-    let reminderIds = (1...63).map { "\(reminderNotificationIdPrefix).\($0)" }
+    let reminderIds = (1...60).map { "\(reminderNotificationIdPrefix).\($0)" }
     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
 }
