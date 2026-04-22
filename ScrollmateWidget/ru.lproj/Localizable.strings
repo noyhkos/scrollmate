@@ -1,0 +1,46 @@
+// MARK: - UI
+"greeting.title" = "G'day mate!";
+"greeting.subtitle" = "Let's Scroll";
+"splash.line1" = "Hello?";
+"splash.line2" = "What a Wonderful Day, Innit?";
+"unit.min" = "мин";
+
+// MARK: - Permission
+"permission.title" = "Требуется разрешение на уведомления";
+"permission.body" = "Разрешите уведомления в Настройках, чтобы получать оповещения.";
+"permission.settings" = "Открыть настройки";
+
+// MARK: - Common
+"common.cancel" = "Отмена";
+"common.confirm" = "Подтвердить";
+
+// MARK: - Session
+"session.title" = "Сегодняшние скроллы";
+"session.empty" = "Сессий пока нет";
+
+// MARK: - Notifications
+"notification.start.title" = "Let's Scroll!";
+"notification.start.body" = "Напоминание каждые %d мин.";
+"notification.end.title" = "Хороший выбор!";
+"notification.end.body" = "Прокрутка: %@.";
+"notification.reminder.title" = "Весело проводите время?";
+"notification.action.confirm" = "Да";
+"notification.action.stop" = "Остановить скролл";
+
+// MARK: - Elapsed (reminder body)
+"elapsed.minutes" = "Прошло %d минут с начала прокрутки.";
+"elapsed.hours" = "Прошло %d часов с начала прокрутки.";
+"elapsed.hours.minutes" = "Прошло %d часов %d минут с начала прокрутки.";
+
+// MARK: - Duration (end notification body / session list)
+"duration.hours.minutes" = "%d ч %d мин";
+"duration.hours" = "%d ч";
+"duration.minutes" = "%d мин";
+"duration.less" = "Менее 1 мин";
+
+// MARK: - Widget
+"widget.title" = "Let's Scroll!";
+"widget.start" = "Старт";
+"widget.stop" = "Стоп";
+"widget.description" = "Запустить или остановить уведомления.";
+"control.description" = "Переключить уведомления";

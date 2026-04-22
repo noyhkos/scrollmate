@@ -1,0 +1,94 @@
+// MARK: - UI
+"greeting.title" = "G'day mate!";
+"greeting.subtitle" = "Let's Scroll";
+"splash.line1" = "Hello?";
+"splash.line2" = "What a Wonderful Day, Innit?";
+"unit.min" = "Min.";
+
+// MARK: - Permission
+"permission.title" = "Mitteilungsberechtigung erforderlich";
+"permission.body" = "Erlaube Mitteilungen in den Einstellungen, um Scroll-Hinweise zu erhalten.";
+"permission.settings" = "Einstellungen öffnen";
+"permission.banner.title" = "Mitteilungen sind deaktiviert";
+"permission.banner.body" = "Aktiviere Mitteilungen, um Erinnerungen zu erhalten.";
+
+// MARK: - Common
+"common.cancel" = "Abbrechen";
+"common.confirm" = "Bestätigen";
+
+// MARK: - Session
+"session.title" = "Heutige Scrolls";
+"session.empty" = "Noch keine Sitzungen";
+
+// MARK: - Notifications
+"notification.start.title" = "Let's Scroll!";
+"notification.start.body" = "Erinnerung alle %d Min.";
+"notification.end.title" = "Gute Wahl!";
+"notification.end.body" = "%@ gescrollt.";
+"notification.reminder.title" = "Macht es Spaß?";
+"notification.exhausted.title" = "Ich gebe auf. 🏳️";
+"notification.exhausted.body" = "Keine weiteren Hinweise. Tschüss...";
+"notification.action.confirm" = "Ja";
+"notification.action.stop" = "Scrollen beenden";
+
+// MARK: - Elapsed (reminder body)
+"elapsed.minutes" = "%d Minuten seit Beginn des Scrollens.";
+"elapsed.hours" = "%d Stunden seit Beginn des Scrollens.";
+"elapsed.hours.minutes" = "%d Stunden %d Minuten seit Beginn des Scrollens.";
+
+// MARK: - Duration (end notification body / session list)
+"duration.hours.minutes" = "%d Std. %d Min.";
+"duration.hours" = "%d Std.";
+"duration.minutes" = "%d Min.";
+"duration.less" = "Weniger als 1 Min.";
+
+// MARK: - Tip
+"tip.fab.label" = "Buy me a coffee";
+"tip.title" = "Buy me a coffee";
+"tip.subtitle" = "Scrollmate ist kostenlos.\nWenn es dir gefällt, freut mich ein kleines Trinkgeld ☺️";
+"tip.cta" = "Unterstützen";
+"tip.restore" = "Kauf wiederherstellen";
+"tip.retry" = "Erneut versuchen";
+"tip.error.loadfailed" = "Artikel konnten nicht geladen werden. Prüfe deine Verbindung und versuche es erneut.";
+
+// MARK: - Tip Tiers
+"tier.none"    = "Standard";
+"tier.bronze"  = "Bronze";
+"tier.silver"  = "Silber";
+"tier.gold"    = "Gold";
+"tier.emerald" = "Smaragd";
+"tier.diamond" = "Diamant";
+
+// MARK: - Interval
+"interval.label" = "Erinnerungsintervall";
+
+// MARK: - Widget
+"widget.title" = "Let's Scroll!";
+"widget.start" = "Start";
+"widget.stop" = "Stopp";
+"widget.description" = "Hinweise starten oder stoppen.";
+"control.description" = "Hinweise umschalten";
+
+// MARK: - How To
+"howto.title" = "So geht's";
+"howto.subtitle" = "Scrollmate";
+
+"howto.step1.title" = "Starten";
+"howto.step1.body" = "Tippe auf Play, um deine Scroll-Sitzung zu starten.";
+"howto.step2.title" = "Erinnert werden";
+"howto.step2.body" = "Du erhältst alle paar Minuten eine Mitteilung als sanften Hinweis, das Scrollen zu beenden.";
+"howto.step3.title" = "Intervall festlegen";
+"howto.step3.body" = "Tippe auf den Intervall-Picker, um die Häufigkeit zu wählen — von 1 bis 60 Minuten.";
+"howto.step4.title" = "Stoppen";
+"howto.step4.body" = "Tippe auf die Krone, um die Sitzung zu beenden. Deine Scroll-Zeit wird im heutigen Protokoll gespeichert.";
+
+"howto.access.title" = "Wo du umschalten kannst";
+"howto.access.subtitle" = "Alle vier Schalter sind synchron. Nutze den, der für dich am bequemsten ist.";
+"howto.access.app.title" = "App";
+"howto.access.app.body" = "Hauptbildschirm — Play zum Starten, Krone zum Stoppen.";
+"howto.access.widget.title" = "Home-Bildschirm-Widget";
+"howto.access.widget.body" = "Füge das Scrollmate-Widget zu deinem Home-Bildschirm hinzu für Ein-Tipp-Steuerung.";
+"howto.access.control.title" = "Kontrollzentrum";
+"howto.access.control.body" = "Füge den Scrollmate-Umschalter im Kontrollzentrum hinzu für schnellen Zugriff ohne App zu öffnen.";
+"howto.access.lock.title" = "Sperrbildschirm";
+"howto.access.lock.body" = "Füge ein Scrollmate-Widget über die Sperrbildschirm-Anpassung hinzu.";

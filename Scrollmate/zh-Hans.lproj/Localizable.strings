@@ -1,0 +1,94 @@
+// MARK: - UI
+"greeting.title" = "G'day mate!";
+"greeting.subtitle" = "Let's Scroll";
+"splash.line1" = "Hello?";
+"splash.line2" = "What a Wonderful Day, Innit?";
+"unit.min" = "分钟";
+
+// MARK: - Permission
+"permission.title" = "需要通知权限";
+"permission.body" = "请在设置中允许通知,以接收滑动提醒。";
+"permission.settings" = "前往设置";
+"permission.banner.title" = "通知已关闭";
+"permission.banner.body" = "开启通知以接收提醒。";
+
+// MARK: - Common
+"common.cancel" = "取消";
+"common.confirm" = "确认";
+
+// MARK: - Session
+"session.title" = "今日滑动记录";
+"session.empty" = "暂无记录";
+
+// MARK: - Notifications
+"notification.start.title" = "Let's Scroll!";
+"notification.start.body" = "每 %d 分钟提醒一次。";
+"notification.end.title" = "不错的选择!";
+"notification.end.body" = "已滑动 %@。";
+"notification.reminder.title" = "玩得开心吗?";
+"notification.exhausted.title" = "我认输了 🏳️";
+"notification.exhausted.body" = "不再提醒了,再见...";
+"notification.action.confirm" = "是";
+"notification.action.stop" = "停止滑动";
+
+// MARK: - Elapsed (reminder body)
+"elapsed.minutes" = "开始滑动已经 %d 分钟了。";
+"elapsed.hours" = "开始滑动已经 %d 小时了。";
+"elapsed.hours.minutes" = "开始滑动已经 %d 小时 %d 分钟了。";
+
+// MARK: - Duration (end notification body / session list)
+"duration.hours.minutes" = "%d 小时 %d 分钟";
+"duration.hours" = "%d 小时";
+"duration.minutes" = "%d 分钟";
+"duration.less" = "不到 1 分钟";
+
+// MARK: - Tip
+"tip.fab.label" = "Buy me a coffee";
+"tip.title" = "Buy me a coffee";
+"tip.subtitle" = "Scrollmate 免费使用。\n如果喜欢,一点小费就是莫大的鼓励 ☺️";
+"tip.cta" = "支持";
+"tip.restore" = "恢复购买";
+"tip.retry" = "重试";
+"tip.error.loadfailed" = "无法加载商品。请检查网络后重试。";
+
+// MARK: - Tip Tiers
+"tier.none"    = "默认";
+"tier.bronze"  = "青铜";
+"tier.silver"  = "白银";
+"tier.gold"    = "黄金";
+"tier.emerald" = "翡翠";
+"tier.diamond" = "钻石";
+
+// MARK: - Interval
+"interval.label" = "提醒间隔";
+
+// MARK: - Widget
+"widget.title" = "Let's Scroll!";
+"widget.start" = "开始";
+"widget.stop" = "停止";
+"widget.description" = "开始或停止提醒。";
+"control.description" = "切换提醒";
+
+// MARK: - How To
+"howto.title" = "使用方法";
+"howto.subtitle" = "Scrollmate";
+
+"howto.step1.title" = "开始";
+"howto.step1.body" = "点击播放按钮开始记录你的滑动会话。";
+"howto.step2.title" = "获取提醒";
+"howto.step2.body" = "每隔几分钟你会收到一条通知,轻轻提醒你停止滑动。";
+"howto.step3.title" = "设置间隔";
+"howto.step3.body" = "点击间隔选择器,选择希望被提醒的频率 — 1 到 60 分钟之间。";
+"howto.step4.title" = "停止";
+"howto.step4.body" = "点击皇冠按钮结束会话。你的滑动时间会保存到今日记录中。";
+
+"howto.access.title" = "在何处切换";
+"howto.access.subtitle" = "四个开关全部同步。使用最方便的一个即可。";
+"howto.access.app.title" = "App";
+"howto.access.app.body" = "主屏幕 — 点击播放开始,点击皇冠停止。";
+"howto.access.widget.title" = "主屏幕小组件";
+"howto.access.widget.body" = "将 Scrollmate 小组件添加到主屏幕,一键操控。";
+"howto.access.control.title" = "控制中心";
+"howto.access.control.body" = "在控制中心添加 Scrollmate 切换按钮,无需打开 App 即可快速使用。";
+"howto.access.lock.title" = "锁屏";
+"howto.access.lock.body" = "通过锁屏自定义添加 Scrollmate 小组件。";

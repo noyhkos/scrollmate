@@ -1,0 +1,46 @@
+// MARK: - UI
+"greeting.title" = "G'day mate!";
+"greeting.subtitle" = "Let's Scroll";
+"splash.line1" = "Hello?";
+"splash.line2" = "What a Wonderful Day, Innit?";
+"unit.min" = "分钟";
+
+// MARK: - Permission
+"permission.title" = "需要通知权限";
+"permission.body" = "请在设置中允许通知,以接收滑动提醒。";
+"permission.settings" = "前往设置";
+
+// MARK: - Common
+"common.cancel" = "取消";
+"common.confirm" = "确认";
+
+// MARK: - Session
+"session.title" = "今日滑动记录";
+"session.empty" = "暂无记录";
+
+// MARK: - Notifications
+"notification.start.title" = "Let's Scroll!";
+"notification.start.body" = "每 %d 分钟提醒一次。";
+"notification.end.title" = "不错的选择!";
+"notification.end.body" = "已滑动 %@。";
+"notification.reminder.title" = "玩得开心吗?";
+"notification.action.confirm" = "是";
+"notification.action.stop" = "停止滑动";
+
+// MARK: - Elapsed (reminder body)
+"elapsed.minutes" = "开始滑动已经 %d 分钟了。";
+"elapsed.hours" = "开始滑动已经 %d 小时了。";
+"elapsed.hours.minutes" = "开始滑动已经 %d 小时 %d 分钟了。";
+
+// MARK: - Duration (end notification body / session list)
+"duration.hours.minutes" = "%d 小时 %d 分钟";
+"duration.hours" = "%d 小时";
+"duration.minutes" = "%d 分钟";
+"duration.less" = "不到 1 分钟";
+
+// MARK: - Widget
+"widget.title" = "Let's Scroll!";
+"widget.start" = "开始";
+"widget.stop" = "停止";
+"widget.description" = "开始或停止提醒。";
+"control.description" = "切换提醒";

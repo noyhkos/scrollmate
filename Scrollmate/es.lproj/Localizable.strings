@@ -1,0 +1,94 @@
+// MARK: - UI
+"greeting.title" = "G'day mate!";
+"greeting.subtitle" = "Let's Scroll";
+"splash.line1" = "Hello?";
+"splash.line2" = "What a Wonderful Day, Innit?";
+"unit.min" = "min";
+
+// MARK: - Permission
+"permission.title" = "Se requiere permiso de notificaciones";
+"permission.body" = "Permite las notificaciones en Ajustes para recibir avisos de scroll.";
+"permission.settings" = "Ir a Ajustes";
+"permission.banner.title" = "Las notificaciones están desactivadas";
+"permission.banner.body" = "Activa las notificaciones para recibir recordatorios.";
+
+// MARK: - Common
+"common.cancel" = "Cancelar";
+"common.confirm" = "Aceptar";
+
+// MARK: - Session
+"session.title" = "Scrolls de hoy";
+"session.empty" = "Aún no hay sesiones";
+
+// MARK: - Notifications
+"notification.start.title" = "Let's Scroll!";
+"notification.start.body" = "Recordatorio cada %d min.";
+"notification.end.title" = "¡Buena elección!";
+"notification.end.body" = "%@ de scroll.";
+"notification.reminder.title" = "¿Te lo estás pasando bien?";
+"notification.exhausted.title" = "Me rindo. 🏳️";
+"notification.exhausted.body" = "No más alertas. Adiós...";
+"notification.action.confirm" = "Sí";
+"notification.action.stop" = "Dejar de hacer scroll";
+
+// MARK: - Elapsed (reminder body)
+"elapsed.minutes" = "%d minutos desde que empezaste a hacer scroll.";
+"elapsed.hours" = "%d horas desde que empezaste a hacer scroll.";
+"elapsed.hours.minutes" = "%d horas y %d minutos desde que empezaste a hacer scroll.";
+
+// MARK: - Duration (end notification body / session list)
+"duration.hours.minutes" = "%d h %d min";
+"duration.hours" = "%d h";
+"duration.minutes" = "%d min";
+"duration.less" = "Menos de 1 min";
+
+// MARK: - Tip
+"tip.fab.label" = "Buy me a coffee";
+"tip.title" = "Buy me a coffee";
+"tip.subtitle" = "Scrollmate es gratis.\nSi te gusta, una pequeña propina significa mucho ☺️";
+"tip.cta" = "Apoyar";
+"tip.restore" = "Restaurar compra";
+"tip.retry" = "Reintentar";
+"tip.error.loadfailed" = "No se pudieron cargar los artículos. Revisa tu conexión e inténtalo de nuevo.";
+
+// MARK: - Tip Tiers
+"tier.none"    = "Predeterminado";
+"tier.bronze"  = "Bronce";
+"tier.silver"  = "Plata";
+"tier.gold"    = "Oro";
+"tier.emerald" = "Esmeralda";
+"tier.diamond" = "Diamante";
+
+// MARK: - Interval
+"interval.label" = "Intervalo de recordatorio";
+
+// MARK: - Widget
+"widget.title" = "Let's Scroll!";
+"widget.start" = "Iniciar";
+"widget.stop" = "Detener";
+"widget.description" = "Inicia o detiene las alertas.";
+"control.description" = "Alternar alertas";
+
+// MARK: - How To
+"howto.title" = "Cómo usarlo";
+"howto.subtitle" = "Scrollmate";
+
+"howto.step1.title" = "Iniciar";
+"howto.step1.body" = "Pulsa el botón de play para empezar a registrar tu sesión de scroll.";
+"howto.step2.title" = "Recibir recordatorios";
+"howto.step2.body" = "Recibirás una notificación cada pocos minutos como un suave empujón para dejar de hacer scroll.";
+"howto.step3.title" = "Configura tu intervalo";
+"howto.step3.body" = "Toca el selector de intervalo para elegir cada cuánto quieres ser recordado — de 1 a 60 minutos.";
+"howto.step4.title" = "Detener";
+"howto.step4.body" = "Pulsa el botón de la corona para terminar la sesión. Tu tiempo de scroll se guarda en el registro de hoy.";
+
+"howto.access.title" = "Dónde alternarlo";
+"howto.access.subtitle" = "Los cuatro interruptores están sincronizados. Usa el que te resulte más cómodo.";
+"howto.access.app.title" = "App";
+"howto.access.app.body" = "La pantalla principal — pulsa play para iniciar, la corona para detener.";
+"howto.access.widget.title" = "Widget de pantalla de inicio";
+"howto.access.widget.body" = "Añade el widget de Scrollmate a tu pantalla de inicio para controlarlo con un toque.";
+"howto.access.control.title" = "Centro de Control";
+"howto.access.control.body" = "Añade el widget de Scrollmate al Centro de Control para un acceso rápido sin abrir la app.";
+"howto.access.lock.title" = "Pantalla de bloqueo";
+"howto.access.lock.body" = "Añade un widget de Scrollmate desde la personalización de la pantalla de bloqueo.";

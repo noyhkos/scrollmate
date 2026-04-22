@@ -1,0 +1,94 @@
+// MARK: - UI
+"greeting.title" = "G'day mate!";
+"greeting.subtitle" = "Let's Scroll";
+"splash.line1" = "Hello?";
+"splash.line2" = "What a Wonderful Day, Innit?";
+"unit.min" = "分";
+
+// MARK: - Permission
+"permission.title" = "通知の許可が必要です";
+"permission.body" = "スクロール通知を受け取るには、設定で通知を許可してください。";
+"permission.settings" = "設定を開く";
+"permission.banner.title" = "通知がオフになっています";
+"permission.banner.body" = "リマインダーを受け取るには通知をオンにしてください。";
+
+// MARK: - Common
+"common.cancel" = "キャンセル";
+"common.confirm" = "確認";
+
+// MARK: - Session
+"session.title" = "今日のスクロール";
+"session.empty" = "まだセッションはありません";
+
+// MARK: - Notifications
+"notification.start.title" = "Let's Scroll!";
+"notification.start.body" = "%d分ごとにお知らせします。";
+"notification.end.title" = "いい選択ですね!";
+"notification.end.body" = "%@スクロールしました。";
+"notification.reminder.title" = "楽しんでいますか?";
+"notification.exhausted.title" = "降参します 🏳️";
+"notification.exhausted.body" = "これ以上お知らせしません。さようなら...";
+"notification.action.confirm" = "はい";
+"notification.action.stop" = "スクロールをやめる";
+
+// MARK: - Elapsed (reminder body)
+"elapsed.minutes" = "スクロール開始から%d分が経ちました。";
+"elapsed.hours" = "スクロール開始から%d時間が経ちました。";
+"elapsed.hours.minutes" = "スクロール開始から%d時間%d分が経ちました。";
+
+// MARK: - Duration (end notification body / session list)
+"duration.hours.minutes" = "%d時間%d分";
+"duration.hours" = "%d時間";
+"duration.minutes" = "%d分";
+"duration.less" = "1分未満";
+
+// MARK: - Tip
+"tip.fab.label" = "Buy me a coffee";
+"tip.title" = "Buy me a coffee";
+"tip.subtitle" = "Scrollmateは無料です。\n気に入っていただけたら、ちょっとした応援が励みになります ☺️";
+"tip.cta" = "応援する";
+"tip.restore" = "購入を復元";
+"tip.retry" = "再試行";
+"tip.error.loadfailed" = "商品を読み込めませんでした。接続を確認してもう一度お試しください。";
+
+// MARK: - Tip Tiers
+"tier.none"    = "デフォルト";
+"tier.bronze"  = "ブロンズ";
+"tier.silver"  = "シルバー";
+"tier.gold"    = "ゴールド";
+"tier.emerald" = "エメラルド";
+"tier.diamond" = "ダイヤ";
+
+// MARK: - Interval
+"interval.label" = "通知間隔";
+
+// MARK: - Widget
+"widget.title" = "Let's Scroll!";
+"widget.start" = "開始";
+"widget.stop" = "終了";
+"widget.description" = "通知を開始または終了します。";
+"control.description" = "通知の切り替え";
+
+// MARK: - How To
+"howto.title" = "使い方";
+"howto.subtitle" = "Scrollmate";
+
+"howto.step1.title" = "開始";
+"howto.step1.body" = "再生ボタンを押してスクロールセッションを始めましょう。";
+"howto.step2.title" = "リマインダーを受け取る";
+"howto.step2.body" = "数分ごとに通知が届き、スクロールをやめるきっかけになります。";
+"howto.step3.title" = "間隔を設定";
+"howto.step3.body" = "インターバルピッカーをタップして、1〜60分の間で通知の頻度を選びましょう。";
+"howto.step4.title" = "終了";
+"howto.step4.body" = "クラウンボタンを押してセッションを終了。スクロール時間は今日の記録に保存されます。";
+
+"howto.access.title" = "どこからでも操作";
+"howto.access.subtitle" = "4つのスイッチはすべて同期されています。お好みの方法をお使いください。";
+"howto.access.app.title" = "アプリ";
+"howto.access.app.body" = "メイン画面 — 再生で開始、クラウンで終了。";
+"howto.access.widget.title" = "ホーム画面ウィジェット";
+"howto.access.widget.body" = "ホーム画面にScrollmateウィジェットを追加してワンタップで操作。";
+"howto.access.control.title" = "コントロールセンター";
+"howto.access.control.body" = "コントロールセンターにScrollmateのトグルを追加すれば、アプリを開かず素早く操作できます。";
+"howto.access.lock.title" = "ロック画面";
+"howto.access.lock.body" = "ロック画面のカスタマイズからScrollmateウィジェットを追加することもできます。";

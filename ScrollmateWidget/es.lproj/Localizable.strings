@@ -1,0 +1,46 @@
+// MARK: - UI
+"greeting.title" = "G'day mate!";
+"greeting.subtitle" = "Let's Scroll";
+"splash.line1" = "Hello?";
+"splash.line2" = "What a Wonderful Day, Innit?";
+"unit.min" = "min";
+
+// MARK: - Permission
+"permission.title" = "Se requiere permiso de notificaciones";
+"permission.body" = "Permite las notificaciones en Ajustes para recibir avisos de scroll.";
+"permission.settings" = "Ir a Ajustes";
+
+// MARK: - Common
+"common.cancel" = "Cancelar";
+"common.confirm" = "Aceptar";
+
+// MARK: - Session
+"session.title" = "Scrolls de hoy";
+"session.empty" = "Aún no hay sesiones";
+
+// MARK: - Notifications
+"notification.start.title" = "Let's Scroll!";
+"notification.start.body" = "Recordatorio cada %d min.";
+"notification.end.title" = "¡Buena elección!";
+"notification.end.body" = "%@ de scroll.";
+"notification.reminder.title" = "¿Te lo estás pasando bien?";
+"notification.action.confirm" = "Sí";
+"notification.action.stop" = "Dejar de hacer scroll";
+
+// MARK: - Elapsed (reminder body)
+"elapsed.minutes" = "%d minutos desde que empezaste a hacer scroll.";
+"elapsed.hours" = "%d horas desde que empezaste a hacer scroll.";
+"elapsed.hours.minutes" = "%d horas y %d minutos desde que empezaste a hacer scroll.";
+
+// MARK: - Duration (end notification body / session list)
+"duration.hours.minutes" = "%d h %d min";
+"duration.hours" = "%d h";
+"duration.minutes" = "%d min";
+"duration.less" = "Menos de 1 min";
+
+// MARK: - Widget
+"widget.title" = "Let's Scroll!";
+"widget.start" = "Iniciar";
+"widget.stop" = "Detener";
+"widget.description" = "Inicia o detiene las alertas.";
+"control.description" = "Alternar alertas";

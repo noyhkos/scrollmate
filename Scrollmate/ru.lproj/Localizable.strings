@@ -1,0 +1,94 @@
+// MARK: - UI
+"greeting.title" = "G'day mate!";
+"greeting.subtitle" = "Let's Scroll";
+"splash.line1" = "Hello?";
+"splash.line2" = "What a Wonderful Day, Innit?";
+"unit.min" = "мин";
+
+// MARK: - Permission
+"permission.title" = "Требуется разрешение на уведомления";
+"permission.body" = "Разрешите уведомления в Настройках, чтобы получать оповещения.";
+"permission.settings" = "Открыть настройки";
+"permission.banner.title" = "Уведомления отключены";
+"permission.banner.body" = "Включите уведомления, чтобы получать напоминания.";
+
+// MARK: - Common
+"common.cancel" = "Отмена";
+"common.confirm" = "Подтвердить";
+
+// MARK: - Session
+"session.title" = "Сегодняшние скроллы";
+"session.empty" = "Сессий пока нет";
+
+// MARK: - Notifications
+"notification.start.title" = "Let's Scroll!";
+"notification.start.body" = "Напоминание каждые %d мин.";
+"notification.end.title" = "Хороший выбор!";
+"notification.end.body" = "Прокрутка: %@.";
+"notification.reminder.title" = "Весело проводите время?";
+"notification.exhausted.title" = "Я сдаюсь. 🏳️";
+"notification.exhausted.body" = "Больше никаких уведомлений. Прощайте...";
+"notification.action.confirm" = "Да";
+"notification.action.stop" = "Остановить скролл";
+
+// MARK: - Elapsed (reminder body)
+"elapsed.minutes" = "Прошло %d минут с начала прокрутки.";
+"elapsed.hours" = "Прошло %d часов с начала прокрутки.";
+"elapsed.hours.minutes" = "Прошло %d часов %d минут с начала прокрутки.";
+
+// MARK: - Duration (end notification body / session list)
+"duration.hours.minutes" = "%d ч %d мин";
+"duration.hours" = "%d ч";
+"duration.minutes" = "%d мин";
+"duration.less" = "Менее 1 мин";
+
+// MARK: - Tip
+"tip.fab.label" = "Buy me a coffee";
+"tip.title" = "Buy me a coffee";
+"tip.subtitle" = "Scrollmate бесплатен.\nЕсли нравится, небольшая поддержка много значит ☺️";
+"tip.cta" = "Поддержать";
+"tip.restore" = "Восстановить покупку";
+"tip.retry" = "Повторить";
+"tip.error.loadfailed" = "Не удалось загрузить товары. Проверьте соединение и попробуйте снова.";
+
+// MARK: - Tip Tiers
+"tier.none"    = "По умолчанию";
+"tier.bronze"  = "Бронза";
+"tier.silver"  = "Серебро";
+"tier.gold"    = "Золото";
+"tier.emerald" = "Изумруд";
+"tier.diamond" = "Алмаз";
+
+// MARK: - Interval
+"interval.label" = "Интервал напоминаний";
+
+// MARK: - Widget
+"widget.title" = "Let's Scroll!";
+"widget.start" = "Старт";
+"widget.stop" = "Стоп";
+"widget.description" = "Запустить или остановить уведомления.";
+"control.description" = "Переключить уведомления";
+
+// MARK: - How To
+"howto.title" = "Как пользоваться";
+"howto.subtitle" = "Scrollmate";
+
+"howto.step1.title" = "Запуск";
+"howto.step1.body" = "Нажмите кнопку воспроизведения, чтобы начать отслеживать сессию прокрутки.";
+"howto.step2.title" = "Получайте напоминания";
+"howto.step2.body" = "Вы будете получать уведомления каждые несколько минут как мягкое напоминание прекратить прокрутку.";
+"howto.step3.title" = "Настройте интервал";
+"howto.step3.body" = "Нажмите на селектор интервала, чтобы выбрать частоту напоминаний — от 1 до 60 минут.";
+"howto.step4.title" = "Остановка";
+"howto.step4.body" = "Нажмите кнопку короны, чтобы завершить сессию. Время прокрутки сохранится в сегодняшнем журнале.";
+
+"howto.access.title" = "Где переключать";
+"howto.access.subtitle" = "Все четыре переключателя синхронизированы. Используйте любой удобный для вас.";
+"howto.access.app.title" = "Приложение";
+"howto.access.app.body" = "Главный экран — воспроизведение для старта, корона для остановки.";
+"howto.access.widget.title" = "Виджет на домашнем экране";
+"howto.access.widget.body" = "Добавьте виджет Scrollmate на домашний экран для управления в одно касание.";
+"howto.access.control.title" = "Пункт управления";
+"howto.access.control.body" = "Добавьте переключатель Scrollmate в Пункт управления для быстрого доступа без открытия приложения.";
+"howto.access.lock.title" = "Экран блокировки";
+"howto.access.lock.body" = "Добавьте виджет Scrollmate через настройку экрана блокировки.";

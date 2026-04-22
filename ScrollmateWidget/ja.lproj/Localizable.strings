@@ -1,0 +1,46 @@
+// MARK: - UI
+"greeting.title" = "G'day mate!";
+"greeting.subtitle" = "Let's Scroll";
+"splash.line1" = "Hello?";
+"splash.line2" = "What a Wonderful Day, Innit?";
+"unit.min" = "分";
+
+// MARK: - Permission
+"permission.title" = "通知の許可が必要です";
+"permission.body" = "スクロール通知を受け取るには、設定で通知を許可してください。";
+"permission.settings" = "設定を開く";
+
+// MARK: - Common
+"common.cancel" = "キャンセル";
+"common.confirm" = "確認";
+
+// MARK: - Session
+"session.title" = "今日のスクロール";
+"session.empty" = "まだセッションはありません";
+
+// MARK: - Notifications
+"notification.start.title" = "Let's Scroll!";
+"notification.start.body" = "%d分ごとにお知らせします。";
+"notification.end.title" = "いい選択ですね!";
+"notification.end.body" = "%@スクロールしました。";
+"notification.reminder.title" = "楽しんでいますか?";
+"notification.action.confirm" = "はい";
+"notification.action.stop" = "スクロールをやめる";
+
+// MARK: - Elapsed (reminder body)
+"elapsed.minutes" = "スクロール開始から%d分が経ちました。";
+"elapsed.hours" = "スクロール開始から%d時間が経ちました。";
+"elapsed.hours.minutes" = "スクロール開始から%d時間%d分が経ちました。";
+
+// MARK: - Duration (end notification body / session list)
+"duration.hours.minutes" = "%d時間%d分";
+"duration.hours" = "%d時間";
+"duration.minutes" = "%d分";
+"duration.less" = "1分未満";
+
+// MARK: - Widget
+"widget.title" = "Let's Scroll!";
+"widget.start" = "開始";
+"widget.stop" = "終了";
+"widget.description" = "通知を開始または終了します。";
+"control.description" = "通知の切り替え";
