@@ -13,7 +13,6 @@ struct ScrollTabView: View {
 
     @State private var elapsedSeconds: Int = 0
     @State private var showIntervalPicker = false
-    @State private var showDeniedAlert = false
     @State private var showHowTo = false
     @State private var showTip = false
     @State private var pendingInterval: Int = 5
@@ -27,6 +26,7 @@ struct ScrollTabView: View {
                 elapsedSection
                 intervalSection
                 actionButton
+                notificationBanner
                 sessionsSection
             }
         }
@@ -226,29 +226,60 @@ struct ScrollTabView: View {
         }
         .frame(maxWidth: .infinity, alignment: .center)
         .padding(.bottom, 36)
-        .alert("permission.title", isPresented: $showDeniedAlert) {
-            Button("permission.settings") { notificationManager.openAppSettings() }
-            Button("common.cancel", role: .cancel) {}
-        } message: {
-            Text("permission.body")
-        }
     }
 
     // MARK: Start Action
+    // Timer runs regardless of notification permission — notifications are an optional enhancement.
 
     private func handleStartTapped() {
-        switch notificationManager.authorizationStatus {
-        case .notDetermined:
-            Task {
-                let granted = await notificationManager.requestAuthorization()
-                if granted { viewModel.setEnabled(true) }
+        // Always start the session; notifications are an optional enhancement (App Review guideline 4.5.4).
+        viewModel.setEnabled(true)
+
+        // Request permission only on first launch; user can still proceed if they deny.
+        if notificationManager.authorizationStatus == .notDetermined {
+            Task { _ = await notificationManager.requestAuthorization() }
+        }
+    }
+
+    // MARK: Notification Banner — shown only when permission is denied
+
+    @ViewBuilder
+    private var notificationBanner: some View {
+        if notificationManager.authorizationStatus == .denied {
+            Button {
+                notificationManager.openAppSettings()
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "bell.slash.fill")
+                        .font(.system(size: 18, weight: .regular))
+                        .foregroundColor(.appTextSecondary)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("permission.banner.title")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(.appTextPrimary)
+                        Text("permission.banner.body")
+                            .font(.system(size: 12, weight: .regular))
+                            .foregroundColor(.appTextSecondary)
+                    }
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.appTextSecondary)
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.appSurface)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .strokeBorder(Color.appBorder, lineWidth: 1)
+                        )
+                )
             }
-        case .denied:
-            showDeniedAlert = true
-        case .authorized, .provisional, .ephemeral:
-            viewModel.setEnabled(true)
-        @unknown default:
-            viewModel.setEnabled(true)
+            .buttonStyle(.plain)
+            .padding(.horizontal, 24)
+            .padding(.bottom, 24)
         }
     }
 

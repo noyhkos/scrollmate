@@ -9,6 +9,8 @@
 "permission.title" = "Notification Permission Required";
 "permission.body" = "Allow notifications in Settings to receive scroll alerts.";
 "permission.settings" = "Go to Settings";
+"permission.banner.title" = "Notifications are off";
+"permission.banner.body" = "Turn on notifications to receive scroll reminders.";
 
 // MARK: - Common
 "common.cancel" = "Cancel";
@@ -46,6 +48,8 @@
 "tip.subtitle" = "Scrollmate is free.\nIf you enjoy it, a small tip means a lot ☺️";
 "tip.cta" = "Support";
 "tip.restore" = "Restore purchase";
+"tip.retry" = "Retry";
+"tip.error.loadfailed" = "Couldn't load items. Check your connection and try again.";
 
 // MARK: - Tip Tiers
 "tier.none"    = "Default";

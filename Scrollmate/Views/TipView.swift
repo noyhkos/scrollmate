@@ -49,7 +49,7 @@ struct TipView: View {
                     .padding(.horizontal, 24)
                     .padding(.bottom, 16)
 
-                    // Error message
+                    // Purchase error (transient, post-tap)
                     if let error = store.purchaseError {
                         Text(error)
                             .font(.system(size: 13))
@@ -57,38 +57,63 @@ struct TipView: View {
                             .padding(.bottom, 8)
                     }
 
-                    // CTA
-                    Button {
-                        Task {
-                            if let product = store.products.first(where: { $0.id == selectedTier.productId }) {
-                                await store.purchase(product)
-                                if SharedStorage.shared.purchasedTier >= selectedTier {
-                                    dismiss()
+                    // Product load error with retry (fixes greyed-out CTA issue — App Review 2.1(b))
+                    if let loadError = store.productLoadError, store.products.isEmpty {
+                        VStack(spacing: 10) {
+                            Text(loadError)
+                                .font(.system(size: 13))
+                                .foregroundColor(.appTextSecondary)
+                                .multilineTextAlignment(.center)
+                            Button {
+                                Task { await store.loadProducts() }
+                            } label: {
+                                Text("tip.retry")
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 24)
+                                    .padding(.vertical, 10)
+                                    .background(
+                                        Capsule().fill(Color.appAccent)
+                                    )
+                            }
+                            .disabled(store.isLoadingProducts)
+                        }
+                        .padding(.horizontal, 24)
+                        .padding(.bottom, 12)
+                    } else {
+                        // CTA
+                        Button {
+                            Task {
+                                if let product = store.products.first(where: { $0.id == selectedTier.productId }) {
+                                    await store.purchase(product)
+                                    if SharedStorage.shared.purchasedTier >= selectedTier {
+                                        dismiss()
+                                    }
                                 }
                             }
-                        }
-                    } label: {
-                        ZStack {
-                            Text("\(store.priceLabel(for: selectedTier)) \(String(localized: "tip.cta"))")
-                                .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(.white)
-                                .opacity(store.isPurchasing ? 0 : 1)
+                        } label: {
+                            ZStack {
+                                Text("\(store.priceLabel(for: selectedTier)) \(String(localized: "tip.cta"))")
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .opacity(store.isPurchasing || store.isLoadingProducts ? 0 : 1)
 
-                            if store.isPurchasing {
-                                ProgressView()
-                                    .tint(.white)
+                                if store.isPurchasing || store.isLoadingProducts {
+                                    ProgressView()
+                                        .tint(.white)
+                                }
                             }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(Color.appAccent)
+                            )
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
-                        .background(
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(store.products.isEmpty ? Color.gray : Color.appAccent)
-                        )
+                        .disabled(store.isPurchasing || store.isLoadingProducts || store.products.isEmpty)
+                        .padding(.horizontal, 24)
+                        .padding(.bottom, 12)
                     }
-                    .disabled(store.isPurchasing || store.products.isEmpty)
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 12)
 
                     // Restore
                     Button {

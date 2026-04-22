@@ -9,6 +9,8 @@ class StoreKitManager: ObservableObject {
     @Published var products: [Product] = []
     @Published var isPurchasing: Bool = false
     @Published var purchaseError: String? = nil
+    @Published var isLoadingProducts: Bool = false
+    @Published var productLoadError: String? = nil
 
     private let productIds: [String] = [
         "com.scrollmate.tip.bronze",
@@ -31,10 +33,18 @@ class StoreKitManager: ObservableObject {
     // MARK: - Load Products
 
     func loadProducts() async {
+        isLoadingProducts = true
+        productLoadError = nil
+        defer { isLoadingProducts = false }
+
         do {
             let fetched = try await Product.products(for: productIds)
             products = fetched.sorted { $0.price < $1.price }
+            if fetched.isEmpty {
+                productLoadError = String(localized: "tip.error.loadfailed")
+            }
         } catch {
+            productLoadError = String(localized: "tip.error.loadfailed")
             print("StoreKit: failed to load products — \(error)")
         }
     }
