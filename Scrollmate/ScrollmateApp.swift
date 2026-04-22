@@ -28,7 +28,7 @@ struct ScrollmateApp: App {
         WindowGroup {
             ContentView()
                 .onAppear {
-                    NotificationManager.shared.setupNotificationCategory()
+                    setupReminderCategory()
                 }
                 .task {
                     // Restore purchased tiers on every launch

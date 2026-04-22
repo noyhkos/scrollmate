@@ -40,96 +40,6 @@ class NotificationManager: NSObject, ObservableObject {
             UIApplication.shared.open(url)
         }
     }
-
-    // nonisolated — UNUserNotificationCenter calls use XPC and must not run on main thread
-    nonisolated func setupNotificationCategory() {
-        let confirmAction = UNNotificationAction(
-            identifier: "CONFIRM",
-            title: String(localized: "notification.action.confirm"),
-            options: []
-        )
-        let stopAction = UNNotificationAction(
-            identifier: "STOP",
-            title: String(localized: "notification.action.stop"),
-            options: [.destructive]
-        )
-        let category = UNNotificationCategory(
-            identifier: reminderCategoryId,
-            actions: [confirmAction, stopAction],
-            intentIdentifiers: [],
-            options: [.customDismissAction]
-        )
-        UNUserNotificationCenter.current().setNotificationCategories([category])
-    }
-
-    nonisolated func sendStartNotification(intervalMinutes: Int) {
-        let content = UNMutableNotificationContent()
-        content.title = String(localized: "notification.start.title")
-        content.body = String(format: String(localized: "notification.start.body"), intervalMinutes)
-        content.sound = .default
-        let request = UNNotificationRequest(
-            identifier: startNotificationId,
-            content: content,
-            trigger: UNTimeIntervalNotificationTrigger(timeInterval: 0.5, repeats: false)
-        )
-        UNUserNotificationCenter.current().add(request)
-    }
-
-    nonisolated func sendEndNotification(startTime: Date) {
-        let elapsed = Int(Date().timeIntervalSince(startTime))
-        let content = UNMutableNotificationContent()
-        content.title = String(localized: "notification.end.title")
-        content.body = String(format: String(localized: "notification.end.body"), usageDurationLabel(seconds: elapsed))
-        content.sound = .default
-        let request = UNNotificationRequest(
-            identifier: endNotificationId,
-            content: content,
-            trigger: UNTimeIntervalNotificationTrigger(timeInterval: 0.5, repeats: false)
-        )
-        UNUserNotificationCenter.current().add(request)
-    }
-
-    // Schedule 59 normal reminders + 1 exhausted final notice (60th) aligned to startTime
-    nonisolated func scheduleRepeatingNotification(intervalMinutes: Int, startTime: Date) {
-        setupNotificationCategory()
-        let reminderIds = (1...60).map { "\(reminderNotificationIdPrefix).\($0)" }
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
-
-        let elapsedSeconds = Int(Date().timeIntervalSince(startTime))
-        let elapsedMinutes = elapsedSeconds / 60
-        // First future interval index from start (e.g. at 25min with 10min interval → next is index 3 = 30min)
-        let startIndex = elapsedMinutes / intervalMinutes + 1
-
-        for i in 0..<60 {
-            let minutesFromStart = (startIndex + i) * intervalMinutes
-            let secondsFromNow = minutesFromStart * 60 - elapsedSeconds
-            guard secondsFromNow > 0 else { continue }
-
-            let content = UNMutableNotificationContent()
-            let isLast = (i == 59)
-            content.title = String(localized: isLast ? "notification.exhausted.title" : "notification.reminder.title")
-            content.body = isLast
-                ? String(localized: "notification.exhausted.body")
-                : elapsedLabel(minutes: minutesFromStart)
-            content.sound = .default
-            content.categoryIdentifier = reminderCategoryId
-            let trigger = UNTimeIntervalNotificationTrigger(
-                timeInterval: TimeInterval(secondsFromNow),
-                repeats: false
-            )
-            let request = UNNotificationRequest(
-                identifier: "\(reminderNotificationIdPrefix).\(i + 1)",
-                content: content,
-                trigger: trigger
-            )
-            UNUserNotificationCenter.current().add(request)
-        }
-    }
-
-    nonisolated func cancelReminderNotifications() {
-        let reminderIds = (1...60).map { "\(reminderNotificationIdPrefix).\($0)" }
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
-    }
 }
 
 extension NotificationManager: UNUserNotificationCenterDelegate {
@@ -145,7 +55,7 @@ extension NotificationManager: UNUserNotificationCenterDelegate {
         Task { @MainActor in
             guard let startTime = SharedStorage.shared.activeTimers[scrollmateTimerKey] else { return }
             let interval = SharedStorage.shared.notificationInterval
-            NotificationManager.shared.scheduleRepeatingNotification(intervalMinutes: interval, startTime: startTime)
+            scheduleRepeatingNotification(intervalMinutes: interval, startTime: startTime)
         }
     }
 
@@ -162,7 +72,7 @@ extension NotificationManager: UNUserNotificationCenterDelegate {
             Task { @MainActor in
                 guard let startTime = SharedStorage.shared.activeTimers[scrollmateTimerKey] else { return }
                 let interval = SharedStorage.shared.notificationInterval
-                NotificationManager.shared.scheduleRepeatingNotification(intervalMinutes: interval, startTime: startTime)
+                scheduleRepeatingNotification(intervalMinutes: interval, startTime: startTime)
             }
         }
 
@@ -170,10 +80,10 @@ extension NotificationManager: UNUserNotificationCenterDelegate {
         Task { @MainActor in
             if let startTime = SharedStorage.shared.activeTimers[scrollmateTimerKey] {
                 SharedStorage.shared.addSession(start: startTime, end: Date())
-                NotificationManager.shared.sendEndNotification(startTime: startTime)
+                sendEndNotification(startTime: startTime)
             }
             SharedStorage.shared.activeTimers = [:]
-            NotificationManager.shared.cancelReminderNotifications()
+            cancelReminderNotifications()
             // Delay to ensure UserDefaults is flushed before widget reads it
             try? await Task.sleep(nanoseconds: 100_000_000)
             WidgetCenter.shared.reloadAllTimelines()

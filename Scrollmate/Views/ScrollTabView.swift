@@ -80,7 +80,7 @@ struct ScrollTabView: View {
             if viewModel.isEnabled, let start = SharedStorage.shared.activeTimers[scrollmateTimerKey] {
                 elapsedSeconds = Int(Date().timeIntervalSince(start))
                 // Replenish notifications in case they were exhausted while the app was in the background
-                notificationManager.scheduleRepeatingNotification(
+                scheduleRepeatingNotification(
                     intervalMinutes: SharedStorage.shared.notificationInterval,
                     startTime: start
                 )

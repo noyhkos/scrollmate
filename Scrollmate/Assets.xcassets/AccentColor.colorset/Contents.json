@@ -1,7 +1,15 @@
 {
   "colors" : [
     {
-      "filename" : "Scrollmate-iOS-Default-1024x1024@1x.png",
+      "color" : {
+        "color-space" : "srgb",
+        "components" : {
+          "alpha" : "1.000",
+          "blue" : "1.000",
+          "green" : "0.557",
+          "red" : "0.114"
+        }
+      },
       "idiom" : "universal"
     }
   ],

@@ -46,15 +46,14 @@ class SettingsViewModel: ObservableObject {
 
     func setEnabled(_ enabled: Bool) {
         isEnabled = enabled
-        let nm = NotificationManager.shared
         if enabled {
             let now = Date()
             SharedStorage.shared.activeTimers[scrollmateTimerKey] = now
             SharedStorage.shared.notificationInterval = selectedInterval
-            nm.sendStartNotification(intervalMinutes: selectedInterval)
+            sendStartNotification(intervalMinutes: selectedInterval)
             let interval = selectedInterval
             Task.detached {
-                nm.scheduleRepeatingNotification(intervalMinutes: interval, startTime: now)
+                scheduleRepeatingNotification(intervalMinutes: interval, startTime: now)
             }
         } else {
             let startTime = SharedStorage.shared.activeTimers[scrollmateTimerKey]
@@ -63,10 +62,10 @@ class SettingsViewModel: ObservableObject {
             }
             SharedStorage.shared.removeTimer(for: scrollmateTimerKey)
             if let startTime {
-                nm.sendEndNotification(startTime: startTime)
+                sendEndNotification(startTime: startTime)
             }
             Task.detached {
-                nm.cancelReminderNotifications()
+                cancelReminderNotifications()
             }
         }
         WidgetCenter.shared.reloadAllTimelines()
@@ -77,9 +76,8 @@ class SettingsViewModel: ObservableObject {
         selectedInterval = interval
         SharedStorage.shared.notificationInterval = interval
         if isEnabled, let startTime = SharedStorage.shared.activeTimers[scrollmateTimerKey] {
-            let nm = NotificationManager.shared
             Task.detached {
-                nm.scheduleRepeatingNotification(intervalMinutes: interval, startTime: startTime)
+                scheduleRepeatingNotification(intervalMinutes: interval, startTime: startTime)
             }
         }
     }

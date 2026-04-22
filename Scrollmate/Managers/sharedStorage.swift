@@ -1,18 +1,20 @@
 import Foundation
+import UserNotifications
+import WidgetKit
 
 // Shared across app and widget targets — must be defined here
-let scrollmateStopNotification = Notification.Name("ScrollmateStopFromBanner")
+nonisolated let scrollmateStopNotification = Notification.Name("ScrollmateStopFromBanner")
 
 // Darwin notification for cross-process state sync (widget → main app)
-let darwinStateChangedNotification = "com.scrollmate.stateChanged"
+nonisolated let darwinStateChangedNotification = "com.scrollmate.stateChanged"
 
 // MARK: - Notification Keys & Identifiers
 
-nonisolated(unsafe) let scrollmateTimerKey = "scrollmate"
-nonisolated(unsafe) let startNotificationId = "scrollmate.start"
-nonisolated(unsafe) let endNotificationId = "scrollmate.end"
-nonisolated(unsafe) let reminderNotificationIdPrefix = "scrollmate.reminder"
-nonisolated(unsafe) let reminderCategoryId = "SCROLLMATE_REMINDER"
+nonisolated let scrollmateTimerKey = "scrollmate"
+nonisolated let startNotificationId = "scrollmate.start"
+nonisolated let endNotificationId = "scrollmate.end"
+nonisolated let reminderNotificationIdPrefix = "scrollmate.reminder"
+nonisolated let reminderCategoryId = "SCROLLMATE_REMINDER"
 
 // MARK: - Shared Formatters (available to both app and widget extension targets)
 
@@ -170,4 +172,99 @@ class SharedStorage {
     func todaySessions() -> [ScrollSession] {
         scrollSessions.filter { Calendar.current.isDateInToday($0.endTime) }
     }
+}
+
+// MARK: - Shared Notification Helpers
+//
+// Free functions so both the main app and the widget extension share a single
+// source of truth. UNUserNotificationCenter is thread-safe, so these run from
+// any isolation context.
+
+nonisolated func setupReminderCategory() {
+    let confirmAction = UNNotificationAction(
+        identifier: "CONFIRM",
+        title: String(localized: "notification.action.confirm"),
+        options: []
+    )
+    let stopAction = UNNotificationAction(
+        identifier: "STOP",
+        title: String(localized: "notification.action.stop"),
+        options: [.destructive]
+    )
+    let category = UNNotificationCategory(
+        identifier: reminderCategoryId,
+        actions: [confirmAction, stopAction],
+        intentIdentifiers: [],
+        options: [.customDismissAction]
+    )
+    UNUserNotificationCenter.current().setNotificationCategories([category])
+}
+
+nonisolated func sendStartNotification(intervalMinutes: Int) {
+    let content = UNMutableNotificationContent()
+    content.title = String(localized: "notification.start.title")
+    content.body = String(format: String(localized: "notification.start.body"), intervalMinutes)
+    content.sound = .default
+    let request = UNNotificationRequest(
+        identifier: startNotificationId,
+        content: content,
+        trigger: UNTimeIntervalNotificationTrigger(timeInterval: 0.5, repeats: false)
+    )
+    UNUserNotificationCenter.current().add(request)
+}
+
+nonisolated func sendEndNotification(startTime: Date) {
+    let elapsed = Int(Date().timeIntervalSince(startTime))
+    let content = UNMutableNotificationContent()
+    content.title = String(localized: "notification.end.title")
+    content.body = String(format: String(localized: "notification.end.body"), usageDurationLabel(seconds: elapsed))
+    content.sound = .default
+    let request = UNNotificationRequest(
+        identifier: endNotificationId,
+        content: content,
+        trigger: UNTimeIntervalNotificationTrigger(timeInterval: 0.5, repeats: false)
+    )
+    UNUserNotificationCenter.current().add(request)
+}
+
+// Schedule 59 normal reminders + 1 exhausted final notice (60th) aligned to startTime
+nonisolated func scheduleRepeatingNotification(intervalMinutes: Int, startTime: Date) {
+    setupReminderCategory()
+    let reminderIds = (1...60).map { "\(reminderNotificationIdPrefix).\($0)" }
+    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
+
+    let elapsedSeconds = Int(Date().timeIntervalSince(startTime))
+    let elapsedMinutes = elapsedSeconds / 60
+    // First future interval index from start (e.g. at 25min with 10min interval → next is index 3 = 30min)
+    let startIndex = elapsedMinutes / intervalMinutes + 1
+
+    for i in 0..<60 {
+        let minutesFromStart = (startIndex + i) * intervalMinutes
+        let secondsFromNow = minutesFromStart * 60 - elapsedSeconds
+        guard secondsFromNow > 0 else { continue }
+
+        let content = UNMutableNotificationContent()
+        let isLast = (i == 59)
+        content.title = String(localized: isLast ? "notification.exhausted.title" : "notification.reminder.title")
+        content.body = isLast
+            ? String(localized: "notification.exhausted.body")
+            : elapsedLabel(minutes: minutesFromStart)
+        content.sound = .default
+        content.categoryIdentifier = reminderCategoryId
+        let trigger = UNTimeIntervalNotificationTrigger(
+            timeInterval: TimeInterval(secondsFromNow),
+            repeats: false
+        )
+        let request = UNNotificationRequest(
+            identifier: "\(reminderNotificationIdPrefix).\(i + 1)",
+            content: content,
+            trigger: trigger
+        )
+        UNUserNotificationCenter.current().add(request)
+    }
+}
+
+nonisolated func cancelReminderNotifications() {
+    let reminderIds = (1...60).map { "\(reminderNotificationIdPrefix).\($0)" }
+    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: reminderIds)
 }
