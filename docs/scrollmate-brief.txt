@@ -1,0 +1,602 @@
+================================================================================
+SCROLLMATE — COMPREHENSIVE PROJECT BRIEF
+(For handoff to marketing / content / growth agents)
+Last updated: 2026-04-24
+================================================================================
+
+This document is a self-contained briefing. The reader (another agent or a
+human collaborator) is assumed to have NO prior context. Everything needed to
+write marketing copy, plan campaigns, or draft outreach should be here.
+
+
+================================================================================
+SECTION 1 — APP FACTS (THE BASICS)
+================================================================================
+
+App name          : Scrollmate
+Tagline           : Scroll Smarter
+Bundle ID         : (iOS app on App Store)
+App Store ID      : 6762578910
+App Store URL     : https://apps.apple.com/kr/app/scrollmate-scroll-smarter/id6762578910
+Current version   : 1.0.3
+Release date      : 2026-04-24 (released manually after Apple approval)
+Platform          : iOS only (iOS 18+)
+Category          : Health & Fitness / Lifestyle (digital well-being)
+Price             : Free
+Monetization      : Tip-based (non-consumable IAP, 5 tiers)
+                    - Bronze / Silver / Gold / Emerald / Diamond jar tiers
+                    - Cosmetic only; no feature gating
+Data collection   : None (no login, no account, no analytics tracking users)
+Ads               : None
+Login required    : No
+Developer         : Solo indie dev from Korea (석현 김 / "emile")
+Developer contact : skhn00j@gmail.com
+
+Supported languages (8 total):
+  - English (base)
+  - Korean (한국어)
+  - Spanish (Español)
+  - Japanese (日本語)
+  - French (Français)
+  - German (Deutsch)
+  - Russian (Русский)
+  - Simplified Chinese (简体中文)
+
+Brand phrases kept in English across ALL localizations (intentional, character-
+driven):
+  - "G'day mate!"
+  - "Let's Scroll"
+  - "Hello?"
+  - "What a Wonderful Day, Innit?"
+
+These are the app's "voice." The Australian/British register is part of the
+personality — NOT translated even in Korean or Japanese builds.
+
+
+================================================================================
+SECTION 2 — WHAT THE APP DOES
+================================================================================
+
+ONE-SENTENCE PITCH
+------------------
+Scrollmate is an iOS app that politely checks in while you're doomscrolling,
+and eventually gives up on you — because guilt-tripping adults about their
+phone use doesn't work.
+
+THE CORE LOOP
+-------------
+1. User taps "Let's Scroll" (in-app, widget, Control Center, or lock screen).
+2. Scrollmate starts a session and sends a gentle notification at the user's
+   chosen interval (e.g., every 10 min) with a slight Australian voice:
+   "G'day mate! Still scrolling?"
+3. User can confirm "Yes" (session continues) or "Stop scrolling" (ends).
+4. If user ignores the reminders repeatedly, Scrollmate STOPS nagging.
+   This is the deliberate "gives up on you 🏳️" moment.
+5. When the session ends, the user sees total scroll time and the session is
+   logged to today's list.
+6. Optional: user can leave a tip (cosmetic jar upgrade).
+
+WHY THIS DESIGN
+---------------
+Competing apps (Opal, One Sec, Jomo, Screen Zen, etc.) share a pattern:
+  - Block the app
+  - Shame the user
+  - Enforce hard limits
+  - Push subscriptions
+
+Scrollmate's thesis: adults already feel bad about doomscrolling. More guilt
+doesn't help. A friendly nudge that eventually respects your autonomy works
+better for some people. The "giving up" behavior is the differentiator.
+
+
+================================================================================
+SECTION 3 — FEATURE LIST (TECHNICAL & USER-FACING)
+================================================================================
+
+USER-FACING FEATURES
+--------------------
+- One-tap start/stop scroll sessions
+- Customizable reminder interval (in minutes)
+- Four sync'd entry points (start/stop from any surface, all stay in sync):
+    * Main app
+    * Home screen widget
+    * Control Center toggle (iOS 18 Control Widget)
+    * Lock screen widget
+- Notification actions: "Yes" / "Stop scrolling"
+- Session history ("Today's Scrolls") with durations
+- Tip jar with 5 visual tiers (Bronze → Diamond)
+- 8 languages
+
+TECHNICAL HIGHLIGHTS (for HN / dev Twitter / IndieHackers audience)
+-------------------------------------------------------------------
+- Built with Swift 6 strict concurrency (nonisolated, @MainActor, Sendable)
+- iOS 18 WidgetKit + AppIntents + ControlWidget
+- Darwin notifications for cross-process IPC (how the 4 surfaces stay in sync)
+- StoreKit 2 non-consumable IAP for tips
+- PBXFileSystemSynchronizedRootGroup (Xcode 16+ project structure)
+- Zero warnings, zero errors in final build
+- No third-party SDKs. No analytics. No tracking.
+
+PRIVACY POSTURE
+---------------
+- No account, no login, no email collection
+- No third-party analytics
+- No ads / no ad SDKs
+- Session data stays on device
+- Privacy policy page: privacy.html in the project repo
+
+
+================================================================================
+SECTION 4 — THE DEVELOPMENT JOURNEY (THE STORY)
+================================================================================
+
+TIMELINE (~3 weeks total)
+-------------------------
+- Initial concept → MVP build
+- Swift 6 strict concurrency refactor (the painful part)
+- Widget + Control Center + lock screen surface integration
+- StoreKit 2 tip jar implementation
+- First App Store submission (v1.0) → REJECTED
+
+FIRST REJECTION (Guideline 4.5.4 + 2.1(b))
+------------------------------------------
+Apple rejected v1.0 citing notification / IAP related issues. Developer
+iterated on the rejection points, rebuilt, and resubmitted.
+
+LOCALIZATION SPRINT
+-------------------
+Added 6 new languages in one pass (es / ja / fr / de / ru / zh-Hans), on top
+of the existing English + Korean. Kept brand phrases in English across all
+locales for consistent character voice.
+- Main app: ~65 strings per locale
+- Widget extension: ~30 strings per locale
+- Total: 13 files added, 846 insertions
+- knownRegions updated in project.pbxproj
+
+RESUBMISSION (v1.0.3)
+---------------------
+Submitted with a clear review memo explaining each rejection fix. Apple
+approved. User switched release strategy from "automatic" to "manual release"
+for safety. Manually pushed the release on 2026-04-24.
+
+LAUNCH
+------
+Released to App Store (KR storefront confirmed, global rollout in progress).
+Solo dev, no team, no funding, no marketing budget.
+
+NARRATIVE ANGLES (strong hooks for content)
+-------------------------------------------
+1. "Solo Korean dev, 3 weeks, 8 languages, 4 sync surfaces, 0 analytics."
+2. "Got rejected once. Fixed it. Shipped."
+3. "The only screen-time app that gives up on you."
+4. "No subscription, no login, no ads. Tip if you like it."
+
+NARRATIVE ANGLES TO AVOID
+-------------------------
+- "Built with AI in 3 days" → DO NOT USE. Critical reasoning:
+    (a) r/nosurf, r/digitalminimalism, HN audiences are increasingly hostile
+        to "AI-built" framing. Triggers "AI slop" pattern-match.
+    (b) 3 days is not even fast by 2026 AI-tooling standards; fails to impress.
+    (c) Reduces willingness to tip ("why tip an AI app?").
+    (d) Obscures the real story: the PERSONALITY and iOS engineering depth
+        are the product, not the fact that AI assisted.
+    (e) "Solo dev in 3 weeks, shipped in 8 languages after a rejection" is
+        a stronger, more defensible story.
+- Preachy digital detox language ("reclaim your life," "break free," etc.)
+- Korean-first copy for overseas channels
+- Over-hashtagging
+
+
+================================================================================
+SECTION 5 — TARGET AUDIENCE (OVERSEAS FOCUS)
+================================================================================
+
+PRIMARY MARKETS (80% of effort)
+-------------------------------
+- United States
+- United Kingdom
+- Canada
+- Australia
+
+SECONDARY MARKETS
+-----------------
+- Japan (large iOS installed base, digital-wellbeing receptive)
+- Germany, France (privacy-conscious audience aligns with no-tracking posture)
+- Spanish-speaking markets (large TAM, low competition for this niche)
+
+AUDIENCE PROFILES
+-----------------
+A) The self-aware doomscroller
+   - Age 22-40, iPhone user, knows they scroll too much
+   - Has tried Opal / One Sec / Apple Screen Time and bounced off
+   - Resents being shamed or forced; values autonomy
+   - Will respond to "gives up on you" hook emotionally
+
+B) The indie / dev community
+   - Age 25-45, follows #buildinpublic on X
+   - Reads Hacker News daily
+   - Appreciates Swift 6, AppIntents, Darwin notifications technical depth
+   - Likely to tip out of solidarity with solo devs
+
+C) The privacy-conscious user
+   - Values "no login, no ads, no tracking"
+   - Common in EU/DE/FR and privacy-focused subreddits
+   - Will choose Scrollmate specifically because of data posture
+
+D) The App Store browsers
+   - Will never hear about marketing channels
+   - Reached only via ASO (App Store Optimization) and editorial features
+   - Keywords: "screen time," "doomscroll," "focus," "phone use"
+
+
+================================================================================
+SECTION 6 — MARKETING STRATEGY (OVERSEAS)
+================================================================================
+
+CORE MESSAGING HIERARCHY
+------------------------
+Tier 1 — Emotional hook (lead with this):
+  "An app that gives up on you 🏳️"
+  "The only screen-time app that stops nagging if you ignore it."
+
+Tier 2 — Story/credibility:
+  "Solo Korean indie dev, 3 weeks, 8 languages. Free, no ads, no login,
+  no account. Tip if it helps."
+
+Tier 3 — Technical proof (for dev audiences only):
+  "4 surfaces (app / widget / Control Center / lock screen) stay in
+  perfect sync via Darwin notifications. Swift 6 strict concurrency.
+  iOS 18 AppIntents."
+
+RULE: Lead with Tier 1 for general audiences. Layer in Tier 2 for trust.
+Only bring Tier 3 for dev-audience channels (HN, IndieHackers, dev Twitter).
+
+CHANNEL STRATEGY — RANKED BY EXPECTED ROI
+-----------------------------------------
+
+TIER S (highest ROI, do first)
+------------------------------
+1. Reddit posts
+   Subreddits (priority order):
+   - r/nosurf           (primary fit — doomscrolling community)
+   - r/digitalminimalism
+   - r/iosapps
+   - r/apple            (be careful with self-promo rules)
+   - r/SideProject
+   - r/indiehackers
+   Post pattern: personal story, not ad. "I built a screen-time app that
+   gives up on you — because shaming me didn't work." Include honest
+   description, link in comments (follow each sub's rules).
+
+2. Hacker News — Show HN
+   Title pattern: "Show HN: Scrollmate – a screen-time app that gives up
+   on you if you ignore it"
+   Post Tuesday–Thursday, 9am ET. Include: what it does, why, tech stack
+   (Swift 6, AppIntents, Darwin notifications), pricing model, what you
+   learned. Reply to every comment quickly for the first 2 hours.
+
+3. Product Hunt launch
+   Prepare assets: GIF demo, screenshots (especially "Four ways, one
+   sync"), tagline, first-comment explainer. Launch 12:01am PST. Line up
+   5–10 hunters/friends for early upvotes (authentic, not fake).
+
+TIER A (strong ROI, do second)
+------------------------------
+4. X/Twitter thread (#buildinpublic)
+   7-post thread drafted separately; leads with "gives up on you 🏳️"
+   hook. Technical post about 4-way sync goes at post 6 as "proud of this
+   small thing." Tuesday–Thursday, ~9am ET or 10am UK time.
+
+5. TikTok short-form video
+   Concept angles:
+   - POV: your screen time app rage-quits on you
+   - Screen recording of Scrollmate's Australian-accent notification
+   - "I tried every screen time app. This one is different because it
+     STOPS trying." (text overlay style)
+   Three 15–30s clips, not one. Post daily for a week.
+
+6. Instagram DM outreach (manual, not spam)
+   Target: micro-influencers (5k–50k followers) in digital minimalism,
+   iOS tips, productivity niches. 10–20 personal DMs. Offer nothing —
+   just share the story. Some will post organically if the hook lands.
+
+TIER B (longer-tail, low effort, do opportunistically)
+-----------------------------------------------------
+7. Indie Hackers — launch post + milestone updates
+8. BetaList — free listing
+9. App-review blogs (MacStories, iMore, 9to5Mac tip line email)
+10. YouTube Shorts (repurpose TikTok content)
+11. Small podcast pitches (iOS-focused, indie dev focused)
+
+CHANNELS TO SKIP (low ROI for this app)
+---------------------------------------
+- Facebook ads (poor fit for privacy-first audience)
+- Google ads (keyword cost too high for tip-based monetization)
+- LinkedIn (wrong audience)
+- Paid influencer campaigns (don't have budget, don't need it yet)
+
+
+================================================================================
+SECTION 7 — CONTENT ASSETS AVAILABLE / NEEDED
+================================================================================
+
+ALREADY AVAILABLE
+-----------------
+- App icon (in Scrollmate.icon)
+- Design folder with screenshots
+- "Four ways, one sync" visual (screenshot showing all 4 surfaces)
+- App Store listing (screenshots, description already approved)
+- Working privacy.html
+
+NEEDS TO BE CREATED
+-------------------
+- 15–30s screen recording: starting a session → receiving nag → ignoring
+  → notification stops (the "gives up on you" moment)
+- GIF version of the above for X/Twitter and Product Hunt
+- Short vertical clips (3 variants) for TikTok/Reels/Shorts
+- Clean "hero" image for X Post 1 and Reddit thumbnails
+- Show HN post body (Hacker News)
+- Reddit r/nosurf post body (longer, story-led)
+- Product Hunt first-comment explainer
+
+
+================================================================================
+SECTION 8 — COPY SNIPPETS TO REUSE
+================================================================================
+
+TAGLINES (try variations)
+-------------------------
+- "An app that gives up on you."
+- "The only screen-time app that stops nagging."
+- "Scroll smarter. Or don't. It'll stop asking."
+- "G'day mate! Still scrolling?"
+
+SHORT BIO (X, Product Hunt maker profile, etc.)
+-----------------------------------------------
+"Solo iOS dev from Korea. Made Scrollmate — a screen-time app that gives
+up on you. Free, no ads, no login. Tips welcome if it helps."
+
+ONE-PARAGRAPH DESCRIPTION (Reddit, IH, blog outreach)
+-----------------------------------------------------
+"Scrollmate is an iOS screen-time app I built solo over 3 weeks. It
+doesn't block apps and it doesn't guilt-trip you. It sends a friendly
+nudge every few minutes while you're scrolling, in a slightly
+Australian voice. If you ignore the nudges a few times in a row, it
+stops — because shaming adults about their phone use doesn't work, at
+least not for me. It's free, has no ads, no login, no account, and no
+analytics. If it helps you, you can leave a tip (the jar gets shinier).
+Released today on the App Store."
+
+TECHNICAL BLURB (HN, dev Twitter, IH)
+-------------------------------------
+"Built with Swift 6 strict concurrency, iOS 18 AppIntents, WidgetKit,
+and a Control Center widget. The four entry points (app / home widget /
+Control Center / lock screen) stay in sync via Darwin notifications.
+StoreKit 2 for tips. Zero third-party SDKs. Zero analytics."
+
+
+================================================================================
+SECTION 9 — X THREAD DRAFT (7 POSTS, READY TO POST)
+================================================================================
+
+POST 1/7
+--------
+I built an iOS app that gives up on you. 🏳️
+
+If you scroll for too long, it stops nagging.
+It just... waves a little white flag and walks away.
+
+Apparently that's the only way to beat doomscrolling
+(for me, anyway).
+
+Meet Scrollmate 👇
+[attach: short screen recording or GIF]
+
+POST 2/7
+--------
+Every screen-time app I tried yelled at me.
+
+"You've used Instagram for 2 hours!"
+"Time's up!"
+"Try again tomorrow!"
+
+I just... closed the notification and kept scrolling.
+Guilt-tripping an adult doesn't work. We already feel bad.
+
+POST 3/7
+--------
+So Scrollmate does the opposite.
+
+It doesn't block you.
+It doesn't shame you.
+It just asks, with a slight Australian accent:
+
+"G'day mate! Still scrolling?"
+
+And if you ignore it a few times, it stops asking.
+Because honestly, same.
+
+POST 4/7
+--------
+Built this solo over 3 weeks.
+
+- Swift 6 strict concurrency
+- iOS 18 Control Center widget
+- Lock screen widget
+- Live Activities
+- 8 languages
+
+No team. No funding. No ads. No login.
+No account. No data collection.
+
+Just me, trying to scroll less.
+
+POST 5/7
+--------
+It's free.
+
+If it actually helps, you can drop a tip
+(jar gets shinier — bronze → diamond ✨).
+
+If it doesn't help, that's fine too.
+I'd rather you uninstall than feel manipulated
+into a subscription.
+
+POST 6/7
+--------
+Small thing I'm proud of:
+
+You can start/stop Scrollmate from 4 places
+and they all stay in sync instantly:
+
+📱 App
+🧩 Home screen widget
+🎛️ Control Center
+🔒 Lock screen
+
+Turns out keeping 4 surfaces in sync is
+surprisingly hard. Darwin notifications saved me.
+
+POST 7/7
+--------
+Scrollmate is live on the App Store today 🎉
+
+apps.apple.com/app/id6762578910
+
+If you're a doomscroller, try it.
+If you're not, tell your doomscroller friend.
+If you hate it, tell me why (I'll fix it).
+
+Made by one Korean dev who scrolls too much.
+
+
+================================================================================
+SECTION 10 — 2-WEEK LAUNCH TIMELINE
+================================================================================
+
+WEEK 1 (LAUNCH WEEK)
+--------------------
+Day 1 (launch day, already done):
+  - App live on App Store ✅
+
+Day 2:
+  - Post X thread (Tue–Thu, 9am ET)
+  - Cross-post to Threads (same content)
+  - Record the 15–30s demo video
+
+Day 3:
+  - Submit Show HN (Tue–Thu, 9am ET)
+  - Reply to every HN comment for first 2 hours
+
+Day 4:
+  - Post to r/nosurf (personal story format)
+  - Post to r/SideProject
+
+Day 5:
+  - Post to r/iosapps, r/indiehackers
+  - Schedule Product Hunt launch for Day 8
+
+Day 6–7:
+  - Create 3 TikTok variants
+  - Post first TikTok
+  - Begin 10–20 Instagram DM outreach to micro-influencers
+
+WEEK 2
+------
+Day 8:
+  - Product Hunt launch (12:01am PST)
+  - Reply to every PH comment
+  - X announcement of PH launch
+
+Day 9–10:
+  - Post to r/digitalminimalism, r/apple
+  - Post on Indie Hackers with launch milestones
+  - Pitch to MacStories / 9to5Mac tip lines
+
+Day 11–12:
+  - Repurpose TikToks to YouTube Shorts
+  - Post follow-up X thread with first-week results (numbers, reviews)
+
+Day 13–14:
+  - Gather first user feedback
+  - Iterate on whatever hook performed best
+  - Plan v1.1 feature based on feedback
+
+
+================================================================================
+SECTION 11 — METRICS TO TRACK (LIGHTWEIGHT)
+================================================================================
+
+Because the app does NO tracking, metrics come from:
+- App Store Connect analytics (impressions, downloads, tap-through, crashes)
+- App Store Connect sales (tip revenue per tier)
+- X/Twitter impressions & profile visits
+- Reddit upvotes & comment count per post
+- Hacker News points & rank
+- Product Hunt upvotes & comments
+- Referral traffic to App Store URL (use UTM on shared links)
+
+DO NOT add in-app analytics. Privacy posture is a marketing asset.
+
+
+================================================================================
+SECTION 12 — DECISION LOG (WHY THINGS ARE THE WAY THEY ARE)
+================================================================================
+
+Why tip-based instead of subscription:
+  Subscription fatigue is a real pain point for the target audience.
+  Charging a subscription for an app that tells you to use your phone
+  less feels contradictory. Tips turn the transaction into gratitude,
+  not obligation.
+
+Why no login:
+  Login friction kills conversion, creates GDPR surface area, and
+  conflicts with the privacy-first brand.
+
+Why English brand phrases in every locale:
+  The Australian voice IS the product character. Translating "G'day
+  mate!" to "안녕하세요!" would kill the personality. Users understand
+  a tiny bit of stylized English in a notification.
+
+Why ignore Korean domestic marketing for now:
+  iOS market share is smaller in Korea vs. overseas; tip-based pricing
+  is culturally harder in KR; English-language content travels further
+  per unit of effort. Revisit KR marketing after overseas traction.
+
+Why NOT lead with "made with AI":
+  See Section 4's "Narrative angles to avoid." Hostile audience reaction,
+  weakens tip willingness, obscures real differentiators.
+
+Why manual release instead of automatic:
+  Safety. Automatic release means an approved build goes live the moment
+  Apple clicks approve — no time to notice a last-minute issue. Manual
+  release gave the dev a final gate before pushing the live button.
+
+
+================================================================================
+SECTION 13 — FAST FACTS CHEAT SHEET (for quick copy-paste)
+================================================================================
+
+Name            : Scrollmate
+Tagline         : Scroll Smarter
+URL             : https://apps.apple.com/kr/app/scrollmate-scroll-smarter/id6762578910
+Platform        : iOS 18+
+Price           : Free (optional tips)
+Version         : 1.0.3
+Released        : 2026-04-24
+Developer       : Solo indie dev from Korea
+Contact         : skhn00j@gmail.com
+Languages       : English, Korean, Spanish, Japanese, French, German,
+                  Russian, Simplified Chinese (8 total)
+USP hook        : "The screen-time app that gives up on you 🏳️"
+Privacy         : No login, no account, no analytics, no ads
+Monetization    : Non-consumable IAP tip jar (5 tiers, cosmetic only)
+Tech stack      : Swift 6, iOS 18, WidgetKit, AppIntents, ControlWidget,
+                  StoreKit 2, Darwin notifications
+Build time      : ~3 weeks, solo
+Lead channels   : Reddit (r/nosurf, r/iosapps) → HN Show HN → Product Hunt
+                  → X #buildinpublic thread
+
+================================================================================
+END OF BRIEF
+================================================================================

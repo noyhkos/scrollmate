@@ -64,31 +64,46 @@ extension NotificationManager: UNUserNotificationCenterDelegate {
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
-        completionHandler()
+        let isReminder = response.notification.request.identifier.hasPrefix(reminderNotificationIdPrefix)
+        let isStop = response.actionIdentifier == "STOP"
 
-        // Replenish on any reminder interaction (user tapped from background)
-        if response.notification.request.identifier.hasPrefix(reminderNotificationIdPrefix),
-           response.actionIdentifier != "STOP" {
+        // UN completion handler is safe to call from any thread; capture as
+        // nonisolated(unsafe) so the @MainActor Task can call it after async work.
+        nonisolated(unsafe) let completion = completionHandler
+
+        // STOP path — defer completion until cleanup + widget reload finish.
+        // Calling completion() too early lets iOS suspend the background-launched
+        // app mid-task, leaving widgets/Control Center stale until next foreground.
+        if isStop {
             Task { @MainActor in
+                defer { completion() }
+                if let startTime = SharedStorage.shared.activeTimers[scrollmateTimerKey] {
+                    SharedStorage.shared.addSession(start: startTime, end: Date())
+                    sendEndNotification(startTime: startTime)
+                }
+                SharedStorage.shared.activeTimers = [:]
+                cancelReminderNotifications()
+                // Delay to ensure UserDefaults is flushed before widget reads it
+                try? await Task.sleep(nanoseconds: 100_000_000)
+                WidgetCenter.shared.reloadAllTimelines()
+                ControlCenter.shared.reloadAllControls()
+                NotificationCenter.default.post(name: scrollmateStopNotification, object: nil)
+            }
+            return
+        }
+
+        // Non-STOP reminder interaction — replenish the queue, then signal completion
+        if isReminder {
+            Task { @MainActor in
+                defer { completion() }
                 guard let startTime = SharedStorage.shared.activeTimers[scrollmateTimerKey] else { return }
                 let interval = SharedStorage.shared.notificationInterval
                 scheduleRepeatingNotification(intervalMinutes: interval, startTime: startTime)
             }
+            return
         }
 
-        guard response.actionIdentifier == "STOP" else { return }
-        Task { @MainActor in
-            if let startTime = SharedStorage.shared.activeTimers[scrollmateTimerKey] {
-                SharedStorage.shared.addSession(start: startTime, end: Date())
-                sendEndNotification(startTime: startTime)
-            }
-            SharedStorage.shared.activeTimers = [:]
-            cancelReminderNotifications()
-            // Delay to ensure UserDefaults is flushed before widget reads it
-            try? await Task.sleep(nanoseconds: 100_000_000)
-            WidgetCenter.shared.reloadAllTimelines()
-            ControlCenter.shared.reloadAllControls()
-            NotificationCenter.default.post(name: scrollmateStopNotification, object: nil)
-        }
+        // Other notifications — nothing to do
+        completion()
     }
 }
