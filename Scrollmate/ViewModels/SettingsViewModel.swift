@@ -68,8 +68,14 @@ class SettingsViewModel: ObservableObject {
                 cancelReminderNotifications()
             }
         }
-        WidgetCenter.shared.reloadAllTimelines()
-        ControlCenter.shared.reloadAllControls()
+        // Defer reload so cross-process UserDefaults flush completes first.
+        // Without this delay, Control Center can read stale state via
+        // ControlValueProvider.currentValue() and cache the wrong toggle visual.
+        Task {
+            try? await Task.sleep(nanoseconds: 200_000_000)
+            WidgetCenter.shared.reloadAllTimelines()
+            ControlCenter.shared.reloadAllControls()
+        }
     }
 
     func intervalChanged(to interval: Int) {
