@@ -131,15 +131,15 @@ final class SyncEngine {
         Task.detached {
             try? await Task.sleep(nanoseconds: 200_000_000)
             WidgetCenter.shared.reloadAllTimelines()
-            ControlCenter.shared.reloadAllControls()
+            ControlCenter.shared.reloadControls(ofKind: SCROLLMATE_CONTROL_KIND)
 
             try? await Task.sleep(nanoseconds: 800_000_000)
             WidgetCenter.shared.reloadAllTimelines()
-            ControlCenter.shared.reloadAllControls()
+            ControlCenter.shared.reloadControls(ofKind: SCROLLMATE_CONTROL_KIND)
 
             try? await Task.sleep(nanoseconds: 2_500_000_000)
             WidgetCenter.shared.reloadAllTimelines()
-            ControlCenter.shared.reloadAllControls()
+            ControlCenter.shared.reloadControls(ofKind: SCROLLMATE_CONTROL_KIND)
         }
     }
 

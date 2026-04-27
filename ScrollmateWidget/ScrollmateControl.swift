@@ -39,7 +39,7 @@ struct ToggleScrollmateIntent: SetValueIntent {
 struct ScrollmateControl: ControlWidget {
     var body: some ControlWidgetConfiguration {
         StaticControlConfiguration(
-            kind: "com.scrollmate.app.controlcenter",
+            kind: SCROLLMATE_CONTROL_KIND,
             provider: ScrollmateControlProvider()
         ) { isOn in
             ControlWidgetToggle(

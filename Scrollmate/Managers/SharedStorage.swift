@@ -62,6 +62,11 @@ let STATE_UPDATED_AT_KEY = "stateUpdatedAt"
 // Atomic-mirror file for cross-process state visibility — see SyncEngine
 let STATE_MIRROR_FILENAME = "state.json"
 
+// ControlWidget kind — used by both the widget definition and SyncEngine's
+// reloadControls(ofKind:) call. Per Apple WWDC24, kind-specific reloads are
+// preferred over reloadAllControls() for reliability.
+nonisolated let SCROLLMATE_CONTROL_KIND = "com.scrollmate.app.controlcenter"
+
 struct SyncStateMirror: Codable, Sendable {
     let isActive: Bool
     let startTime: Date?
