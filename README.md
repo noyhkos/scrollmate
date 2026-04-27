@@ -6,10 +6,11 @@
 
 **The screen-time app that gives up on you.** 🏳️
 
-[![App Store](https://img.shields.io/badge/App_Store-Download-0D96F6?logo=apple&logoColor=white)](https://apps.apple.com/app/id6762578910)
-[![iOS](https://img.shields.io/badge/iOS-18%2B-lightgrey)](https://www.apple.com/ios/)
-[![Swift](https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white)](https://swift.org/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+<a href="https://apps.apple.com/app/id6762578910">
+  <img src="https://img.shields.io/badge/Download_on_the-App_Store-0D96F6?style=for-the-badge&logo=apple&logoColor=white" alt="Download on the App Store" height="44" />
+</a>
+
+<sub>iOS 18+ · Swift 6 · [MIT License](LICENSE)</sub>
 
 </div>
 
