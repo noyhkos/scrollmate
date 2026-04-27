@@ -27,6 +27,9 @@ struct ToggleScrollmateIntent: SetValueIntent {
         let currentlyActive = SyncEngine.shared.isActive
         if value != currentlyActive {
             SyncEngine.shared.toggle()
+            // Keep the intent (and the widget extension process) alive long
+            // enough for the first multi-pass reload pass to fire.
+            try? await Task.sleep(nanoseconds: 300_000_000)
         }
         return .result()
     }
