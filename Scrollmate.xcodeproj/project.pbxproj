@@ -13,6 +13,7 @@
 		A6B46CC72F3C9E09000FAC81 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B46CC62F3C9E09000FAC81 /* SwiftUI.framework */; };
 		A6B46CD62F3C9E0A000FAC81 /* ScrollmateWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A6B46CC22F3C9E08000FAC81 /* ScrollmateWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B1C2D3E4F5A6B7C8D9E0F1A2 /* SharedStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E2D3C4B5A6978869504132 /* SharedStorage.swift */; };
+		A2B3C4D5E6F7A8B9C0D1E2F3 /* SyncEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6A7B8C9D0E1F2 /* SyncEngine.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		A6B46CC62F3C9E09000FAC81 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		A6B46CDC2F3C9E36000FAC81 /* ScrollmateWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScrollmateWidgetExtension.entitlements; sourceTree = "<group>"; };
 		F1E2D3C4B5A6978869504132 /* SharedStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SharedStorage.swift; path = Scrollmate/Managers/SharedStorage.swift; sourceTree = SOURCE_ROOT; };
+		A1B2C3D4E5F6A7B8C9D0E1F2 /* SyncEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SyncEngine.swift; path = Scrollmate/Managers/SyncEngine.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -150,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				F1E2D3C4B5A6978869504132 /* SharedStorage.swift */,
+				A1B2C3D4E5F6A7B8C9D0E1F2 /* SyncEngine.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1C2D3E4F5A6B7C8D9E0F1A2 /* SharedStorage.swift in Sources */,
+				A2B3C4D5E6F7A8B9C0D1E2F3 /* SyncEngine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

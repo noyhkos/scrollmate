@@ -19,7 +19,7 @@ class SettingsViewModel: ObservableObject {
             SharedStorage.shared.notificationInterval = sanitized
         }
         selectedInterval = sanitized
-        isEnabled = !SharedStorage.shared.activeTimers.isEmpty
+        isEnabled = SyncEngine.shared.isActive
 
         // Sync state when user stops from notification banner
         NotificationCenter.default.publisher(for: scrollmateStopNotification)
@@ -36,9 +36,10 @@ class SettingsViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    // Re-sync isEnabled from SharedStorage (call on foreground resume)
+    // Re-sync isEnabled from cross-process state (call on foreground resume)
     func syncState() {
-        isEnabled = !SharedStorage.shared.activeTimers.isEmpty
+        SyncEngine.shared.resyncFromStorage()
+        isEnabled = SyncEngine.shared.isActive
         let stored = SharedStorage.shared.notificationInterval
         let sanitized = Self.validIntervals.first { $0 >= stored } ?? 5
         selectedInterval = sanitized
@@ -47,34 +48,9 @@ class SettingsViewModel: ObservableObject {
     func setEnabled(_ enabled: Bool) {
         isEnabled = enabled
         if enabled {
-            let now = Date()
-            SharedStorage.shared.activeTimers[scrollmateTimerKey] = now
-            SharedStorage.shared.notificationInterval = selectedInterval
-            sendStartNotification(intervalMinutes: selectedInterval)
-            let interval = selectedInterval
-            Task.detached {
-                scheduleRepeatingNotification(intervalMinutes: interval, startTime: now)
-            }
+            SyncEngine.shared.startSession(intervalMinutes: selectedInterval)
         } else {
-            let startTime = SharedStorage.shared.activeTimers[scrollmateTimerKey]
-            if let startTime {
-                SharedStorage.shared.addSession(start: startTime, end: Date())
-            }
-            SharedStorage.shared.removeTimer(for: scrollmateTimerKey)
-            if let startTime {
-                sendEndNotification(startTime: startTime)
-            }
-            Task.detached {
-                cancelReminderNotifications()
-            }
-        }
-        // Defer reload so cross-process UserDefaults flush completes first.
-        // Without this delay, Control Center can read stale state via
-        // ControlValueProvider.currentValue() and cache the wrong toggle visual.
-        Task {
-            try? await Task.sleep(nanoseconds: 200_000_000)
-            WidgetCenter.shared.reloadAllTimelines()
-            ControlCenter.shared.reloadAllControls()
+            SyncEngine.shared.stopSession()
         }
     }
 

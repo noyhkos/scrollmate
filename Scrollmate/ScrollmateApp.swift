@@ -8,15 +8,16 @@ extension Notification.Name {
 @main
 struct ScrollmateApp: App {
     init() {
-        // Widget extension signals state change → main app syncs UI and reloads all widgets
-        // This is necessary because ControlWidget intents run in a separate process
-        // and cannot reliably trigger home/lock screen widget reloads directly
+        // Widget/Control Center process signals state change → main app re-reads
+        // SoT and refreshes its UI + all surfaces. ControlWidget intents run in
+        // the widget extension process and can't reliably reach the main app's
+        // surfaces directly, so this observer fills that gap.
         CFNotificationCenterAddObserver(
             CFNotificationCenterGetDarwinNotifyCenter(), nil,
             { _, _, _, _, _ in
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: .scrollmateWidgetStateChanged, object: nil)
-                    WidgetCenter.shared.reloadAllTimelines()
+                    SyncEngine.shared.reloadAllSurfaces()
                 }
             },
             darwinStateChangedNotification as CFString,

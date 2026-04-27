@@ -77,16 +77,10 @@ extension NotificationManager: UNUserNotificationCenterDelegate {
         if isStop {
             Task { @MainActor in
                 defer { completion() }
-                if let startTime = SharedStorage.shared.activeTimers[scrollmateTimerKey] {
-                    SharedStorage.shared.addSession(start: startTime, end: Date())
-                    sendEndNotification(startTime: startTime)
-                }
-                SharedStorage.shared.activeTimers = [:]
-                cancelReminderNotifications()
-                // Delay to ensure UserDefaults is flushed before widget reads it
-                try? await Task.sleep(nanoseconds: 100_000_000)
-                WidgetCenter.shared.reloadAllTimelines()
-                ControlCenter.shared.reloadAllControls()
+                SyncEngine.shared.stopSession()
+                // Wait long enough for SyncEngine's first reload pass to fire
+                // (~200ms) before completionHandler signals iOS we're done.
+                try? await Task.sleep(nanoseconds: 250_000_000)
                 NotificationCenter.default.post(name: scrollmateStopNotification, object: nil)
             }
             return

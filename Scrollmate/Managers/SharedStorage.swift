@@ -56,6 +56,18 @@ let DEFAULT_NOTIFICATION_INTERVAL = 5
 let ACTIVE_TIMERS_KEY = "activeTimers"
 let SCROLL_SESSIONS_KEY = "scrollSessions"
 let TIP_TIER_KEY = "tipTier"
+let STATE_VERSION_KEY = "stateVersion"
+let STATE_UPDATED_AT_KEY = "stateUpdatedAt"
+
+// Atomic-mirror file for cross-process state visibility — see SyncEngine
+let STATE_MIRROR_FILENAME = "state.json"
+
+struct SyncStateMirror: Codable, Sendable {
+    let isActive: Bool
+    let startTime: Date?
+    let version: Int
+    let updatedAt: Date
+}
 
 // MARK: - Tip Tier
 
@@ -124,6 +136,59 @@ class SharedStorage {
 
     func removeTimer(for appName: String) {
         activeTimers.removeValue(forKey: appName)
+    }
+
+    // MARK: - State Version (race detection / staleness)
+
+    var stateVersion: Int {
+        get { defaults.integer(forKey: STATE_VERSION_KEY) }
+        set {
+            defaults.set(newValue, forKey: STATE_VERSION_KEY)
+            defaults.synchronize()
+        }
+    }
+
+    var stateUpdatedAt: Date? {
+        get { defaults.object(forKey: STATE_UPDATED_AT_KEY) as? Date }
+        set {
+            defaults.set(newValue, forKey: STATE_UPDATED_AT_KEY)
+            defaults.synchronize()
+        }
+    }
+
+    // MARK: - Atomic State Mirror (cross-process visibility)
+    //
+    // UserDefaults App Group has eventual cross-process visibility — writes can
+    // take tens to hundreds of milliseconds to become visible in another process.
+    // Atomic file writes (POSIX rename) have stronger ordering guarantees, so we
+    // mirror the active-state subset here. Other state (sessions, tier, interval)
+    // remains UserDefaults-only.
+
+    private var stateMirrorURL: URL? {
+        FileManager.default
+            .containerURL(forSecurityApplicationGroupIdentifier: APP_GROUP_ID)?
+            .appendingPathComponent(STATE_MIRROR_FILENAME)
+    }
+
+    func writeStateMirror(_ mirror: SyncStateMirror) {
+        guard let url = stateMirrorURL else { return }
+        guard let data = try? JSONEncoder().encode(mirror) else { return }
+        try? data.write(to: url, options: [.atomic])
+    }
+
+    func readStateMirror() -> SyncStateMirror? {
+        guard let url = stateMirrorURL,
+              let data = try? Data(contentsOf: url),
+              let mirror = try? JSONDecoder().decode(SyncStateMirror.self, from: data)
+        else { return nil }
+        return mirror
+    }
+
+    /// Force the App Group UserDefaults to flush/refresh from disk.
+    /// `synchronize()` is deprecated for app-private defaults but remains valid
+    /// for cross-process use cases like this one.
+    func forceSync() {
+        defaults.synchronize()
     }
 
     // MARK: - Session Storage

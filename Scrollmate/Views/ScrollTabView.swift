@@ -61,7 +61,7 @@ struct ScrollTabView: View {
         .onAppear {
             notificationManager.checkAuthorization()
             pendingInterval = viewModel.selectedInterval
-            if let start = SharedStorage.shared.activeTimers[scrollmateTimerKey] {
+            if let start = SyncEngine.shared.activeStartTime {
                 elapsedSeconds = Int(Date().timeIntervalSince(start))
             }
             todaySessions = SharedStorage.shared.todaySessions()
@@ -77,7 +77,7 @@ struct ScrollTabView: View {
             guard phase == .active else { return }
             notificationManager.checkAuthorization()
             viewModel.syncState()
-            if viewModel.isEnabled, let start = SharedStorage.shared.activeTimers[scrollmateTimerKey] {
+            if viewModel.isEnabled, let start = SyncEngine.shared.activeStartTime {
                 elapsedSeconds = Int(Date().timeIntervalSince(start))
                 // Replenish notifications in case they were exhausted while the app was in the background
                 scheduleRepeatingNotification(
@@ -161,7 +161,7 @@ struct ScrollTabView: View {
             .padding(.bottom, 28)
             .onReceive(ticker) { _ in
                 guard viewModel.isEnabled,
-                      let start = SharedStorage.shared.activeTimers[scrollmateTimerKey] else { return }
+                      let start = SyncEngine.shared.activeStartTime else { return }
                 elapsedSeconds = Int(Date().timeIntervalSince(start))
             }
     }

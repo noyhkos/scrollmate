@@ -3,16 +3,20 @@ import UserNotifications
 import WidgetKit
 import SwiftUI
 
-// Reads current timer state to reflect on/off in the Control Center toggle
+// Reads current timer state to reflect on/off in the Control Center toggle.
+// Goes through SyncEngine so the read is file-first (atomic mirror) and falls
+// back to UserDefaults — this minimizes stale visuals from cross-process delay.
 struct ScrollmateControlProvider: ControlValueProvider {
     var previewValue: Bool { false }
 
     func currentValue() async throws -> Bool {
-        return !SharedStorage.shared.activeTimers.isEmpty
+        SyncEngine.shared.isActive
     }
 }
 
-// SetValueIntent required by ControlWidgetToggle — delegates to shared toggle logic
+// SetValueIntent required by ControlWidgetToggle — delegates to SyncEngine.
+// We honor the system's desired value rather than blind-toggling so a stale
+// CC visual that already matches the actual state doesn't double-flip.
 struct ToggleScrollmateIntent: SetValueIntent {
     static var title: LocalizedStringResource = "Toggle Scrollmate"
 
@@ -20,10 +24,9 @@ struct ToggleScrollmateIntent: SetValueIntent {
     var value: Bool
 
     func perform() async throws -> some IntentResult {
-        let currentlyActive = !SharedStorage.shared.activeTimers.isEmpty
-        // Only toggle if system's desired state differs from actual state
+        let currentlyActive = SyncEngine.shared.isActive
         if value != currentlyActive {
-            await performTimerToggle()
+            SyncEngine.shared.toggle()
         }
         return .result()
     }
